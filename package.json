@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.17",
+    "jquery": "^3.2",
+    "node-sass": "^4",
+    "sass-loader": "^6"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free-regular": "^5",
+    "bootstrap": "^4",
+    "open-sans-fontface": "^1.4.0"
+  }
+}
