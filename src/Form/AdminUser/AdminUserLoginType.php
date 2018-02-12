@@ -11,7 +11,7 @@
 
 namespace App\Form\AdminUser;
 
-use App\Entity\AdminUser;
+use App\Entity\BackendUser;
 use App\Form\Generic\LoginType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +20,7 @@ class AdminUserLoginType extends LoginType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => AdminUser::class,
+            'data_class' => BackendUser::class,
         ]);
     }
 }

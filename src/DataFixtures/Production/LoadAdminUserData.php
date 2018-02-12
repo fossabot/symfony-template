@@ -12,7 +12,7 @@
 namespace App\DataFixtures\Production;
 
 use App\DataFixtures\Base\BaseFixture;
-use App\Entity\AdminUser;
+use App\Entity\BackendUser;
 use Doctrine\Common\DataFixtures\BadMethodCallException;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -27,7 +27,7 @@ class LoadAdminUserData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $user = new AdminUser();
+        $user = new BackendUser();
         $user->setEmail('info@nodika.ch');
         $user->setPlainPassword('jhagfgawefgajwef');
         $user->persistNewPassword();

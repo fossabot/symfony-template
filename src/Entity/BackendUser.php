@@ -24,7 +24,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table
  * @ORM\Entity(repositoryClass="App\Repository\AdminUserRepository")
  */
-class AdminUser extends BaseEntity implements UserInterface, EquatableInterface
+class BackendUser extends BaseEntity implements UserInterface, EquatableInterface
 {
     use IdTrait;
     use UserTrait;

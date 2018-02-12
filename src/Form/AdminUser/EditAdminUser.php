@@ -11,7 +11,7 @@
 
 namespace App\Form\AdminUser;
 
-use App\Entity\AdminUser;
+use App\Entity\BackendUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -41,6 +41,6 @@ class EditAdminUser extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => AdminUser::class]);
+        $resolver->setDefaults(['data_class' => BackendUser::class]);
     }
 }

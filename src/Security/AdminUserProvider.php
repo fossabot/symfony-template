@@ -11,7 +11,7 @@
 
 namespace App\Security;
 
-use App\Entity\AdminUser;
+use App\Entity\BackendUser;
 use App\Security\Base\BaseUserProvider;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -58,7 +58,7 @@ class AdminUserProvider extends BaseUserProvider
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof AdminUser) {
+        if (!$user instanceof BackendUser) {
             throw new UnsupportedUserException(
                 sprintf('Instances of "%s" are not supported.', get_class($user))
             );
@@ -104,6 +104,6 @@ class AdminUserProvider extends BaseUserProvider
      */
     public function supportsClass($class)
     {
-        return AdminUser::class === $class;
+        return BackendUser::class === $class;
     }
 }

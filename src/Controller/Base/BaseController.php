@@ -34,7 +34,7 @@ class BaseController extends AbstractController
         return parent::getSubscribedServices() + ['kernel' => KernelInterface::class];
     }
 
-    /**
+    /**w
      * @param $type
      * @param $submitButtonType
      * @param array $data
