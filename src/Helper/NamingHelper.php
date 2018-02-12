@@ -102,18 +102,4 @@ class NamingHelper
     {
         return ['label' => 'trait.name', 'translation_domain' => static::traitToTranslationDomain($trait)];
     }
-
-    /**
-     * produces my_stuff from Famoser\Class\MyStuffTrait.
-     *
-     * @param $traitWithNamespace
-     *
-     * @return string
-     */
-    public static function traitToTranslationDomain($traitWithNamespace)
-    {
-        $traitName = mb_substr($traitWithNamespace, mb_strrpos($traitWithNamespace, '\\') + 1);
-        // subtract 5 because strlen("Trait") == 5
-        return 'trait_' . static::camelCaseToTranslation(mb_substr($traitName, 0, -5));
-    }
 }

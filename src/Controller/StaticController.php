@@ -13,7 +13,6 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseController;
 use App\Entity\FrontendUser;
-use App\Form\ContactRequest\ContactRequestType;
 use App\Model\ContactRequest\ContactRequest;
 use App\Service\EmailService;
 use Symfony\Component\Form\FormInterface;
@@ -42,23 +41,6 @@ class StaticController extends BaseController
             $arr,
             'this is the homepage'
         );
-    }
-
-    /**
-     * @Route("/email/{identifier}", name="view_email")
-     *
-     * @param $identifier
-     *
-     * @return Response
-     */
-    public function emailAction($identifier)
-    {
-        $email = $this->getDoctrine()->getRepository('App:Email')->findOneBy(['identifier' => $identifier]);
-        if (null === $email) {
-            throw new NotFoundHttpException();
-        }
-
-        return $this->render('email/email.html.twig', ['email' => $email]);
     }
 
     /**

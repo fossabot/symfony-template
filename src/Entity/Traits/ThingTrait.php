@@ -46,12 +46,12 @@ trait ThingTrait
         $builder->add(
             'name',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('name')
+            $builderArray
         );
         $builder->add(
             'description',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('description') + ['required' => false]
+            $builderArray + ['required' => false]
         );
 
         return $builder;

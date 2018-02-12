@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\AdminUser;
+namespace App\Form\BackendUser;
 
 use App\Entity\BackendUser;
 use App\Form\Generic\LoginType;

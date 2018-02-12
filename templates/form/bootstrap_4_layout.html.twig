@@ -147,7 +147,7 @@
                     '%id%': id,
                 }) -%}
             {%- else -%}
-                {%- set label = name|humanize -%}
+                {%- set label = name|camelCaseToUnderscore -%}
             {%- endif -%}
         {%- endif -%}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>

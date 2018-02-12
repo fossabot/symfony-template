@@ -63,36 +63,36 @@ trait AddressTrait
      */
     public static function getAddressBuilder(FormBuilderInterface $builder, $defaultArray = [])
     {
-        $builderArray = ['translation_domain' => NamingHelper::traitToTranslationDomain(AddressTrait::class)] + $defaultArray;
+        $builderArray = ['translation_domain' => 'trait_address'] + $defaultArray;
         $builder->add(
             'street',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('street')
+            $builderArray
         );
         $builder->add(
             'streetNr',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('streetNr')
+            $builderArray
         );
         $builder->add(
             'addressLine',
             TextType::class,
-            ['required' => false] + $builderArray + NamingHelper::propertyToTranslationForBuilder('addressLine')
+            ['required' => false] + $builderArray
         );
         $builder->add(
             'postalCode',
             NumberType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('postalCode')
+            $builderArray
         );
         $builder->add(
             'city',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('city')
+            $builderArray
         );
         $builder->add(
             'country',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('country')
+            $builderArray
         );
 
         return $builder;

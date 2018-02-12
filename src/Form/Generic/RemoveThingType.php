@@ -26,7 +26,7 @@ abstract class RemoveThingType extends BaseAbstractType
         $builder->add(
             'confirmConsequences',
             CheckboxType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('confirmConsequences') + ['mapped' => false]
+            $builderArray + ['mapped' => false]
         );
         $this->addSubmit($builder, $options[StaticMessageHelper::FORM_SUBMIT_BUTTON_TYPE_OPTION]);
     }

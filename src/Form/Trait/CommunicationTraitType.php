@@ -12,27 +12,26 @@
 namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
+use App\Entity\Traits\UserTrait;
 use App\Enum\SubmitButtonType;
 use App\Form\BaseAbstractType;
-use App\Helper\NamingHelper;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FrontendUserChangeEmailType extends BaseAbstractType
+class CommunicationTraitType extends BaseAbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options = [])
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builderArray = ['translation_domain' => 'entity_frontend_user'];
-        $builder->add(
-            'email',
-            EmailType::class,
-            $builderArray
-        );
 
-        $this->addSubmit($builder, SubmitButtonType::APPLY);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

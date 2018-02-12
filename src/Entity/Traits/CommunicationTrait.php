@@ -47,21 +47,21 @@ trait CommunicationTrait
      */
     public static function getCommunicationBuilder(FormBuilderInterface $builder, $defaultArray = [])
     {
-        $builderArray = ['translation_domain' => NamingHelper::traitToTranslationDomain(CommunicationTrait::class)] + $defaultArray;
+        $builderArray = ['translation_domain' => 'trait_communication'] + $defaultArray;
         $builder->add(
             'phone',
             TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('phone') + ['required' => false]
+            $builderArray + ['required' => false]
         );
         $builder->add(
             'email',
             EmailType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('email')
+            $builderArray
         );
         $builder->add(
             'webpage',
             UrlType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('webpage') + ['required' => false]
+            $builderArray + ['required' => false]
         );
 
         return $builder;

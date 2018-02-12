@@ -19,100 +19,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 trait PersonTrait
 {
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $jobTitle;
-
-    /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      */
     private $givenName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      */
     private $familyName;
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param $defaultArray
-     *
-     * @return FormBuilderInterface
-     */
-    public static function getPersonBuilder(FormBuilderInterface $builder, $defaultArray = [])
-    {
-        $builderArray = ['translation_domain' => NamingHelper::traitToTranslationDomain(PersonTrait::class)] + $defaultArray;
-        $builder->add(
-            'jobTitle',
-            TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('jobTitle') + ['required' => false]
-        );
-        $builder->add(
-            'givenName',
-            TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('givenName')
-        );
-        $builder->add(
-            'familyName',
-            TextType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('familyName')
-        );
-
-        return $builder;
-    }
-
-    /**
-     * @param PersonTrait $source
-     */
-    public function setPersonFieldsFrom($source)
-    {
-        $this->setJobTitle($source->getJobTitle());
-        $this->setGivenName($source->getGivenName());
-        $this->setFamilyName($source->getFamilyName());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getJobTitle()
-    {
-        return $this->jobTitle;
-    }
-
-    /**
-     * @param mixed $jobTitle
-     *
-     * @return PersonTrait
-     */
-    public function setJobTitle($jobTitle)
-    {
-        $this->jobTitle = $jobTitle;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFullName()
-    {
-        $res = $this->getJobTitle();
-        if (mb_strlen($this->getJobTitle()) > 0) {
-            $res .= ' ';
-        }
-
-        return $res . $this->getGivenName() . ' ' . $this->getFamilyName();
-    }
-
-    /**
-     * get the person identifier.
-     *
-     * @return string
-     */
-    protected function getPersonIdentifier()
-    {
-        return $this->jobTitle . ' ' . $this->getGivenName() . ' ' . $this->getFamilyName();
-    }
 
     /**
      * Get givenName.
@@ -160,5 +78,13 @@ trait PersonTrait
         $this->familyName = $familyName;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->getGivenName() . ' ' . $this->getFamilyName();
     }
 }

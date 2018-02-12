@@ -105,7 +105,7 @@ trait UserTrait
         $builder->add(
             'email',
             EmailType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('email')
+            $builderArray
         );
     }
 
@@ -118,7 +118,7 @@ trait UserTrait
         $builder->add(
             'plainPassword',
             PasswordType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('plainPassword')
+            $builderArray
         );
     }
 
@@ -164,7 +164,7 @@ trait UserTrait
         $builder->add(
             'repeatPlainPassword',
             PasswordType::class,
-            $builderArray + NamingHelper::propertyToTranslationForBuilder('repeatPlainPassword')
+            $builderArray
         );
 
         return $builder;

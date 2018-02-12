@@ -9,33 +9,33 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Person;
+namespace App\Form\FrontendUser;
 
-use App\Entity\Person;
+use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
+use App\Enum\SubmitButtonType;
 use App\Form\BaseAbstractType;
-use App\Form\FrontendUser\FrontendUserRegisterType;
-use App\Helper\NamingHelper;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PersonInviteType extends BaseAbstractType
+class AddressTraitType extends BaseAbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add($builder->create(
-            'frontendUser',
-            FrontendUserRegisterType::class,
-            ['agb' => false] + NamingHelper::traitNameToTranslationForBuilder(UserTrait::class) +
-            ['label_attr' => ['class' => 'sub-form-label'], 'attr' => ['class' => 'sub-form-control']]
-        ));
+
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Person::class,
+            'data_class' => FrontendUser::class,
         ]);
-        parent::configureOptions($resolver);
     }
 }

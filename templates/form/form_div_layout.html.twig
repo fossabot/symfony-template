@@ -223,7 +223,7 @@
                 '%id%': id,
             }) %}
         {%- else -%}
-            {% set label = name|humanize %}
+            {% set label = name|camelCaseToUnderscore %}
         {%- endif -%}
     {%- endif -%}
     <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
@@ -266,7 +266,7 @@
                     '%id%': id,
                 }) %}
             {%- else -%}
-                {% set label = name|humanize %}
+                {% set label = name|camelCaseToUnderscore %}
             {%- endif -%}
         {%- endif -%}
         <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</{{ element|default('label') }}>
