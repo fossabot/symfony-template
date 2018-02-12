@@ -20,6 +20,7 @@
 
     <title>{{ title }}</title>
     {% block stylesheets %}
+
     {% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('dist/app.css') }}"/>
@@ -35,45 +36,45 @@
 
 <header class="header">
     <div class="container header-container">
-        <div class="logo-wrapper">
-            <img src="{{ asset("images/logo.svg") }}" alt="logo" class="logo-img">
-        </div>
-
-        <div class="header-content">
-            <div class="row">
-                <div class="col-md-6">
-                    <h1>{{ title }}</h1>
-                    <p class="h1-description">{{ description }}</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="go-buttons">
-                        {% if back_url is defined %}
-                            <a href="{{ back_url }}"
-                               class="{{ theme_color }}-background go-button">{{ "navigation.go_back"|trans({}, "content_base") }}</a>
-                        {% endif %}
-                        {% if show_login is defined %}
-                            <a href="{{ path("access_register_check") }}"
-                               class="{{ theme_color }}-background go-button">{{ "navigation.register"|trans({}, "content_base") }}</a>
-                            <a href="{{ path("dashboard_index") }}"
-                               class="{{ theme_color }}-background go-button">{{ "navigation.login"|trans({}, "content_base") }}</a>
-                        {% endif %}
-                        {% if show_dashboard %}
-                            <a href="{{ path("dashboard_index") }}"
-                               class="{{ theme_color }}-background go-button">{{ "navigation.dashboard"|trans({}, "content_base") }}</a>
-                        {% endif %}
-                        {% if go_to_startpage is defined %}
-                            <a href="{{ path("homepage") }}"
-                               class="{{ theme_color }}-background go-button">{{ "navigation.to_start_page"|trans({}, "content_base") }}</a>
-                        {% endif %}
+        <div class="container menu-container">
+            <div class="menu-toggle-container">
+                <div class="menu-toggle" id="menu-toggle">
+                    <div class="nav-icon navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </div>
+            </div>
+            <div class="menu-entries-container menu-content">
+                <h3>{{ "menu.menu"|trans({}, "content_base") }}</h3>
+                <ul class="menu-entries">
+                    <li>
+                        <a href="mailto:support@nodika.ch">
+                            {{ "menu.user.contact_support"|trans({}, "content_base") }}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </header>
-{% block content %}
+<content>
+    {# flashbag #}
+    {% for type, messages in app.session.flashbag.all() %}
+        <div class="container index-container {{ type }}-color message-container">
+            {% for message in messages %}
+                <p class="no-margin">
+                    {{ message|raw }}
+                </p>
+            {% endfor %}
+        </div>
+    {% endfor %}
 
-{% endblock %}
+    {% block content %}
+
+    {% endblock %}
+</content>
 <footer class="footer">
     <div class="container footer-container">
         <div class="row">
@@ -88,8 +89,8 @@
 </footer>
 
 <script src="{{ asset('dist/app.js') }}"></script>
-
 {% block javascript %}
+
 {% endblock %}
 </body>
 </html>

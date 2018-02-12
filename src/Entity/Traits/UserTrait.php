@@ -63,6 +63,7 @@ trait UserTrait
      * @var bool
      *
      * @ORM\Column(type="boolean", options={"default": false})
+     * @Assert\IsTrue()
      */
     private $agbAccepted = false;
 
@@ -88,7 +89,7 @@ trait UserTrait
             $builder->add(
                 'agbAccepted',
                 CheckboxType::class,
-                $builderArray + NamingHelper::propertyToTranslationForBuilder('agbAccepted')
+                $builderArray
             );
         }
 

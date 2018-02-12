@@ -30,128 +30,25 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     use UserTrait;
 
     /**
-     * @var Setting[]|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Setting", mappedBy="frontendUser")
-     */
-    private $settings;
-
-    /**
-     * @var Person
-     *
-     * @ORM\OneToOne(targetEntity="Person", inversedBy="frontendUser")
-     */
-    private $person;
-
-    /**
-     * User constructor.
+     * constructor.
      */
     public function __construct()
     {
-        $this->settings = new ArrayCollection();
-    }
 
-    /**
-     * @param Person $person
-     *
-     * @return static
-     */
-    public static function createFromPerson(Person $person)
-    {
-        $user = static::createUserFromEmail($person->getEmail());
-        $user->setPerson($person);
-
-        return $user;
-    }
-
-    /**
-     * Add setting.
-     *
-     * @param Setting $setting
-     *
-     * @return FrontendUser
-     */
-    public function addSetting(Setting $setting)
-    {
-        $this->settings[] = $setting;
-
-        return $this;
-    }
-
-    /**
-     * Remove setting.
-     *
-     * @param Setting $setting
-     */
-    public function removeSetting(Setting $setting)
-    {
-        $this->settings->removeElement($setting);
-    }
-
-    /**
-     * Get settings.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSettings()
-    {
-        return $this->settings;
-    }
-
-    /**
-     * Get person.
-     *
-     * @return Person
-     */
-    public function getPerson()
-    {
-        return $this->person;
-    }
-
-    /**
-     * Set person.
-     *
-     * @param Person $person
-     *
-     * @return FrontendUser
-     */
-    public function setPerson(Person $person = null)
-    {
-        $this->person = $person;
-
-        return $this;
     }
 
     /**
      * Returns the roles granted to the user.
      *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
      * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return ['ROLE_FRONTEND_USER'];
     }
 
     /**
-     * The equality comparison should neither be done by referential equality
-     * nor by comparing identities (i.e. getId() === getId()).
-     *
-     * However, you do not need to compare every attribute, but only those that
-     * are relevant for assessing whether re-authentication is required.
-     *
-     * Also implementation should consider that $user instance may implement
-     * the extended user interface `AdvancedUserInterface`.
+     * check if this is the same user
      *
      * @param UserInterface $user
      *
@@ -173,6 +70,6 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
      */
     public function getFullIdentifier()
     {
-        return $this->getEmail();
+        return $this->getUserIdentifier();
     }
 }
