@@ -13,18 +13,25 @@ namespace App\Controller\Frontend;
 
 use App\Controller\Base\BaseController;
 use App\Model\ContactRequest\ContactRequest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class StaticController extends BaseController
+/**
+ * @Route("/dashboard")
+ * @Security("has_role('ROLE_USER')")
+ *
+ * @return Response
+ */
+class DashboardController extends BaseController
 {
     /**
-     * @Route("/", name="frontend_static_index")
+     * @Route("/", name="frontend_dashboard_index")
      *
      * @return Response
      */
     public function indexAction()
     {
-        return $this->render('frontend/static/index.html.twig');
+        return $this->render('frontend/dashboard/index.html.twig');
     }
 }

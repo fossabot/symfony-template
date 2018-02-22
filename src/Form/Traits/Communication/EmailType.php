@@ -9,16 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits;
+namespace App\Form\Traits\Communication;
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommunicationTraitType extends BaseAbstractType
+class EmailType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,9 +23,7 @@ class CommunicationTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("phone", TextType::class);
-        $builder->add("email", EmailType::class);
-        $builder->add("webpage", UrlType::class);
+        $builder->add("email", \Symfony\Component\Form\Extension\Core\Type\EmailType::class);
     }
 
     /**

@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace App\DataFixtures\Production;
+namespace App\DataFixtures;
 
 use App\DataFixtures\Base\BaseFixture;
 use App\Entity\BackendUser;
 use Doctrine\Common\DataFixtures\BadMethodCallException;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadAdminUserData extends BaseFixture
+class LoadDevBackendUserData extends BaseFixture
 {
     /**
      * Load data fixtures with the passed EntityManager.
@@ -27,21 +27,16 @@ class LoadAdminUserData extends BaseFixture
      */
     public function load(ObjectManager $manager)
     {
-        $user = new BackendUser();
-        $user->setEmail('info@nodika.ch');
-        $user->setPlainPassword('jhagfgawefgajwef');
+        $user = $manager->getRepository("App:BackendUser")->findOneBy(["email" => "info@example.com"]);
+        $user->setPlainPassword("asdf1234");
         $user->setPassword();
-        $user->setRegistrationDate(new \DateTime());
-        $user->setIsEnabled(true);
         $manager->persist($user);
         $manager->flush();
-
-        $this->addReference('user-1', $user);
     }
 
     public function getOrder()
     {
-        return 1;
+        return 10;
     }
 
     /**

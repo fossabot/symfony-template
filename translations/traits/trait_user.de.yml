@@ -2,6 +2,10 @@
 trait:
  name: Benutzer
 
+form:
+  login: Login
+  register: Registrieren
+
 #properties
 username: 'Benutzername'
 password: 'Passwort'

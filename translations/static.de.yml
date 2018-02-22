@@ -19,8 +19,8 @@ introduction:
     Funktion 2
 
 about:
-  title: Über example.ch
-  description: Erfahren Sie mehr über diese Webseite
+  title: 'Über example.ch'
+  description: 'Erfahren Sie mehr über diese Webseite'
   features:
     header: 'Funktionen'
     header_description: >
@@ -39,10 +39,11 @@ contact:
   contact_form_header: 'Kontaktformular'
   thanks_for_contact_form: 'Vielen Dank für die Kontaktaufnahme. Wir melden uns.'
 
-error:
-  title: 'Fehler'
-  description: 'Diese Seite existiert nicht oder kann nicht angezeigt werden'
-  404: 'Diese Seite wurde nicht gefunden'
-  fallback: 'Ein Problem hat verhindert dass diese Anfrage ausgeführt werden konnte'
-  500: 'Ein kritischer Fehler ist bei der Ausführung Ihrer Anfrage aufgetreten. Probieren sie es am Besten einfach noch einmal. Besteht das Problem weiterhin, schreiben Sie uns eine E-Mail an'
-  back_to_homepage: 'Hier geht''s zurück zur Startseite'
+#register/check page
+register_check:
+  title: "Registrieren"
+  description: "Möchten Sie einen neuen Account erstellen?"
+  help_frontend_user: "Beschreibung frontend."
+  create_frontend_user: "frontend user erstellen"
+  help_backend_user: "Beschreibung backend."
+  create_backend_user: "backend user erstellen"

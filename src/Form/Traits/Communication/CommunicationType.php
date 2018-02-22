@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits;
+namespace App\Form\Traits\Communication;
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserLoginTraitType extends BaseAbstractType
+class CommunicationType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -25,8 +26,9 @@ class UserLoginTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('username', TextType::class);
-        $builder->add('password', PasswordType::class);
+        $builder->add("phone", TextType::class);
+        $builder->add("email", EmailType::class);
+        $builder->add("webpage", UrlType::class);
     }
 
     /**
@@ -35,7 +37,7 @@ class UserLoginTraitType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user'
+            'translation_domain' => 'trait_communication'
         ]);
     }
 }

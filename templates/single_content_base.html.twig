@@ -5,6 +5,8 @@
         <div class="container index-container default-color">
             <div class="row">
                 <div class="col-md-12">
+                    <h1>{% block title %}{% endblock %}</h1>
+                    <h2>{% block description %}{% endblock %}</h2>
                     {% block single_content %}
                     {% endblock single_content %}
                 </div>

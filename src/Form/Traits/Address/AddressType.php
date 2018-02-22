@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits;
+namespace App\Form\Traits\Address;
 
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressTraitType extends BaseAbstractType
+class AddressType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder

@@ -12,6 +12,7 @@
 namespace App\Entity;
 
 use App\Entity\Base\BaseEntity;
+use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
 {
     use IdTrait;
     use UserTrait;
+    use AddressTrait;
 
     /**
      * constructor.

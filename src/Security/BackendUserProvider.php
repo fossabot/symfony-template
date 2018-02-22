@@ -26,20 +26,13 @@ class BackendUserProvider extends BaseUserProvider
     private $registry;
 
     /**
-     * @var string[]
-     */
-    private $adminEmails;
-
-    /**
      * AdminUserProvider constructor.
      *
      * @param RegistryInterface $registry
-     * @param $adminEmails
      */
-    public function __construct(RegistryInterface $registry, $adminEmails)
+    public function __construct(RegistryInterface $registry)
     {
         $this->registry = $registry;
-        $this->adminEmails = explode(',', $adminEmails);
     }
 
     /**
@@ -83,10 +76,6 @@ class BackendUserProvider extends BaseUserProvider
     {
         $user = $this->registry->getRepository('App:AdminUser')->findOneBy(['email' => $username]);
         if (null !== $user) {
-            if (in_array($user->getEmail(), $this->adminEmails, true)) {
-                $user->addRole('ROLE_ADMIN');
-            }
-
             return $user;
         }
 

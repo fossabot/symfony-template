@@ -9,14 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits;
+namespace App\Form\Traits\User;
 
+use App\Entity\FrontendUser;
+use App\Entity\Traits\UserTrait;
 use App\Form\Base\BaseAbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PersonTraitType extends BaseAbstractType
+class RecoverType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -24,8 +27,7 @@ class PersonTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('givenName', TextType::class);
-        $builder->add('familyName', TextType::class);
+        $builder->add('email', TextType::class);
     }
 
     /**
@@ -34,7 +36,7 @@ class PersonTraitType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_person'
+            'translation_domain' => 'trait_user'
         ]);
     }
 }

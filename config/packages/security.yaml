@@ -4,16 +4,18 @@ security:
 
     encoders:
         App\Entity\FrontendUser: bcrypt
+        App\Entity\BackendUser: bcrypt
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN: ROLE_USER
+        ROLE_FRONTEND_USER: ROLE_USER
+        ROLE_BACKEND_USER: ROLE_USER
 
     providers:
         frontend_user_provider:
-            id: app.frontend_user_provider
-        admin_user_provider:
-            id: app.admin_user_provider
+            id: App\Security\FrontendUserProvider
+        backend_user_provider:
+            id: App\Security\BackendUserProvider
 
     firewalls:
         # disables authentication for assets and the profiler
@@ -29,11 +31,11 @@ security:
             form_login:
                 login_path: frontend_login_index
                 check_path: frontend_login_check
-                default_target_path: dashboard_index
+                default_target_path: frontend_dashboard_index
                 csrf_token_generator: security.csrf.token_manager
                 # field names for the username and password fields
-                username_parameter: frontend_user_login[email]
-                password_parameter: frontend_user_login[plainPassword]
+                username_parameter: login[email]
+                password_parameter: login[password]
             logout:       true
             anonymous:    true
             logout_on_user_change: true
@@ -47,13 +49,14 @@ security:
         backend:
             pattern:   ^/
             anonymous: ~
-            provider: admin_user_provider
+            provider: backend_user_provider
             form_login:
                 login_path: backend_login
                 check_path: backend_login_check
                 default_target_path: backend_dashboard_index
                 csrf_token_generator: security.csrf.token_manager
-
+                username_parameter: login[email]
+                password_parameter: login[password]
             logout:       true
             anonymous:    true
             logout_on_user_change: true

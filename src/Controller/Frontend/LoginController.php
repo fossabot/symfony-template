@@ -10,8 +10,9 @@ namespace App\Controller\Frontend;
 
 
 use App\Controller\Base\BaseLoginController;
-use App\Form\FrontendUser\LoginType;
-use App\Form\Traits\UserLoginTraitType;
+use App\Form\Traits\User\LoginType;
+use App\Form\Traits\User\RecoverType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,9 +28,23 @@ class LoginController extends BaseLoginController
      */
     public function indexAction()
     {
-        $form = $this->createForm(UserLoginTraitType::class);
+        $form = $this->createForm(LoginType::class);
+        $form->add("form.login", SubmitType::class);
         $arr["form"] = $form->createView();
-        return $this->render('frontend/login/login.html.twig', $arr);
+        return $this->render('frontend/login/index.html.twig', $arr);
+    }
+
+    /**
+     * @Route("/recover", name="frontend_login_recover")
+     *
+     * @return Response
+     */
+    public function recoverAction()
+    {
+        $form = $this->createForm(RecoverType::class);
+        $form->add("form.recover", SubmitType::class);
+        $arr["form"] = $form->createView();
+        return $this->render('frontend/login/recover.html.twig', $arr);
     }
 
     /**
