@@ -196,7 +196,6 @@ trait UserTrait
     {
         $this->setPasswordHash(password_hash($this->getPlainPassword(), PASSWORD_BCRYPT));
         $this->eraseCredentials();
-        $this->setResetHash(HashHelper::createNewResetHash());
     }
 
     /**
@@ -273,18 +272,6 @@ trait UserTrait
     public function getResetHash()
     {
         return $this->resetHash;
-    }
-
-    /**
-     * @param string $resetHash
-     *
-     * @return static
-     */
-    public function setResetHash($resetHash)
-    {
-        $this->resetHash = $resetHash;
-
-        return $this;
     }
 
     /**
@@ -525,5 +512,32 @@ trait UserTrait
     public function getUsername()
     {
         return $this->email;
+    }
+
+
+    /**
+     * creates a new reset hash
+     */
+    public function setNewResetHash()
+    {
+        $newHash = '';
+        //0-9, A-Z, a-z
+        $allowedRanges = [[48, 57], [65, 90], [97, 122]];
+        for ($i = 0; $i < 20; ++$i) {
+            $rand = mt_rand(20, 160);
+            $allowed = false;
+            for ($j = 0; $j < count($allowedRanges); ++$j) {
+                if ($allowedRanges[$j][0] <= $rand && $allowedRanges[$j][1] >= $rand) {
+                    $allowed = true;
+                }
+            }
+            if ($allowed) {
+                $newHash .= chr($rand);
+            } else {
+                --$i;
+            }
+        }
+
+        $this->resetHash = $newHash;
     }
 }

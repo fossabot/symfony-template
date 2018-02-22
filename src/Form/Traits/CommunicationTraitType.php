@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\FrontendUser;
+namespace App\Form\Traits;
 
 use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
@@ -18,7 +18,7 @@ use App\Form\BaseAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressTraitType extends BaseAbstractType
+class CommunicationTraitType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder

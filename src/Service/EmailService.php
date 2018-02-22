@@ -17,6 +17,7 @@ use App\Helper\HashHelper;
 use App\Service\Interfaces\EmailServiceInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\Environment;
 
@@ -90,7 +91,7 @@ class EmailService implements EmailServiceInterface
     private function processEmail(Email $email)
     {
         $email->setSentDateTime(new \DateTime());
-        $email->setIdentifier(HashHelper::createNewResetHash());
+        $email->setIdentifier(Uuid::uuid4());
 
         $manager = $this->doctrine->getManager();
         $manager->persist($email);

@@ -9,16 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\FrontendUser;
+namespace App\Form\Traits;
 
 use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
 use App\Enum\SubmitButtonType;
 use App\Form\BaseAbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommunicationTraitType extends BaseAbstractType
+class PersonTraitType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,7 +27,8 @@ class CommunicationTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
+        $builder->add('givenName', TextType::class);
+        $builder->add('familyName', TextType::class);
     }
 
     /**
@@ -35,7 +37,7 @@ class CommunicationTraitType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => FrontendUser::class,
+            'translation_domain' => 'trait_person'
         ]);
     }
 }

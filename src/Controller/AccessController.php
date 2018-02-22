@@ -13,15 +13,10 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseAccessController;
 use App\Entity\FrontendUser;
-use App\Entity\Member;
-use App\Entity\Person;
 use App\Enum\SubmitButtonType;
 use App\Form\FrontendUser\FrontendUserLoginType;
 use App\Form\FrontendUser\FrontendUserResetType;
 use App\Form\FrontendUser\FrontendUserSetPasswordType;
-use App\Form\Member\MemberInviteType;
-use App\Form\Person\PersonInviteType;
-use App\Form\Person\PersonType;
 use App\Helper\HashHelper;
 use App\Service\EmailService;
 use Psr\Log\LoggerInterface;
@@ -437,7 +432,7 @@ class AccessController extends BaseAccessController
 
                 $existingUser = $this->getDoctrine()->getRepository('App:FrontendUser')->findOneBy(['email' => $entity->getEmail()]);
                 if (null !== $existingUser) {
-                    $existingUser->setResetHash(HashHelper::createNewResetHash());
+                    $existingUser->setNewResetHash();
                     $this->fastSave($existingUser);
 
                     $subject = $translator->trans('reset.subject', [], 'email_access');

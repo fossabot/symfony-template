@@ -1,5 +1,6 @@
 require("../sass/app.sass");
 var $ = require("jquery");
+var bootstrap = require("bootstrap");
 
 //open navigation menu
 var openMenu = function () {

@@ -234,6 +234,20 @@ class BaseController extends AbstractController
     }
 
     /**
+     * removes entity to database.
+     *
+     * @param BaseEntity[] $entities
+     */
+    protected function fastRemove(...$entities)
+    {
+        $mgr = $this->getDoctrine()->getManager();
+        foreach ($entities as $item) {
+            $mgr->remove($item);
+        }
+        $mgr->flush();
+    }
+
+    /**
      * get the parameter.
      *
      * remove this method as soon as possible
@@ -271,19 +285,6 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @return Person
-     */
-    protected function getPerson()
-    {
-        $user = $this->getUser();
-        if ($user instanceof FrontendUser) {
-            return $user->getPerson();
-        }
-
-        return null;
-    }
-
-    /**
      * @return FrontendUser
      */
     protected function getUser()
@@ -291,116 +292,4 @@ class BaseController extends AbstractController
         return parent::getUser();
     }
 
-    /**
-     * @param $filename
-     * @param array $header
-     * @param array $data
-     *
-     * @return StreamedResponse
-     */
-    protected function renderCsv($filename, $data, $header = null)
-    {
-        $response = new StreamedResponse();
-        $response->setCallback(function () use ($header, $data) {
-            $handle = fopen('php://output', 'w+');
-
-            //UTF-8 BOM
-            fwrite($handle, "\xEF\xBB\xBF");
-            fwrite($handle, "sep=,\n");
-
-            if (is_array($header)) {
-                // Add the header of the CSV file
-                fputcsv($handle, $header, CsvFileHelper::DELIMITER);
-            }
-
-            //add the data
-            foreach ($data as $row) {
-                fputcsv(
-                    $handle, // The file pointer
-                    $row, // The fields
-                    CsvFileHelper::DELIMITER // The delimiter
-                );
-            }
-
-            fclose($handle);
-        });
-
-        $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
-
-        return $response;
-    }
-
-    /**
-     * removes entity to database.
-     *
-     * @param BaseEntity[] $entities
-     */
-    protected function fastRemove(...$entities)
-    {
-        $mgr = $this->getDoctrine()->getManager();
-        foreach ($entities as $item) {
-            $mgr->remove($item);
-        }
-        $mgr->flush();
-    }
-
-    /**
-     * @param Organisation $organisation
-     * @param int $applicationEventType
-     *
-     * @return bool
-     */
-    protected function getHasEventOccurred(Organisation $organisation, $applicationEventType)
-    {
-        return $this->getDoctrine()->getRepository('App:ApplicationEvent')->hasEventOccurred($organisation, $applicationEventType);
-    }
-
-    /**
-     * Renders a view.
-     *
-     * @param string $view The view name
-     * @param array $parameters An array of parameters to pass to the view
-     * @param string $backUrl
-     * @param Response $response A response instance
-     *
-     * @return Response A Response instance
-     */
-    protected function renderWithBackUrl($view, array $parameters, $backUrl, Response $response = null)
-    {
-        $parameters['show_dashboard'] = $this->getShowDashboard($backUrl);
-        $parameters['back_url'] = $backUrl;
-
-        return parent::render($view, $parameters, $response);
-    }
-
-    /**
-     * @param string|null $backUrl
-     *
-     * @return bool
-     */
-    private function getShowDashboard($backUrl = null)
-    {
-        $request = $this->get('request_stack')->getCurrentRequest();
-
-        return $this->getUser() instanceof FrontendUser && 'dashboard_index' !== $request->get('_route') && '/dashboard/' !== $backUrl;
-    }
-
-    /**
-     * Renders a view.
-     *
-     * @param string $view The view name
-     * @param array $parameters An array of parameters to pass to the view
-     * @param string $justification why no backbutton
-     * @param Response $response A response instance
-     *
-     * @return Response A Response instance
-     */
-    protected function renderNoBackUrl($view, array $parameters, $justification, Response $response = null)
-    {
-        $parameters['show_dashboard'] = $this->getShowDashboard();
-
-        return parent::render($view, $parameters, $response);
-    }
 }
