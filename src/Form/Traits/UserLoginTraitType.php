@@ -17,11 +17,13 @@ use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressTraitType extends BaseAbstractType
+class UserLoginTraitType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -29,12 +31,8 @@ class AddressTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('street', TextType::class);
-        $builder->add('streetNr', TextType::class);
-        $builder->add('addressLine', TextType::class);
-        $builder->add('postalCode', NumberType::class);
-        $builder->add('city', TextType::class);
-        $builder->add('country', CountryType::class);
+        $builder->add('username', TextType::class);
+        $builder->add('password', PasswordType::class);
     }
 
     /**
@@ -43,7 +41,7 @@ class AddressTraitType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_address'
+            'translation_domain' => 'trait_user'
         ]);
     }
 }

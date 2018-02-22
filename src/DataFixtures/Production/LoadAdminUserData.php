@@ -32,7 +32,7 @@ class LoadAdminUserData extends BaseFixture
         $user->setPlainPassword('jhagfgawefgajwef');
         $user->persistNewPassword();
         $user->setRegistrationDate(new \DateTime());
-        $user->setIsActive(true);
+        $user->setIsEnabled(true);
         $manager->persist($user);
         $manager->flush();
 

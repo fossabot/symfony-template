@@ -12,6 +12,8 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
+use App\Controller\Base\BaseFormController;
+use App\Controller\Frontend\Base\BaseFrontendController;
 use App\Entity\FrontendUser;
 use App\Model\ContactRequest\ContactRequest;
 use App\Service\EmailService;
@@ -22,29 +24,34 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class StaticController extends BaseController
+class StaticController extends BaseFormController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="static_index")
      *
      * @return Response
      */
     public function indexAction()
     {
-        $arr = [];
         if ($this->getUser() instanceof FrontendUser) {
-            return $this->redirectToRoute('dashboard_index');
+            return $this->redirectToRoute('frontend_static_index');
         }
 
-        return $this->renderNoBackUrl(
-            'static/index.html.twig',
-            $arr,
-            'this is the homepage'
-        );
+        return $this->render('static/index.html.twig');
     }
 
     /**
-     * @Route("/about", name="about")
+     * @Route("/register", name="static_register")
+     *
+     * @return FormInterface|Response
+     */
+    public function registerCheckAction()
+    {
+        return $this->render('access/register_check.html.twig');
+    }
+
+    /**
+     * @Route("/about", name="static_about")
      *
      * @return Response
      */
@@ -55,7 +62,7 @@ class StaticController extends BaseController
     }
 
     /**
-     * @Route("/contact", name="contact")
+     * @Route("/contact", name="static_contact")
      *
      * @param Request $request
      * @param TranslatorInterface $translator
@@ -82,9 +89,8 @@ class StaticController extends BaseController
         $form = $this->handleForm(
             $this->createForm(ContactRequestType::class),
             $request,
-            $translator,
             new ContactRequest(),
-            function ($form, $contactRequest) use ($translator, $emailService) {
+            function ($form) use ($translator, $emailService) {
                 /* @var FormInterface $form */
                 /* @var ContactRequest $contactRequest */
                 $emailService->sendTextEmail(

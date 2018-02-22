@@ -40,31 +40,23 @@ trait CommunicationTrait
     private $webpage;
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param $defaultArray
-     *
-     * @return FormBuilderInterface
+     * @return mixed
      */
-    public static function getCommunicationBuilder(FormBuilderInterface $builder, $defaultArray = [])
+    public function getPhone()
     {
-        $builderArray = ['translation_domain' => 'trait_communication'] + $defaultArray;
-        $builder->add(
-            'phone',
-            TextType::class,
-            $builderArray + ['required' => false]
-        );
-        $builder->add(
-            'email',
-            EmailType::class,
-            $builderArray
-        );
-        $builder->add(
-            'webpage',
-            UrlType::class,
-            $builderArray + ['required' => false]
-        );
+        return $this->phone;
+    }
 
-        return $builder;
+    /**
+     * @param mixed $phone
+     *
+     * @return static
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 
     /**
@@ -88,23 +80,19 @@ trait CommunicationTrait
     }
 
     /**
-     * @param CommunicationTrait $source
+     * @return mixed
      */
-    public function setCommunicationFieldsFrom($source)
+    public function getWebpage()
     {
-        $this->setPhone($source->getPhone());
-        $this->setEmail($source->getEmail());
-        $this->setWebpage($source->getWebpage());
+        return $this->webpage;
     }
 
     /**
-     * get the communication identifier.
-     *
-     * @return string
+     * @param mixed $webpage
      */
-    protected function getCommunicationIdentifier()
+    public function setWebpage($webpage)
     {
-        return implode(',', $this->getCommunicationLines());
+        $this->webpage = $webpage;
     }
 
     /**
@@ -126,41 +114,5 @@ trait CommunicationTrait
         }
 
         return $res;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param mixed $phone
-     *
-     * @return static
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWebpage()
-    {
-        return $this->webpage;
-    }
-
-    /**
-     * @param mixed $webpage
-     */
-    public function setWebpage($webpage)
-    {
-        $this->webpage = $webpage;
     }
 }

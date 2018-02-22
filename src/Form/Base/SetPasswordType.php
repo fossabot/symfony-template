@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Generic;
+namespace App\Form\Base;
 
 use App\Entity\Traits\UserTrait;
 use App\Enum\AutoFormType;

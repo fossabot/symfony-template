@@ -12,7 +12,7 @@
 namespace App\Form\BackendUser;
 
 use App\Entity\BackendUser;
-use App\Form\Generic\LoginType;
+use App\Form\Base\LoginType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AdminUserLoginType extends LoginType

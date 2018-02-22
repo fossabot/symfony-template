@@ -23,7 +23,7 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class BaseAccessController extends BaseFormController
+class BaseLoginController extends BaseFormController
 {
     public static function getSubscribedServices()
     {

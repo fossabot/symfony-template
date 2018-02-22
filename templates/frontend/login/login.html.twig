@@ -1,0 +1,17 @@
+{% extends "single_content_base.html.twig" %}
+
+{% block title %}{{ "login.title"|trans }}{% endblock %}
+{% block description %}{{ "login.description"|trans }}{% endblock %}
+
+{% trans_default_domain "access" %}
+
+{% block content %}
+    {{ form_start(login_form, {"action" : path("frontend_login_check")}) }}
+    {{ form_errors(login_form) }}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    {{ form_end(login_form) }}
+    <p>
+        <a href="{{ path("access_reset") }}">{{ "login.forgot_password_action"|trans }}</a><br/>
+        <a href="{{ path("access_register_check") }}">{{ "login.register_action"|trans }}</a>
+    </p>
+{% endblock %}

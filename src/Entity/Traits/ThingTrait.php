@@ -35,59 +35,6 @@ trait ThingTrait
     private $description;
 
     /**
-     * @param FormBuilderInterface $builder
-     * @param $defaultArray
-     *
-     * @return FormBuilderInterface
-     */
-    public static function getThingBuilder(FormBuilderInterface $builder, $defaultArray = [])
-    {
-        $builderArray = ['translation_domain' => NamingHelper::traitToTranslationDomain(ThingTrait::class)] + $defaultArray;
-        $builder->add(
-            'name',
-            TextType::class,
-            $builderArray
-        );
-        $builder->add(
-            'description',
-            TextType::class,
-            $builderArray + ['required' => false]
-        );
-
-        return $builder;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return static
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * returns the name of this thing.
-     *
-     * @return string
-     */
-    public function getThingIdentifier()
-    {
-        return $this->getName();
-    }
-
-    /**
      * @return string
      */
     public function getName()
@@ -108,11 +55,22 @@ trait ThingTrait
     }
 
     /**
-     * @param ThingTrait $source
+     * @return string
      */
-    public function setThingFieldsFrom($source)
+    public function getDescription()
     {
-        $this->setName($source->getName());
-        $this->setDescription($source->getDescription());
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return static
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

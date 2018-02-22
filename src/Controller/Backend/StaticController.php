@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller;
+namespace App\Controller\Backend;
 
 use App\Controller\Base\BaseController;
 use App\Entity\FrontendUser;
@@ -31,6 +31,6 @@ class StaticController extends BaseController
      */
     public function indexAction()
     {
-        return $this->render('backend/index.html.twig');
+        return $this->render('backend/static/index.html.twig');
     }
 }

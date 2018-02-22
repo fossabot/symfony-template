@@ -11,7 +11,7 @@
 
 namespace App\Form\BackendUser;
 
-use App\Form\Generic\RemoveThingType;
+use App\Form\Base\RemoveThingType;
 
 class RemoveAdminUser extends RemoveThingType
 {

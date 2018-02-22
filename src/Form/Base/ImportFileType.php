@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Generic;
+namespace App\Form\Base;
 
 use App\Form\BaseAbstractType;
 use App\Model\Form\ImportFileModel;

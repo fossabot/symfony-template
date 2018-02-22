@@ -38,6 +38,32 @@ class BaseFormController extends BaseDoctrineController
     }
 
     /**
+     * @param FormInterface $form
+     * @param Request $request
+     * @param $entity
+     * @param callable $onValidCallable with $form ass an argument
+     *
+     * @return FormInterface
+     */
+    protected function handleForm(FormInterface $form, Request $request, $entity, $onValidCallable)
+    {
+        $form->setData($entity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                return $onValidCallable($form);
+            }
+
+            $this->displayError(
+                $this->getTranslator()->trans('error.form_validation_failed', [], 'common_form')
+            );
+        }
+
+        return $form;
+    }
+
+    /**
      * creates a "create" form
      *
      * @param Request $request
@@ -105,21 +131,21 @@ class BaseFormController extends BaseDoctrineController
     /**
      * persist the entity to the database if submitted successfully
      * @param Request $request
-     * @param BaseEntity $baseEntity
+     * @param BaseEntity $entity
      * @param string $formType namespace of form type to use
      * @param string $buttonLabel label of button
      * @param string $successText content of text displayed if successful
      * @return FormInterface the constructed form
      */
-    private function handlePersistFormInternal(Request $request, BaseEntity $baseEntity, $formType, $buttonLabel, $successText)
+    private function handlePersistFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText)
     {
-        $myOnSuccessCallable = function ($form, $entity) use ($successText) {
+        $myOnSuccessCallable = function ($form) use ($entity, $successText) {
             $this->fastSave($entity);
             $this->displaySuccess($successText);
             return $form;
         };
 
-        $myForm = $this->handleForm($this->createForm($formType), $request, $baseEntity, $myOnSuccessCallable);
+        $myForm = $this->handleForm($this->createForm($formType), $request, $entity, $myOnSuccessCallable);
         $myForm->add("submit", SubmitType::class, ["label" => $buttonLabel]);
         return $myForm;
     }
@@ -136,7 +162,7 @@ class BaseFormController extends BaseDoctrineController
      */
     private function handleRemoveFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText, $beforeRemoveCallable)
     {
-        $myOnSuccessCallable = function ($form, $entity) use ($entity, $successText, $beforeRemoveCallable) {
+        $myOnSuccessCallable = function ($form) use ($entity, $successText, $beforeRemoveCallable) {
             $manager = $this->getDoctrine()->getManager();
 
             if ($beforeRemoveCallable($entity, $manager)) {
@@ -167,31 +193,5 @@ class BaseFormController extends BaseDoctrineController
         $className = mb_substr($classWithNamespace, mb_strrpos($classWithNamespace, '\\') + 1);
 
         return 'App\\Form\\' . $className . '\\' . $prepend . $className . 'Type';
-    }
-
-    /**
-     * @param FormInterface $form
-     * @param Request $request
-     * @param $entity
-     * @param callable $onValidCallable with $form ass an argument
-     *
-     * @return FormInterface
-     */
-    protected function handleForm(FormInterface $form, Request $request, $entity, $onValidCallable)
-    {
-        $form->setData($entity);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                return $onValidCallable($form);
-            }
-
-            $this->displayError(
-                $this->getTranslator()->trans('error.form_validation_failed', [], 'common_form')
-            );
-        }
-
-        return $form;
     }
 }

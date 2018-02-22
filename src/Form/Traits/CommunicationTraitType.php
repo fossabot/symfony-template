@@ -12,9 +12,10 @@
 namespace App\Form\Traits;
 
 use App\Entity\FrontendUser;
-use App\Entity\Traits\UserTrait;
-use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +27,9 @@ class CommunicationTraitType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
+        $builder->add("phone", TextType::class);
+        $builder->add("email", EmailType::class);
+        $builder->add("webpage", UrlType::class);
     }
 
     /**
@@ -35,7 +38,7 @@ class CommunicationTraitType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => FrontendUser::class,
+            'translation_domain' => 'trait_communication'
         ]);
     }
 }

@@ -12,11 +12,19 @@
 namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
-use App\Form\Generic\LoginType;
+use App\Form\BaseAbstractType;
+use App\Form\Traits\UserLoginTraitType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FrontendUserLoginType extends LoginType
+class LoginType extends BaseAbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder->add(FormType::class, UserLoginTraitType::class);
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

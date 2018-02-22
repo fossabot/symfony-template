@@ -22,20 +22,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class FrontendUserRepository extends EntityRepository
 {
-    /**
-     * @param FrontendUser $user
-     *
-     * @return FrontendUser|null
-     */
-    public function tryLogin(FrontendUser $user)
-    {
-        /* @var FrontendUser $tryUser */
-        $tryUser = $this->findOneBy(['email' => $user->getEmail()]);
-        $tryUser->setPlainPassword($user->getPlainPassword());
-        if ($tryUser->tryLoginWithPlainPassword()) {
-            return $tryUser;
-        }
 
-        return null;
-    }
 }
