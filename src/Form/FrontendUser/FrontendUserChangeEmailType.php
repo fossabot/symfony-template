@@ -12,7 +12,7 @@
 namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use App\Helper\NamingHelper;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -30,7 +30,7 @@ class FrontendUserChangeEmailType extends BaseAbstractType
             $builderArray
         );
 
-        $this->addSubmit($builder, SubmitButtonType::APPLY);
+        $this->addSubmit($builder, AutoFormType::APPLY);
     }
 
     public function configureOptions(OptionsResolver $resolver)

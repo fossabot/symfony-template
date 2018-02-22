@@ -39,23 +39,6 @@ class NamingHelper
     }
 
     /**
-     * produces App\Form\MyClassName\MyClassNameType from Famoser\Class\MyClassName
-     * if $isRemoveType is true then the remove form is returned.
-     *
-     * @param string $classWithNamespace
-     * @param bool $isRemoveType
-     *
-     * @return string
-     */
-    public static function classToCrudFormType($classWithNamespace, $isRemoveType)
-    {
-        $prepend = $isRemoveType ? 'Remove' : '';
-        $className = mb_substr($classWithNamespace, mb_strrpos($classWithNamespace, '\\') + 1);
-
-        return 'App\\Form\\' . $className . '\\' . $prepend . $className . 'Type';
-    }
-
-    /**
      * produces my_constant from MY_CONSTANT.
      *
      * @param $constant

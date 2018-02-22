@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * CustomerUser.
  *
  * @ORM\Table
- * @ORM\Entity(repositoryClass="App\Repository\AdminUserRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\BackendUserRepository")
  */
 class BackendUser extends BaseEntity implements UserInterface, EquatableInterface
 {

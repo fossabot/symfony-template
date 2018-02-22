@@ -13,7 +13,7 @@ namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +28,7 @@ class FrontendUserRegisterType extends BaseAbstractType
     {
         $builder = UserTrait::getRegisterUserBuilder($builder, [], $options['agb']);
 
-        $this->addSubmit($builder, SubmitButtonType::REGISTER);
+        $this->addSubmit($builder, AutoFormType::REGISTER);
     }
 
     /**

@@ -12,7 +12,7 @@
 namespace App\Form\Generic;
 
 use App\Entity\Traits\UserTrait;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -21,6 +21,6 @@ abstract class SetPasswordType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder = UserTrait::getSetPasswordBuilder($builder);
-        $this->addSubmit($builder, SubmitButtonType::SET_PASSWORD);
+        $this->addSubmit($builder, AutoFormType::SET_PASSWORD);
     }
 }

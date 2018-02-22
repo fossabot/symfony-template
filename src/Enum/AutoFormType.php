@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Security\Voter\Base;
+namespace App\Enum;
 
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use App\Enum\Base\BaseEnum;
 
-abstract class CrudVoter extends Voter
+class AutoFormType extends BaseEnum
 {
     const CREATE = 1;
-    const VIEW = 2;
-    const EDIT = 3;
-    const REMOVE = 4;
+    const EDIT = 2;
+    const REMOVE = 3;
 }

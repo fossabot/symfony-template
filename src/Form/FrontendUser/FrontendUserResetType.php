@@ -13,7 +13,7 @@ namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -27,7 +27,7 @@ class FrontendUserResetType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder = UserTrait::getResetUserBuilder($builder);
-        $this->addSubmit($builder, SubmitButtonType::RESET_PASSWORD);
+        $this->addSubmit($builder, AutoFormType::RESET_PASSWORD);
     }
 
     /**

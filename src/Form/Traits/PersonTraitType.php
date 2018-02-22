@@ -13,7 +13,7 @@ namespace App\Form\Traits;
 
 use App\Entity\FrontendUser;
 use App\Entity\Traits\UserTrait;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

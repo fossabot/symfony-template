@@ -14,7 +14,7 @@ namespace App\Controller;
 use App\Controller\Base\BaseFrontendController;
 use App\Entity\FrontendUser;
 use App\Entity\Member;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\FrontendUser\FrontendUserChangeEmailType;
 use App\Form\FrontendUser\FrontendUserSetPasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -66,7 +66,7 @@ class PersonController extends BaseFrontendController
             $request,
             $translator,
             $person,
-            SubmitButtonType::EDIT,
+            AutoFormType::EDIT,
             function ($form, $entity) {
                 return $this->redirectToRoute('person_view');
             }

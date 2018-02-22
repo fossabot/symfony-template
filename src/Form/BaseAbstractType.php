@@ -11,7 +11,7 @@
 
 namespace App\Form;
 
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Helper\NamingHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -28,7 +28,7 @@ class BaseAbstractType extends AbstractType
      */
     protected function addSubmit(FormBuilderInterface $builder, $submitType)
     {
-        $builder->add('submit', SubmitType::class, SubmitButtonType::getTranslationForBuilder($submitType));
+        $builder->add('submit', SubmitType::class, AutoFormType::getTranslationForBuilder($submitType));
     }
 
     /**

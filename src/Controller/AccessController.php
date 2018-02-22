@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseAccessController;
 use App\Entity\FrontendUser;
-use App\Enum\SubmitButtonType;
+use App\Enum\AutoFormType;
 use App\Form\FrontendUser\FrontendUserLoginType;
 use App\Form\FrontendUser\FrontendUserResetType;
 use App\Form\FrontendUser\FrontendUserSetPasswordType;
@@ -45,7 +45,7 @@ class AccessController extends BaseAccessController
             return $this->redirectToRoute('dashboard_index');
         }
 
-        $form = $this->getLoginForm($request, $translator, new FrontendUser(), $this->createForm(FrontendUserLoginType::class));
+        $form = $this->handleLoginForm($request, $translator, new FrontendUser(), $this->createForm(FrontendUserLoginType::class));
         if ($form instanceof RedirectResponse) {
             return $form;
         }
@@ -84,7 +84,7 @@ class AccessController extends BaseAccessController
     public function registerAction(Request $request, TranslatorInterface $translator, EmailService $emailService)
     {
         $registerForm = $this->handleFormDoctrinePersist(
-            $this->createCrudForm(PersonType::class, SubmitButtonType::REGISTER),
+            $this->createCrudForm(PersonType::class, AutoFormType::REGISTER),
             $request,
             $translator,
             new Person(),
