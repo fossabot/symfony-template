@@ -9,10 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\BackendUser;
+namespace App\Form\Base;
 
-use App\Form\Base\RemoveThingType;
+use Symfony\Component\Form\AbstractType;
 
-class RemoveAdminUser extends RemoveThingType
+class BaseAbstractType extends AbstractType
 {
+
 }

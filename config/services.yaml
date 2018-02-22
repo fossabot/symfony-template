@@ -29,22 +29,15 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\Frontend:
+    App\Controller\Frontend\:
         resource: '../src/Controller/Frontend'
         tags: ['controller.service_arguments']
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\Backend:
+    App\Controller\Backend\:
         resource: '../src/Controller/Backend'
         tags: ['controller.service_arguments']
 
-    App\Security\AdminUserProvider:
-        arguments: ["@doctrine", "%env(ADMIN_EMAIL)%"]
-
     App\Service\EmailService:
-        arguments: ["@mailer", "@doctrine", "@logger","@twig","%env(CONTACT_EMAIL)%"]
-
-    App\Listener\DoctrinePreFlushListener:
-        tags:
-            - { name: doctrine.event_listener, event: preFlush }
+        arguments: ["@mailer", "@doctrine", "@logger","@twig","%env(MAILER_SENDER)%"]

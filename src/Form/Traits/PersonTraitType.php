@@ -11,10 +11,7 @@
 
 namespace App\Form\Traits;
 
-use App\Entity\FrontendUser;
-use App\Entity\Traits\UserTrait;
-use App\Enum\AutoFormType;
-use App\Form\BaseAbstractType;
+use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

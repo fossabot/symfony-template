@@ -11,7 +11,6 @@
 
 namespace App\Repository;
 
-use App\Entity\FrontendUser;
 use Doctrine\ORM\EntityRepository;
 
 /**

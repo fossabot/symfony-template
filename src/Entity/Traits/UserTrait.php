@@ -12,12 +12,7 @@
 namespace App\Entity\Traits;
 
 use App\Helper\HashHelper;
-use App\Helper\NamingHelper;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 trait UserTrait
@@ -291,6 +286,18 @@ trait UserTrait
     }
 
     /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        $this->setPlainPassword(null);
+        $this->setRepeatPlainPassword(null);
+    }
+
+    /**
      * check if two users are equal.
      *
      * @param UserTrait $user
@@ -321,7 +328,6 @@ trait UserTrait
         return $this->email;
     }
 
-
     /**
      * hashes the plainPassword and erases credentials.
      */
@@ -331,7 +337,6 @@ trait UserTrait
         $this->setPlainPassword(null);
         $this->setRepeatPlainPassword(null);
     }
-
 
     /**
      * creates a new reset hash

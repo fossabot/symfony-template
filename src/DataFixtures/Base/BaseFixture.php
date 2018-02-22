@@ -25,29 +25,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    /**
-     * @var EventGenerationService
-     */
-    private $eventGenerationService;
     /* @var ContainerInterface $container */
     private $container;
-
-    public function __construct(EventGenerationService $eventGenerationService)
-    {
-        $this->eventGenerationService = $eventGenerationService;
-    }
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-    }
-
-    /**
-     * @return \App\Service\EventGenerationService
-     */
-    protected function getEventGenerationService()
-    {
-        return $this->eventGenerationService;
     }
 
     /**
@@ -109,9 +92,6 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
         $faker = $this->getFaker();
         $obj->setGivenName($faker->firstName);
         $obj->setFamilyName($faker->lastName);
-        if ($faker->numberBetween(0, 10) > 5) {
-            $obj->setJobTitle($faker->jobTitle);
-        }
     }
 
     /**

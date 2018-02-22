@@ -29,29 +29,6 @@ class BackendUser extends BaseEntity implements UserInterface, EquatableInterfac
     use IdTrait;
     use UserTrait;
 
-    /**
-     * @var array
-     */
-    private $roles = ['ROLE_MODERATOR'];
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * create new user; with required fields filled out.
-     *
-     * @return static
-     */
-    public static function createNewAdminUser()
-    {
-        $user = new static();
-
-        return $user;
-    }
 
     /**
      * returns a string representation of this entity.
@@ -61,14 +38,6 @@ class BackendUser extends BaseEntity implements UserInterface, EquatableInterfac
     public function getFullIdentifier()
     {
         return $this->getUserIdentifier();
-    }
-
-    /**
-     * @param string $role
-     */
-    public function addRole($role)
-    {
-        $this->roles[] = $role;
     }
 
     /**
@@ -89,7 +58,7 @@ class BackendUser extends BaseEntity implements UserInterface, EquatableInterfac
      */
     public function getRoles()
     {
-        return $this->roles;
+        return ["ROLE_BACKEND_USER"];
     }
 
     /**

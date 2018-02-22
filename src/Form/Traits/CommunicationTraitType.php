@@ -11,8 +11,7 @@
 
 namespace App\Form\Traits;
 
-use App\Entity\FrontendUser;
-use App\Form\BaseAbstractType;
+use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;

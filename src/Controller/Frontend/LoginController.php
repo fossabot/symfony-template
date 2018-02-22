@@ -10,6 +10,8 @@ namespace App\Controller\Frontend;
 
 
 use App\Controller\Base\BaseLoginController;
+use App\Form\FrontendUser\LoginType;
+use App\Form\Traits\UserLoginTraitType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +27,9 @@ class LoginController extends BaseLoginController
      */
     public function indexAction()
     {
-        return $this->render('frontend/login/login.html.twig');
+        $form = $this->createForm(UserLoginTraitType::class);
+        $arr["form"] = $form->createView();
+        return $this->render('frontend/login/login.html.twig', $arr);
     }
 
     /**

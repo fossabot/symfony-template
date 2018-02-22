@@ -30,7 +30,7 @@ class LoadAdminUserData extends BaseFixture
         $user = new BackendUser();
         $user->setEmail('info@nodika.ch');
         $user->setPlainPassword('jhagfgawefgajwef');
-        $user->persistNewPassword();
+        $user->setPassword();
         $user->setRegistrationDate(new \DateTime());
         $user->setIsEnabled(true);
         $manager->persist($user);

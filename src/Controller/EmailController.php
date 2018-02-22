@@ -12,16 +12,11 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
-use App\Entity\FrontendUser;
 use App\Form\ContactRequest\ContactRequestType;
 use App\Model\ContactRequest\ContactRequest;
-use App\Service\EmailService;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/email")

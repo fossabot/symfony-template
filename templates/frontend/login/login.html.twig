@@ -5,13 +5,15 @@
 
 {% trans_default_domain "access" %}
 
-{% block content %}
-    {{ form_start(login_form, {"action" : path("frontend_login_check")}) }}
-    {{ form_errors(login_form) }}
+{% block single_content %}
+    {{ form_start(form, {"action" : path("frontend_login_check")}) }}
+    {{ form_errors(form) }}
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    {{ form_end(login_form) }}
+    {{ form_end(form) }}
+    {#
     <p>
         <a href="{{ path("access_reset") }}">{{ "login.forgot_password_action"|trans }}</a><br/>
         <a href="{{ path("access_register_check") }}">{{ "login.register_action"|trans }}</a>
     </p>
+    #}
 {% endblock %}
