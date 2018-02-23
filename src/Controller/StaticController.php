@@ -13,8 +13,10 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\FrontendUser;
-use App\Model\ContactRequest\ContactRequest;
+use App\Form\Model\ContactRequest\ContactRequestType;
+use App\Model\ContactRequest;
 use App\Service\EmailService;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,8 +44,10 @@ class StaticController extends BaseFormController
      *
      * @return FormInterface|Response
      */
-    public function registerCheckAction()
+    public function registerCheckAction(Request $request)
     {
+        dump($request->getBaseUrl());
+        dump($request->getRequestUri());
         return $this->render('static/register_check.html.twig');
     }
 
@@ -70,27 +74,15 @@ class StaticController extends BaseFormController
     public function contactAction(Request $request, TranslatorInterface $translator, EmailService $emailService)
     {
         $arr = [];
-        $this->processContactForm($request, $translator, $emailService, $arr);
-
-        return $this->render('static/contact.html.twig', $arr);
-    }
-
-    /**
-     * @param Request $request
-     * @param TranslatorInterface $translator
-     * @param EmailService $emailService
-     * @param $arr
-     */
-    private function processContactForm(Request $request, TranslatorInterface $translator, EmailService $emailService, &$arr)
-    {
+        $contactRequest = new ContactRequest();
         $form = $this->handleForm(
-            $this->createForm(ContactRequestType::class),
+            $this->createForm(ContactRequestType::class, $contactRequest)
+                ->add("form.send", SubmitType::class),
             $request,
-            function ($form) use ($translator, $emailService) {
+            function () use ($contactRequest, $translator, $emailService) {
                 /* @var FormInterface $form */
-                /* @var ContactRequest $contactRequest */
                 $emailService->sendTextEmail(
-                    $this->getParameter('CONTACT_EMAIL'),
+                    $this->getParameter('SUPPORT_EMAIL'),
                     'Kontaktanfrage von nodika',
                     "Sie haben eine Kontaktanfrage auf nodika erhalten: \n" .
                     "\nEmail: " . $contactRequest->getEmail() .
@@ -98,11 +90,13 @@ class StaticController extends BaseFormController
                     "\nNachricht: " . $contactRequest->getMessage()
                 );
 
-                $this->displaySuccess($translator->trans('contact.thanks_for_contact_form', [], 'static'));
+                $this->displaySuccess($translator->trans('contact.success.email_sent', [], 'static'));
 
                 return $this->createForm(ContactRequestType::class);
             }
         );
-        $arr['contact_form'] = $form->createView();
+        $arr['form'] = $form->createView();
+
+        return $this->render('static/contact.html.twig', $arr);
     }
 }

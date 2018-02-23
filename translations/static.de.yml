@@ -29,18 +29,13 @@ about:
     reason_1_description: 'Beschreibung dieses Grundes'
 
 contact:
-  header: 'Noch Fragen?'
-  header_description: >
-    Kontaktieren Sie uns!
-  address: >+
-    Florian Moser
-    Ochsengasse 66
-    4123 Allschwil
-  contact_form_header: 'Kontaktformular'
-  thanks_for_contact_form: 'Vielen Dank für die Kontaktaufnahme. Wir melden uns.'
+  title: 'Noch Fragen?'
+  description: 'Nehmen sie mit uns Kontakt auf'
+  success:
+    email_sent: 'Vielen Dank für die Kontaktaufnahme. Wir melden uns.'
 
 #register/check page
-register_check:
+register:
   title: "Registrieren"
   description: "Möchten Sie einen neuen Account erstellen?"
   help_frontend_user: "Beschreibung frontend."
