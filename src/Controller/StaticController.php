@@ -46,8 +46,6 @@ class StaticController extends BaseFormController
      */
     public function registerCheckAction(Request $request)
     {
-        dump($request->getBaseUrl());
-        dump($request->getRequestUri());
         return $this->render('static/register_check.html.twig');
     }
 
