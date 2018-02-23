@@ -12,7 +12,6 @@ namespace App\Form\FrontendUser;
 use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;
-use App\Form\Traits\Communication\EmailType;
 use App\Form\Traits\User\RegisterType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

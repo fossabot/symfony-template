@@ -12,7 +12,6 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Base\BaseFixture;
-use App\Entity\BackendUser;
 use Doctrine\Common\DataFixtures\BadMethodCallException;
 use Doctrine\Common\Persistence\ObjectManager;
 

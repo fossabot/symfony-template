@@ -15,6 +15,7 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -24,7 +25,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table
  * @ORM\Entity(repositoryClass="App\Repository\BackendUserRepository")
  */
-class BackendUser extends BaseEntity implements UserInterface, EquatableInterface
+class BackendUser extends BaseEntity implements AdvancedUserInterface, EquatableInterface
 {
     use IdTrait;
     use UserTrait;
