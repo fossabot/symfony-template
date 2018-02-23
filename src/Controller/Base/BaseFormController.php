@@ -40,14 +40,12 @@ class BaseFormController extends BaseDoctrineController
     /**
      * @param FormInterface $form
      * @param Request $request
-     * @param $entity
      * @param callable $onValidCallable with $form ass an argument
      *
      * @return FormInterface
      */
-    protected function handleForm(FormInterface $form, Request $request, $entity, $onValidCallable)
+    protected function handleForm(FormInterface $form, Request $request, $onValidCallable)
     {
-        $form->setData($entity);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -145,7 +143,7 @@ class BaseFormController extends BaseDoctrineController
             return $form;
         };
 
-        $myForm = $this->handleForm($this->createForm($formType), $request, $entity, $myOnSuccessCallable);
+        $myForm = $this->handleForm($this->createForm($formType, $entity), $request, $myOnSuccessCallable);
         $myForm->add("submit", SubmitType::class, ["label" => $buttonLabel]);
         return $myForm;
     }
@@ -174,7 +172,7 @@ class BaseFormController extends BaseDoctrineController
             return $form;
         };
 
-        $myForm = $this->handleForm($this->createForm($formType), $request, $entity, $myOnSuccessCallable);
+        $myForm = $this->handleForm($this->createForm($formType, $entity), $request, $myOnSuccessCallable);
         $myForm->add("submit", SubmitType::class, ["label" => $buttonLabel]);
         return $myForm;
     }

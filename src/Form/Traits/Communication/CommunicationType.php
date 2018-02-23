@@ -26,9 +26,9 @@ class CommunicationType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("phone", TextType::class);
+        $builder->add("phone", TextType::class, ["required" => false]);
         $builder->add("email", EmailType::class);
-        $builder->add("webpage", UrlType::class);
+        $builder->add("webpage", UrlType::class, ["required" => false]);
     }
 
     /**

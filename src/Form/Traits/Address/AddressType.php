@@ -28,7 +28,7 @@ class AddressType extends BaseAbstractType
     {
         $builder->add('street', TextType::class);
         $builder->add('streetNr', TextType::class);
-        $builder->add('addressLine', TextType::class);
+        $builder->add('addressLine', TextType::class, ["required" => false]);
         $builder->add('postalCode', NumberType::class);
         $builder->add('city', TextType::class);
         $builder->add('country', CountryType::class);

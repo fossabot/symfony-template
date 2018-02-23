@@ -25,8 +25,8 @@ class FrontendUserType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', RegisterType::class);
-        $builder->add('address', AddressType::class);
+        $builder->add('user', RegisterType::class, ["label" => false, "inherit_data" => true]);
+        $builder->add('address', AddressType::class, ["inherit_data" => true]);
     }
 
     /**

@@ -55,7 +55,7 @@ class BaseController extends AbstractController
      */
     protected function displayError($message, $link = null)
     {
-        return $this->displayFlash('error', $message, $link);
+        return $this->displayFlash('danger', $message, $link);
     }
 
     /**

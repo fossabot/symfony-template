@@ -63,22 +63,25 @@
     </nav>
 </header>
 
-<content>
+<div class="content-wrapper">
     {# flashbag #}
-    {% for type, messages in app.session.flashbag.all() %}
-        <div class="container index-container {{ type }}-color message-container">
+    <div class="container">
+        {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
-                <p class="no-margin">
+                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
                     {{ message|raw }}
-                </p>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             {% endfor %}
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
     {% block content %}
 
     {% endblock %}
-</content>
+</div>
 
 <footer class="footer">
     <div class="container footer-container">

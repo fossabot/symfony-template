@@ -5,6 +5,8 @@ trait:
 form:
   login: Login
   register: Registrieren
+  recover: Zurücksetzen
+  set_password: Passwort setzen
 
 #properties
 username: 'Benutzername'
@@ -12,3 +14,4 @@ password: 'Passwort'
 plain_password: 'Passwort'
 repeat_plain_password: 'Passwort wiederholen'
 email: 'Email'
+agb_accepted: 'AGB akzeptieren'

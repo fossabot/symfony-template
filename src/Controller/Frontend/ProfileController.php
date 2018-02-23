@@ -11,6 +11,7 @@
 
 namespace App\Controller\Frontend;
 
+use App\Controller\Frontend\Base\BaseBackendController;
 use App\Controller\Frontend\Base\BaseFrontendController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;

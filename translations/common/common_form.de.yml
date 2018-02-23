@@ -14,3 +14,6 @@ submit:
   register: 'registrieren'
   confirm: 'bestätigen'
   apply: 'anwenden'
+
+not_required: '(freiwillig)'
+required: '*'

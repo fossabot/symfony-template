@@ -31,7 +31,7 @@ class StaticController extends BaseFormController
     public function indexAction()
     {
         if ($this->getUser() instanceof FrontendUser) {
-            return $this->redirectToRoute('frontend_static_index');
+            return $this->redirectToRoute('frontend_dashboard_index');
         }
 
         return $this->render('static/index.html.twig');
@@ -44,7 +44,7 @@ class StaticController extends BaseFormController
      */
     public function registerCheckAction()
     {
-        return $this->render('access/register_check.html.twig');
+        return $this->render('static/register_check.html.twig');
     }
 
     /**
@@ -86,7 +86,6 @@ class StaticController extends BaseFormController
         $form = $this->handleForm(
             $this->createForm(ContactRequestType::class),
             $request,
-            new ContactRequest(),
             function ($form) use ($translator, $emailService) {
                 /* @var FormInterface $form */
                 /* @var ContactRequest $contactRequest */

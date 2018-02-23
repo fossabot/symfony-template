@@ -26,7 +26,7 @@ class ThingType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class);
-        $builder->add('description', TextareaType::class);
+        $builder->add('description', TextareaType::class, ["required" => false]);
     }
 
     /**

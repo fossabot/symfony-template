@@ -36,7 +36,9 @@ security:
                 # field names for the username and password fields
                 username_parameter: login[email]
                 password_parameter: login[password]
-            logout:       true
+            logout:
+              path: frontend_login_logout
+              target: /
             anonymous:    true
             logout_on_user_change: true
             remember_me:
@@ -57,7 +59,9 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 username_parameter: login[email]
                 password_parameter: login[password]
-            logout:       true
+            logout:
+              path: backend_login_logout
+              target: /
             anonymous:    true
             logout_on_user_change: true
 

@@ -17,6 +17,7 @@ use App\Form\Traits\User\SetPasswordType;
 use App\Service\EmailService;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,18 +52,18 @@ class LoginController extends BaseLoginController
      */
     public function recoverAction(Request $request, EmailServiceInterface $emailService, TranslatorInterface $translator)
     {
-        $user = new FrontendUser();
-
         $form = $this->handleForm(
-            $this->createForm(RecoverType::class),
+            $this->createForm(RecoverType::class)
+                ->add("form.recover", SubmitType::class),
             $request,
-            $user,
-            function ($form) use ($user, $emailService, $translator) {
+            function ($form) use ($emailService, $translator) {
+                /* @var FormInterface $form */
+
                 //display success
                 $this->displaySuccess($translator->trans("recover.success.email_sent", [], "frontend_login"));
 
                 //check if user exists
-                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(["email" => $user->getEmail()]);
+                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(["email" => $form->getData()["email"]]);
                 if (null === $exitingUser) {
                     return $form;
                 }
@@ -77,14 +78,12 @@ class LoginController extends BaseLoginController
                     $translator->trans("recover.email.reset_password.subject", [], "frontend_login"),
                     $translator->trans("recover.email.reset_password.message", [], "frontend_login"),
                     $translator->trans("recover.email.reset_password.action_text", [], "frontend_login"),
-                    $this->generateUrl("frontend_login_reset", ["resetHash" => $exitingUser->getResetHash(), UrlGeneratorInterface::ABSOLUTE_URL])
+                    $this->generateUrl("frontend_login_reset", ["resetHash" => $exitingUser->getResetHash()], UrlGeneratorInterface::ABSOLUTE_URL)
                 );
 
                 return $form;
             }
         );
-
-        $form->add("form.recover", SubmitType::class);
         $arr["form"] = $form->createView();
         return $this->render('frontend/login/recover.html.twig', $arr);
     }
@@ -101,14 +100,14 @@ class LoginController extends BaseLoginController
     {
         $user = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(["resetHash" => $resetHash]);
         if (null === $user) {
-            $this->displayError($translator->trans("reset.error.invalid_hash",[], "frontend_login"));
+            $this->displayError($translator->trans("reset.error.invalid_hash", [], "frontend_login"));
             return $this->redirectToRoute("frontend_login_invalid", ["resetHash" => $resetHash]);
         }
 
         $form = $this->handleForm(
-            $this->createForm(SetPasswordType::class),
+            $this->createForm(SetPasswordType::class, $user, ["data_class" => FrontendUser::class])
+                ->add("form.set_password", SubmitType::class),
             $request,
-            $user,
             function ($form) use ($user, $translator, $request) {
                 //check for valid password
                 if ($user->getPlainPassword() != $user->getRepeatPlainPassword()) {
@@ -117,7 +116,7 @@ class LoginController extends BaseLoginController
                 }
 
                 //display success
-                $this->displaySuccess($translator->trans("reset.success.password_set",[], "frontend_login"));
+                $this->displaySuccess($translator->trans("reset.success.password_set", [], "frontend_login"));
 
                 //set new password & save
                 $user->setPassword();
@@ -134,8 +133,6 @@ class LoginController extends BaseLoginController
             return $form;
         }
 
-
-        $form->add("form.set_password", SubmitType::class);
         $arr["form"] = $form->createView();
         return $this->render('frontend/login/reset.html.twig', $arr);
     }

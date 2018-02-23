@@ -15,5 +15,4 @@ use Symfony\Component\Form\AbstractType;
 
 class BaseAbstractType extends AbstractType
 {
-
 }

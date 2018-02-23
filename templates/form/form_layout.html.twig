@@ -28,3 +28,14 @@
     {%- endif -%}
     {{- parent() -}}
 {%- endblock form_label -%}
+
+
+{#
+{%- if label is not empty -%}
+    {%- if required -%}
+        {%- set label = label ~ "*" -%}
+    {%- else -%}
+        {%- set label = label ~ " (freiwllig)" -%}
+    {%- endif -%}
+{%- endif -%}
+#}
