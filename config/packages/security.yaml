@@ -24,8 +24,8 @@ security:
             security: false
 
         # main firewall for logged in users
-        main:
-            pattern:   ^/
+        frontend:
+            pattern:   ^/frontend
             anonymous: ~
             provider: frontend_user_provider
             form_login:
@@ -49,11 +49,11 @@ security:
 
         #backend firewall for admins
         backend:
-            pattern:   ^/
+            pattern:   ^/backend
             anonymous: ~
             provider: backend_user_provider
             form_login:
-                login_path: backend_login
+                login_path: backend_login_index
                 check_path: backend_login_check
                 default_target_path: backend_dashboard_index
                 csrf_token_generator: security.csrf.token_manager
@@ -66,11 +66,5 @@ security:
             logout_on_user_change: true
 
     access_control:
-        #all pages are public
+        #all pages are public, specify roles inside the controller
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
-        #frontend firewall
-        - { path: ^/, role: ROLE_FRONTEND_USER }
-
-        #backend firewall
-        - { path: ^/, role: ROLE_BACKEND_USER }
