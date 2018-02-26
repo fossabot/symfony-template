@@ -7,55 +7,6 @@
   -o-transition: $transition
   transition: $transition
 
-
-// Draw an arrow pointing up. Can be called on element or pseudoelement.
-// @include arrowUp(#fff, 2rem, 1rem)
-@mixin arrowUp($color, $arrowWidth, $arrowHeight) 
-  content: ''
-  display: block
-  width: 0
-  height: 0
-  border-bottom: $arrowHeight solid $color
-  border-left: ($arrowWidth/2) solid transparent
-  border-right: ($arrowWidth/2) solid transparent
-
-
-// Draw an arrow pointing right. Can be called on element or pseudoelement.
-// @include arrowRight(#fff, 1rem, 2rem)
-@mixin arrowRight($color, $arrowWidth, $arrowHeight) 
-  content: ''
-  display: block
-  width: 0
-  height: 0
-  border-left: $arrowWidth solid $color
-  border-top: ($arrowHeight/2) solid transparent
-  border-bottom: ($arrowHeight/2) solid transparent
-
-
-// Draw an arrow pointing down. Can be called on element or pseudoelement.
-// @include arrowDown(#fff, 2rem, 1rem)
-@mixin arrowDown($color, $arrowWidth, $arrowHeight) 
-  content: ''
-  display: block
-  width: 0
-  height: 0
-  border-top: $arrowHeight solid $color
-  border-left: ($arrowWidth/2) solid transparent
-  border-right: ($arrowWidth/2) solid transparent
-
-
-// Draw an arrow pointing left. Can be called on element or pseudoelement.
-// @include arrowRight(#fff, 1rem, 2rem)
-@mixin arrowLeft($color, $arrowWidth, $arrowHeight) 
-  content: ''
-  display: block
-  width: 0
-  height: 0
-  border-right: $arrowWidth solid $color
-  border-top: ($arrowHeight/2) solid transparent
-  border-bottom: ($arrowHeight/2) solid transparent
-
-
 // Box shadow with value declarations
 // @include drop-shadow(X-OFFSET, Y-OFFSET, BLUR, ALPHA)
 @mixin drop-shadow($x-axis: 0, $y-axis: 1px, $blur: 2px, $alpha: 0.1) 
@@ -84,12 +35,3 @@
   -webkit-box-shadow: $shadow
   -moz-box-shadow: $shadow
   box-shadow: $shadow
-
-
-@mixin font-face($family, $path, $svg, $weight: normal, $style: normal)
-  @font-face
-    font-family: $family
-    src: url('#{$path}.eot')
-    src: url('#{$path}.eot?#iefix') format('embedded-opentype'), url('#{$path}.woff') format('woff'), url('#{$path}.ttf') format('truetype'), url('#{$path}.svg##{$svg}') format('svg')
-    font-weight: $weight
-    font-style: $style
