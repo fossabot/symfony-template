@@ -12,7 +12,6 @@
 namespace App\Controller\Frontend;
 
 use App\Controller\Base\BaseController;
-use App\Model\ContactRequest\ContactRequest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

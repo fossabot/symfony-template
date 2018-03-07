@@ -44,7 +44,7 @@ class StaticController extends BaseFormController
      *
      * @return FormInterface|Response
      */
-    public function registerCheckAction(Request $request)
+    public function registerCheckAction()
     {
         return $this->render('static/register_check.html.twig');
     }

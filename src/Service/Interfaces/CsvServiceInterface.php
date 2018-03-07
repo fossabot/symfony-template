@@ -11,6 +11,8 @@
 
 namespace App\Service\Interfaces;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 interface CsvServiceInterface
 {
 

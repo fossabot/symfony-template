@@ -11,8 +11,6 @@
 
 namespace App\Enum\Base;
 
-use App\Framework\TranslatableObject;
-use App\Helper\NamingHelper;
 use ReflectionClass;
 
 abstract class BaseEnum

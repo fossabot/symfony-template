@@ -30,17 +30,6 @@ class BackendUser extends BaseEntity implements AdvancedUserInterface, Equatable
     use IdTrait;
     use UserTrait;
 
-
-    /**
-     * returns a string representation of this entity.
-     *
-     * @return string
-     */
-    public function getFullIdentifier()
-    {
-        return $this->getUserIdentifier();
-    }
-
     /**
      * Returns the roles granted to the user.
      *

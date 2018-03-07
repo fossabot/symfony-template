@@ -92,16 +92,6 @@ class Setting extends BaseEntity
     }
 
     /**
-     * returns a string representation of this entity.
-     *
-     * @return string
-     */
-    public function getFullIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    /**
      * Get key.
      *
      * @return string

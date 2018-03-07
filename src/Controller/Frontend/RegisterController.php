@@ -12,8 +12,6 @@ namespace App\Controller\Frontend;
 use App\Controller\Base\BaseLoginController;
 use App\Entity\FrontendUser;
 use App\Form\FrontendUser\FrontendUserType;
-use App\Form\FrontendUser\LoginType;
-use App\Form\Traits\UserLoginTraitType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

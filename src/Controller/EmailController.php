@@ -12,8 +12,6 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
-use App\Form\ContactRequest\ContactRequestType;
-use App\Model\ContactRequest\ContactRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;

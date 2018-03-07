@@ -13,7 +13,6 @@ namespace App\Service;
 
 use App\Entity\Email;
 use App\Enum\EmailType;
-use App\Helper\HashHelper;
 use App\Service\Interfaces\EmailServiceInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;

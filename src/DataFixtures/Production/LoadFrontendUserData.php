@@ -13,7 +13,6 @@ namespace App\DataFixtures\Production;
 
 use App\DataFixtures\Base\BaseFixture;
 use App\Entity\FrontendUser;
-use Doctrine\Common\DataFixtures\BadMethodCallException;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadFrontendUserData extends BaseFixture

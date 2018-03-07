@@ -15,6 +15,8 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\UserTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Migrations\Configuration\ArrayConfiguration;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -31,11 +33,18 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     use AddressTrait;
 
     /**
+     * @var Setting[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Setting", mappedBy="frontendUser")
+     */
+    private $settings;
+
+    /**
      * constructor.
      */
     public function __construct()
     {
-
+        $this->settings = new ArrayCollection();
     }
 
     /**
@@ -72,5 +81,13 @@ class FrontendUser extends BaseEntity implements AdvancedUserInterface, Equatabl
     public function getFullIdentifier()
     {
         return $this->getUserIdentifier();
+    }
+
+    /**
+     * @return Setting[]|ArrayCollection
+     */
+    public function getSettings()
+    {
+        return $this->settings;
     }
 }
