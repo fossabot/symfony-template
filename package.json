@@ -8,7 +8,7 @@
   "dependencies": {
     "bootstrap": "^4",
     "open-iconic": "^1",
-    "open-sans-fontface": "^1.4.0",
-    "popper.js": "^1.12.9"
+    "open-sans-fontface": "^1.4",
+    "popper.js": "^1.12"
   }
 }
