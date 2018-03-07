@@ -8,7 +8,6 @@
 
 namespace App\Form\FrontendUser;
 
-
 use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\Address\AddressType;

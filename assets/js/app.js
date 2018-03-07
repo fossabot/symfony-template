@@ -2,6 +2,8 @@ require("../sass/app.sass");
 var $ = require("jquery");
 var bootstrap = require("bootstrap");
 
+window.$ = $;
+
 //prevent double submit & give user instant feedback
 var disableFormButton = function () {
     var $form = $(this);

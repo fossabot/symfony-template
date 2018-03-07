@@ -8,7 +8,6 @@
 
 namespace App\Controller\Frontend;
 
-
 use App\Controller\Base\BaseLoginController;
 use App\Entity\FrontendUser;
 use App\Form\FrontendUser\FrontendUserType;

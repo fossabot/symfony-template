@@ -8,7 +8,6 @@
 
 namespace App\Controller\Backend;
 
-
 use App\Controller\Base\BaseLoginController;
 use App\Entity\BackendUser;
 use App\Form\Traits\User\LoginType;

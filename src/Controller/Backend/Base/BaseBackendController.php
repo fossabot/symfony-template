@@ -23,5 +23,4 @@ class BaseBackendController extends BaseFormController
     {
         return parent::getUser();
     }
-
 }
