@@ -28,7 +28,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ContactController extends BaseFormController
 {
     /**
-     * @Route("/", name="contact_index")
+     * @Route("", name="contact")
      *
      * @param Request $request
      * @param TranslatorInterface $translator

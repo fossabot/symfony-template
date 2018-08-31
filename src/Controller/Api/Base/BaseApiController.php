@@ -45,7 +45,7 @@ class BaseApiController extends BaseDoctrineController
             $this->getSerializer()->serialize(
                 $frontendUsers,
                 'json',
-                ['attributes' => ['id', 'email']]
+                ['attributes' => ['id', 'fullName', 'email']]
             ),
             200,
             [],

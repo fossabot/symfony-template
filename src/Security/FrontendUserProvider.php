@@ -53,7 +53,7 @@ class FrontendUserProvider extends BaseUserProvider
             );
         }
 
-        if (!$user->isEnabled()) {
+        if (!$user->getCanLogin()) {
             throw new CustomUserMessageAuthenticationException('login of user ' . $user->getEmail() . ' is disabled');
         }
 

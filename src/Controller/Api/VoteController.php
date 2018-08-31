@@ -28,7 +28,7 @@ class VoteController extends BaseApiController
      */
     public function dataAction()
     {
-        $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findAll();
+        $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(["deletedAt" => null]);
         return $this->returnFrontendUsers($frontendUsers);
     }
 }

@@ -12,12 +12,9 @@
 namespace App\DataFixtures\Base;
 
 use App\Entity\Traits\AddressTrait;
-use App\Entity\Traits\CommunicationTrait;
 use App\Entity\Traits\PersonTrait;
-use App\Entity\Traits\StartEndTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\UserTrait;
-use App\Service\EventGenerationService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,27 +24,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    /** @var EventGenerationService */
-    private $eventGenerationService;
     /* @var ContainerInterface $container */
     private $container;
-
-    public function __construct(EventGenerationService $eventGenerationService)
-    {
-        $this->eventGenerationService = $eventGenerationService;
-    }
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
-    }
-
-    /**
-     * @return \App\Service\EventGenerationService
-     */
-    protected function getEventGenerationService()
-    {
-        return $this->eventGenerationService;
     }
 
     /**
@@ -88,18 +70,6 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     }
 
     /**
-     * @param CommunicationTrait $obj
-     */
-    protected function fillCommunication($obj)
-    {
-        $faker = $this->getFaker();
-        $obj->setEmail($faker->email);
-        if ($faker->numberBetween(0, 10) > 5) {
-            $obj->setPhone($faker->phoneNumber);
-        }
-    }
-
-    /**
      * @param ThingTrait $obj
      */
     protected function fillThing($obj)
@@ -122,19 +92,6 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
         if ($faker->numberBetween(0, 10) > 5) {
             $obj->setJobTitle($faker->jobTitle);
         }
-    }
-
-    /**
-     * @param StartEndTrait $obj
-     */
-    protected function fillStartEnd($obj)
-    {
-        $faker = $this->getFaker();
-        $end = $faker->dateTime;
-        $start = $faker->dateTime($end);
-
-        $obj->setStartDateTime($start);
-        $obj->setEndDateTime($end);
     }
 
     /**

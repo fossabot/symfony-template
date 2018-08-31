@@ -29,6 +29,10 @@ class IndexController extends BaseDoctrineController
         return $this->render('index/index.html.twig');
     }
 
+    /**
+     * no breadcrumbs on the index
+     * @return \App\Model\Breadcrumb[]|array
+     */
     protected function getIndexBreadcrumbs()
     {
         return [];

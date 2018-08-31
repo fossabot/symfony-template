@@ -1,11 +1,15 @@
-date_time:
-  Mon: "Mo"
-  Tue: "Di"
-  Wed: "Mi"
-  Thu: "Do"
-  Fri: "Fr"
-  Sat: "Sa"
-  Sun: "So"
+time:
+  format:
+    date_time: 'd.m.Y H:i' # gives a date with the time of the form 2.12.2012 16:20
+    date: 'd.m.Y' # gives a date of the form 2.12.2012
+  weekdays:
+    Mon: "Mo"
+    Tue: "Di"
+    Wed: "Mi"
+    Thu: "Do"
+    Fri: "Fr"
+    Sat: "Sa"
+    Sun: "So"
 
 form:
   error:
@@ -22,3 +26,8 @@ form:
     required: '*'
     not_required: '(freiwillig)'
     confirm_consequences: 'Ich verstehe, das ich dies nicht rückgängig machen kann.'
+
+email:
+  wrongly_displayed: "Wird diese Mail nicht richtig dargestellt? Klicken Sie hier."
+  is_generated: "Bitte antworten Sie nicht auf dieses automatisch generierte E-Mail."
+  questions: "Administrator kontaktieren"

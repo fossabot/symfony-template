@@ -25,7 +25,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 class AccountController extends BaseUserController
 {
     /**
-     * @Route("/", name="account_index")
+     * @Route("", name="account")
      *
      * @param Request $request
      * @param TranslatorInterface $translator
@@ -58,7 +58,7 @@ class AccountController extends BaseUserController
         //edit account form
         $form = $this->handleForm(
             $this->createForm(EditAccountType::class, $user)
-                ->add('form.save', SubmitType::class, ['translation_domain' => 'common_form', 'label' => 'submit.update']),
+                ->add('form.save', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'form.submit_buttons.update']),
             $request,
             function ($form) use ($user, $translator) {
                 $this->displaySuccess($translator->trans('form.successful.updated', [], 'framework'));

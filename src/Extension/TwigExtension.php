@@ -12,7 +12,6 @@
 namespace App\Extension;
 
 use App\Enum\BooleanType;
-use App\Helper\DateTimeFormatter;
 use DateTime;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig_Extension;
@@ -63,7 +62,8 @@ class TwigExtension extends Twig_Extension
     public function dateFormatFilter($date)
     {
         if ($date instanceof \DateTime) {
-            return $this->prependDayName($date) . ', ' . $date->format(DateTimeFormatter::DATE_FORMAT);
+            $dateFormat = $this->translator->trans("time.format.date", [], "framework");
+            return $this->prependDayName($date) . ', ' . $date->format($dateFormat);
         }
 
         return '-';
@@ -77,7 +77,8 @@ class TwigExtension extends Twig_Extension
     public function dateTimeFilter($date)
     {
         if ($date instanceof \DateTime) {
-            return $this->prependDayName($date) . ', ' . $date->format(DateTimeFormatter::DATE_TIME_FORMAT);
+            $dateTimeFormat = $this->translator->trans("time.format.date_time", [], "framework");
+            return $this->prependDayName($date) . ', ' . $date->format($dateTimeFormat);
         }
 
         return '-';
@@ -92,7 +93,7 @@ class TwigExtension extends Twig_Extension
      */
     private function prependDayName(DateTime $date)
     {
-        return $this->translator->trans('date_time.' . $date->format('D'), [], 'framework');
+        return $this->translator->trans('time.weekdays.' . $date->format('D'), [], 'framework');
     }
 
     /**

@@ -23,7 +23,7 @@ abstract class RemoveThingType extends BaseAbstractType
         $builder->add(
             'confirmConsequences',
             CheckboxType::class,
-            ['mapped' => false, 'label' => 'fields.confirm_consequences']
+            ['mapped' => false, 'label' => 'form.fields.confirm_consequences']
         );
     }
 
@@ -33,7 +33,7 @@ abstract class RemoveThingType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'common_form',
+            'translation_domain' => 'framework',
         ]);
     }
 }

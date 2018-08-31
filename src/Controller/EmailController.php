@@ -28,7 +28,7 @@ class EmailController extends BaseController
      *
      * @return Response
      */
-    public function emailAction($identifier)
+    public function viewAction($identifier)
     {
         $email = $this->getDoctrine()->getRepository('App:Email')->findOneBy(['identifier' => $identifier]);
         if (null === $email) {

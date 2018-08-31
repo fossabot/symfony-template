@@ -19,7 +19,6 @@ use App\Form\FrontendUser\RecoverType;
 use App\Model\Breadcrumb;
 use App\Service\Interfaces\EmailServiceInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,7 +26,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -36,16 +34,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class LoginController extends BaseUserController
 {
-    public static function getSubscribedServices()
-    {
-        return parent::getSubscribedServices() +
-            [
-                'event_dispatcher' => EventDispatcherInterface::class,
-                'security.token_storage' => TokenStorageInterface::class,
-                'translator' => TranslatorInterface::class,
-            ];
-    }
-
     /**
      * @param Request $request
      *
@@ -77,7 +65,7 @@ class LoginController extends BaseUserController
                 return $lastUsername;
             }
 
-            if (!$lastUser->isEnabled()) {
+            if (!$lastUser->getCanLogin()) {
                 $this->displayError($this->getTranslator()->trans('login.error.login_disabled', [], 'login'));
 
                 return $lastUsername;
@@ -108,9 +96,8 @@ class LoginController extends BaseUserController
         // create login form
         $form = $this->createForm(LoginType::class, $user);
         $form->add('form.login', SubmitType::class, ['translation_domain' => 'login', 'label' => 'login.do_login']);
-        $arr['form'] = $form->createView();
 
-        return $this->render('login/login.html.twig', $arr);
+        return $this->render('login/login.html.twig', ["form" => $form->createView()]);
     }
 
     /**
@@ -143,7 +130,7 @@ class LoginController extends BaseUserController
                 }
 
                 //do not send password reset link if not enabled
-                if (!$exitingUser->isEnabled()) {
+                if (!$exitingUser->getCanLogin()) {
                     $logger->warning('tried to reset password for disabled account ' . $form->getData()['email']);
 
                     return $form;
@@ -153,7 +140,7 @@ class LoginController extends BaseUserController
                 $exitingUser->setResetHash();
                 $this->fastSave($exitingUser);
 
-                //sent according email
+                //send recover email
                 $emailService->sendActionEmail(
                     $exitingUser->getEmail(),
                     $translator->trans('recover.email.reset_password.subject', [], 'login'),
@@ -166,9 +153,8 @@ class LoginController extends BaseUserController
                 return $form;
             }
         );
-        $arr['form'] = $form->createView();
 
-        return $this->render('login/recover.html.twig', $arr);
+        return $this->render('login/recover.html.twig', ["form" => $form->createView()]);
     }
 
     /**
@@ -190,7 +176,7 @@ class LoginController extends BaseUserController
         }
 
         //ensure user can indeed login
-        if (!$user->isEnabled()) {
+        if (!$user->getCanLogin()) {
             $this->displayError($translator->trans('login.error.login_disabled', [], 'login'));
 
             return $this->redirectToRoute('login');
@@ -198,7 +184,7 @@ class LoginController extends BaseUserController
 
         $form = $this->handleForm(
             $this->createForm(ChangePasswordType::class, $user, ['data_class' => FrontendUser::class])
-                ->add('form.set_password', SubmitType::class, ['translation_domain' => 'login', 'label' => 'reset.set_password']),
+                ->add('form.set_password', SubmitType::class, ['translation_domain' => 'login', 'label' => 'reset.title']),
             $request,
             function ($form) use ($user, $translator, $request) {
                 //set valid password if possible
@@ -222,9 +208,7 @@ class LoginController extends BaseUserController
             return $form;
         }
 
-        $arr['form'] = $form->createView();
-
-        return $this->render('login/reset.html.twig', $arr);
+        return $this->render('login/reset.html.twig', ["form" => $form->createView()]);
     }
 
     /**

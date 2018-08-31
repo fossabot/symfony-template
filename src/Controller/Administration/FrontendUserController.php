@@ -38,7 +38,7 @@ class FrontendUserController extends BaseController
     {
         $setting = $this->getDoctrine()->getRepository(Setting::class)->findSingle();
         $users = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(["deletedAt" => null], ["familyName" => "ASC", "givenName" => "ASC"], $setting->getMaxShowUsersInList());
-        return $this->render('administration/frontend_users.html.twig');
+        return $this->render('administration/frontend_users.html.twig', ["frontend_users" => $users]);
     }
 
     /**
@@ -160,7 +160,7 @@ class FrontendUserController extends BaseController
     }
 
     /**
-     * @Route("/{frontendUser}/toggle_login_enabled", name="administration_frontend_user_toggle_login_enabled")
+     * @Route("/{frontendUser}/toggle_can_login", name="administration_frontend_user_toggle_can_login")
      *
      * @param FrontendUser $frontendUser
      *
@@ -168,7 +168,7 @@ class FrontendUserController extends BaseController
      */
     public function toggleLoginEnabled(FrontendUser $frontendUser)
     {
-        $frontendUser->setIsEnabled(!$frontendUser->isEnabled());
+        $frontendUser->setCanLogin(!$frontendUser->getCanLogin());
         $this->fastSave($frontendUser);
 
         return $this->redirectToRoute('administration_frontend_users');
@@ -184,7 +184,7 @@ class FrontendUserController extends BaseController
         return array_merge(parent::getIndexBreadcrumbs(), [
             new Breadcrumb(
                 $this->generateUrl('administration_frontend_users'),
-                $this->getTranslator()->trans('frontend_users.title', [], 'administration')
+                $this->getTranslator()->trans('index.title', [], 'administration_frontend_user')
             ),
         ]);
     }

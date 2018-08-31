@@ -44,7 +44,7 @@ trait UserTrait
      *
      * @ORM\Column(type="boolean")
      */
-    private $isEnabled = true;
+    private $canLogin = true;
 
     /**
      * @var \DateTime
@@ -87,13 +87,13 @@ trait UserTrait
     }
 
     /**
-     * @param bool $isEnabled
+     * @param bool $canLogin
      *
      * @return static
      */
-    public function setIsEnabled($isEnabled)
+    public function setCanLogin($canLogin)
     {
-        $this->isEnabled = $isEnabled;
+        $this->canLogin = $canLogin;
 
         return $this;
     }
@@ -167,9 +167,9 @@ trait UserTrait
      *
      * @return bool
      */
-    public function canLogin()
+    public function getCanLogin()
     {
-        return $this->isEnabled;
+        return $this->canLogin;
     }
 
     /**
@@ -268,9 +268,9 @@ trait UserTrait
      *
      * @see DisabledException
      */
-    public function isEnabled()
+    public function canLogin()
     {
-        return $this->isEnabled;
+        return $this->canLogin;
     }
 
     /**

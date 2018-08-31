@@ -11,8 +11,8 @@ login:
 recover:
   title: 'Passwort zurücksetzen'
   description: 'Setzen Sie Ihr Passwort mit Ihrer E-Mail zurück'
-  send_email: 'E-Mail zusenden'
   use_login_email: 'Geben Sie die E-Mail ein, die Sie beim Login verwenden. Wir senden Ihnen dann einen Link zu, mit dem Sie das Passwort neu setzen können.'
+  send_email: 'E-Mail zusenden'
   success:
     email_sent: 'Wir haben Ihnen soeben eine E-Mail versandt.'
   danger:
@@ -26,7 +26,6 @@ recover:
 reset:
   title: 'Passwort setzen'
   description: 'Setzen Sie Ihr neues Passwort'
-  set_password: 'Passwort setzen'
   success:
     password_set: 'Neues Passwort erfolgreich gesetzt. Willkommen zurück :)'
   error:

@@ -36,7 +36,7 @@ class RegisterController extends BaseUserController
      *
      * @return Response
      */
-    public function requestAction(Request $request, EmailService $emailService, TranslatorInterface $translator)
+    public function registerAction(Request $request, EmailService $emailService, TranslatorInterface $translator)
     {
         $user = new FrontendUser();
         $form = $this->handleForm(
@@ -72,8 +72,6 @@ class RegisterController extends BaseUserController
             return $form;
         }
 
-        $arr['form'] = $form->createView();
-
-        return $this->render('register/register.html.twig', $arr);
+        return $this->render('register/register.html.twig', ["form" => $form->createView()]);
     }
 }
