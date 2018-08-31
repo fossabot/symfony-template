@@ -11,50 +11,62 @@
 
 namespace App\Controller;
 
+use App\Controller\Base\BaseUserController;
 use App\Entity\FrontendUser;
 use App\Form\FrontendUser\RegisterType;
-use App\Service\InviteEmailService;
+use App\Service\EmailService;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/register")
  */
-class RegisterController extends LoginController
+class RegisterController extends BaseUserController
 {
     /**
-     * @Route("/register", name="login_request")
+     * @Route("", name="register")
      *
-     * @param Request             $request
-     * @param InviteEmailService  $emailService
+     * @param Request $request
+     * @param EmailService $emailService
      * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function requestAction(Request $request, InviteEmailService $emailService, TranslatorInterface $translator)
+    public function requestAction(Request $request, EmailService $emailService, TranslatorInterface $translator)
     {
+        $user = new FrontendUser();
         $form = $this->handleForm(
-            $this->createForm(RegisterType::class)
+            $this->createForm(RegisterType::class, $user)
                 ->add('form.register', SubmitType::class, ['translation_domain' => 'register', 'label' => 'register.title']),
             $request,
-            function ($form) use ($emailService, $translator) {
+            function ($form) use ($request, $emailService, $translator, $user) {
                 /* @var FormInterface $form */
 
-                //check if user exists
+                //set valid password if possible
+                if (!$this->setNewPasswordIfValid($user)) {
+                    return $form;
+                }
+
+                //check if email already exists
                 $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
-                    $this->displayError($translator->trans('request.error.email_already_taken', [], 'register'));
+                    $this->displayError($translator->trans('index.error.email_already_in_use', [], 'register'));
 
                     return $form;
                 }
 
+                //save user & show success message
+                $this->fastSave($user);
+                $this->displaySuccess($translator->trans("index.success.registered", [], "register"));
+                $this->loginUser($request, $user);
 
-
-                return $form;
+                //redirect to start page
+                return $this->redirectToRoute("index_index");
             }
         );
         if ($form instanceof Response) {
@@ -64,21 +76,5 @@ class RegisterController extends LoginController
         $arr['form'] = $form->createView();
 
         return $this->render('register/register.html.twig', $arr);
-    }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     */
-    public function loginCheck()
-    {
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
-    }
-
-    /**
-     * @Route("/logout", name="login_logout")
-     */
-    public function logoutAction()
-    {
-        throw new \RuntimeException('You must configure the logout path to be handled by the firewall using form_login.logout in your security firewall configuration.');
     }
 }

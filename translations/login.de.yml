@@ -28,8 +28,6 @@ reset:
   description: 'Setzen Sie Ihr neues Passwort'
   set_password: 'Passwort setzen'
   success:
-    password_set: 'Neues Passwort erfolgreich gesetzt'
+    password_set: 'Neues Passwort erfolgreich gesetzt. Willkommen zurück :)'
   error:
     invalid_hash: "Dieser Link ist nicht mehr gültig. Beachten Sie, das jeder Link nur einmal benutzt werden kann."
-    passwords_do_not_match: 'Die Passwörter stimmen nicht überein'
-    password_needs_at_least_8_chars: 'Das Passwort ist zu kurz. Bitte verwenden Sie mindestens 8 Stellen.'

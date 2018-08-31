@@ -6,3 +6,7 @@ plain_password: 'Passwort'
 repeat_plain_password: 'Passwort wiederholen'
 email: 'Email'
 is_enabled: 'Login erlaubt'
+
+error:
+  passwords_do_not_match: 'Die Passwörter stimmen nicht überein'
+  password_needs_at_least_8_chars: 'Das Passwort ist zu kurz. Bitte verwenden Sie mindestens 8 Stellen.'

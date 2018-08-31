@@ -11,7 +11,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Base\BaseFormController;
+use App\Controller\Base\BaseUserController;
 use App\Entity\FrontendUser;
 use App\Form\FrontendUser\ChangePasswordType;
 use App\Form\FrontendUser\LoginType;
@@ -28,16 +28,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/login")
  */
-class LoginController extends BaseFormController
+class LoginController extends BaseUserController
 {
     public static function getSubscribedServices()
     {
@@ -47,20 +44,6 @@ class LoginController extends BaseFormController
                 'security.token_storage' => TokenStorageInterface::class,
                 'translator' => TranslatorInterface::class,
             ];
-    }
-
-    /**
-     * @param Request       $request
-     * @param UserInterface $user
-     */
-    protected function loginUser(Request $request, UserInterface $user)
-    {
-        //login programmatically
-        $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
-        $this->get('security.token_storage')->setToken($token);
-
-        $event = new InteractiveLoginEvent($request, $token);
-        $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
     }
 
     /**
@@ -133,9 +116,9 @@ class LoginController extends BaseFormController
     /**
      * @Route("/recover", name="login_recover")
      *
-     * @param Request               $request
+     * @param Request $request
      * @param EmailServiceInterface $emailService
-     * @param TranslatorInterface   $translator
+     * @param TranslatorInterface $translator
      *
      * @return Response
      */
@@ -154,14 +137,14 @@ class LoginController extends BaseFormController
                 //check if user exists
                 $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
-                    $logger->warning('tried to reset passwort for non-existant email '.$form->getData()['email']);
+                    $logger->warning('tried to reset passwort for non-existant email ' . $form->getData()['email']);
 
                     return $form;
                 }
 
                 //do not send password reset link if not enabled
                 if (!$exitingUser->isEnabled()) {
-                    $logger->warning('tried to reset password for disabled account '.$form->getData()['email']);
+                    $logger->warning('tried to reset password for disabled account ' . $form->getData()['email']);
 
                     return $form;
                 }
@@ -178,7 +161,7 @@ class LoginController extends BaseFormController
                     $translator->trans('recover.email.reset_password.action_text', [], 'login'),
                     $this->generateUrl('login_reset', ['resetHash' => $exitingUser->getResetHash()], UrlGeneratorInterface::ABSOLUTE_URL)
                 );
-                $logger->warning('reset email sent to '.$exitingUser->getEmail());
+                $logger->warning('reset email sent to ' . $exitingUser->getEmail());
 
                 return $form;
             }
@@ -201,14 +184,14 @@ class LoginController extends BaseFormController
     {
         $user = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['resetHash' => $resetHash]);
         if (null === $user) {
-            $this->displayError($translator->trans('reset.danger.invalid_hash', [], 'login'));
+            $this->displayError($translator->trans('reset.error.invalid_hash', [], 'login'));
 
             return new RedirectResponse($this->generateUrl('login'));
         }
 
         //ensure user can indeed login
         if (!$user->isEnabled()) {
-            $this->displayError($translator->trans('login.danger.login_disabled', [], 'login'));
+            $this->displayError($translator->trans('login.error.login_disabled', [], 'login'));
 
             return $this->redirectToRoute('login');
         }
@@ -218,20 +201,15 @@ class LoginController extends BaseFormController
                 ->add('form.set_password', SubmitType::class, ['translation_domain' => 'login', 'label' => 'reset.set_password']),
             $request,
             function ($form) use ($user, $translator, $request) {
-                //check for valid password
-                if ($user->getPlainPassword() !== $user->getRepeatPlainPassword()) {
-                    $this->displayError($translator->trans('reset.danger.passwords_do_not_match', [], 'login'));
-
+                //set valid password if possible
+                if (!$this->setNewPasswordIfValid($user)) {
                     return $form;
                 }
 
-                //display success
-                $this->displaySuccess($translator->trans('reset.success.password_set', [], 'login'));
-
-                //set new password & save
-                $user->setPassword();
+                //set new reset hash & display success message
                 $user->setResetHash();
                 $this->fastSave($user);
+                $this->displaySuccess($this->getTranslator()->trans('reset.success.password_set', [], 'login'));
 
                 //login user & redirect
                 $this->loginUser($request, $user);
@@ -247,64 +225,6 @@ class LoginController extends BaseFormController
         $arr['form'] = $form->createView();
 
         return $this->render('login/reset.html.twig', $arr);
-    }
-
-    /**
-     * @Route("/register", name="login_request")
-     *
-     * @param Request             $request
-     * @param InviteEmailService  $emailService
-     * @param TranslatorInterface $translator
-     *
-     * @return Response
-     */
-    public function requestAction(Request $request, InviteEmailService $emailService, TranslatorInterface $translator)
-    {
-        $form = $this->handleForm(
-            $this->createForm(RequestInviteType::class)
-                ->add('form.request_invite', SubmitType::class, ['translation_domain' => 'login', 'label' => 'request.request_invite']),
-            $request,
-            function ($form) use ($emailService, $translator) {
-                /* @var FormInterface $form */
-
-                //check if user exists
-                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
-                if (null === $exitingUser) {
-                    $this->displayError($translator->trans('request.error.email_not_found', [], 'login'));
-
-                    return $form;
-                }
-
-                //check that invitation was sent
-                if (null !== $exitingUser->getLastLoginDate()) {
-                    $this->displayError($translator->trans('request.error.already_successfully_logged_in', [], 'login'));
-
-                    return $this->redirectToRoute('login');
-                }
-
-                //check that invitation was sent
-                if (null === $exitingUser->getInvitationIdentifier()) {
-                    $this->displayError($translator->trans('request.error.no_invitation_sent_yet', [], 'login'));
-
-                    return $form;
-                }
-
-                //resend invite email
-                $emailService->inviteDoctor($exitingUser);
-
-                //display success
-                $this->displaySuccess($translator->trans('request.success.email_sent', [], 'login'));
-
-                return $form;
-            }
-        );
-        if ($form instanceof Response) {
-            return $form;
-        }
-
-        $arr['form'] = $form->createView();
-
-        return $this->render('login/request.html.twig', $arr);
     }
 
     /**
