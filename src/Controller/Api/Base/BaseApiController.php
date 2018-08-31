@@ -12,8 +12,6 @@
 namespace App\Controller\Api\Base;
 
 use App\Controller\Base\BaseDoctrineController;
-use App\Entity\Clinic;
-use App\Entity\Event;
 use App\Entity\FrontendUser;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;

@@ -9,23 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\User;
+namespace App\Form\ContactRequest;
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use App\Model\ContactRequest;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ChangePasswordType extends BaseAbstractType
+class ContactRequestType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('plainPassword', PasswordType::class);
-        $builder->add('repeatPlainPassword', PasswordType::class);
+        $builder->add('name', TextType::class);
+        $builder->add('email', EmailType::class);
+        $builder->add('message', TextareaType::class);
     }
 
     /**
@@ -34,7 +38,8 @@ class ChangePasswordType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
+            'translation_domain' => 'model_contact_request',
+            'data_class' => ContactRequest::class,
         ]);
     }
 }

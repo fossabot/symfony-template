@@ -20,8 +20,8 @@ class BaseFormController extends BaseDoctrineController
 {
     /**
      * @param FormInterface $form
-     * @param Request       $request
-     * @param callable      $onValidCallable with $form ass an argument
+     * @param Request $request
+     * @param callable $onValidCallable with $form ass an argument
      *
      * @return FormInterface
      */
@@ -45,8 +45,8 @@ class BaseFormController extends BaseDoctrineController
     /**
      * creates a "create" form.
      *
-     * @param Request       $request
-     * @param BaseEntity    $defaultEntity
+     * @param Request $request
+     * @param BaseEntity $defaultEntity
      * @param callable|null $beforeCreateCallable
      *
      * @return FormInterface
@@ -90,8 +90,8 @@ class BaseFormController extends BaseDoctrineController
     /**
      * creates a "create" form.
      *
-     * @param Request       $request
-     * @param BaseEntity    $entity
+     * @param Request $request
+     * @param BaseEntity $entity
      * @param callable|null $beforeUpdateCallable
      *
      * @return FormInterface
@@ -128,9 +128,9 @@ class BaseFormController extends BaseDoctrineController
     /**
      * creates a "create" form.
      *
-     * @param Request    $request
+     * @param Request $request
      * @param BaseEntity $entity
-     * @param callable   $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
+     * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
      *
      * @return FormInterface
      */
@@ -154,12 +154,12 @@ class BaseFormController extends BaseDoctrineController
     /**
      * persist the entity to the database if submitted successfully.
      *
-     * @param Request    $request
+     * @param Request $request
      * @param BaseEntity $entity
-     * @param string     $formType             namespace of form type to use
-     * @param string     $buttonLabel          label of button
-     * @param string     $successText          content of text displayed if successful
-     * @param callable   $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
+     * @param string $formType namespace of form type to use
+     * @param string $buttonLabel label of button
+     * @param string $successText content of text displayed if successful
+     * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
      *
      * @return FormInterface the constructed form
      */
@@ -192,7 +192,7 @@ class BaseFormController extends BaseDoctrineController
      * if $isRemoveType is true then the remove form is returned.
      *
      * @param string $classWithNamespace
-     * @param string $prepend            is prepended to class name
+     * @param string $prepend is prepended to class name
      *
      * @return string
      */
@@ -200,6 +200,6 @@ class BaseFormController extends BaseDoctrineController
     {
         $className = mb_substr($classWithNamespace, mb_strrpos($classWithNamespace, '\\') + 1);
 
-        return 'App\\Form\\'.$className.'\\'.$prepend.$className.'Type';
+        return 'App\\Form\\' . $className . '\\' . $prepend . $className . 'Type';
     }
 }

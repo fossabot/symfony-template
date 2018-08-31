@@ -14,9 +14,9 @@ namespace App\Service\Interfaces;
 interface EmailServiceInterface
 {
     /**
-     * @param string   $receiver
-     * @param string   $subject
-     * @param string   $body
+     * @param string $receiver
+     * @param string $subject
+     * @param string $body
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader
@@ -28,9 +28,9 @@ interface EmailServiceInterface
     public function sendTextEmail($receiver, $subject, $body, $carbonCopy = []);
 
     /**
-     * @param string   $receiver
-     * @param string   $subject
-     * @param string   $body
+     * @param string $receiver
+     * @param string $subject
+     * @param string $body
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader
@@ -46,7 +46,7 @@ interface EmailServiceInterface
      * @param string $subject
      * @param string $body
      * @param $actionText
-     * @param string   $actionLink
+     * @param string $actionLink
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader

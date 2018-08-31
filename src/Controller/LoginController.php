@@ -214,7 +214,7 @@ class LoginController extends BaseUserController
                 //login user & redirect
                 $this->loginUser($request, $user);
 
-                return $this->redirectToRoute('index_index');
+                return $this->redirectToRoute('index');
             }
         );
 

@@ -20,7 +20,7 @@ class BaseController extends BaseFormController
     {
         return [
             new Breadcrumb(
-                $this->generateUrl('administration_index'),
+                $this->generateUrl('administration'),
                 $this->getTranslator()->trans('index.title', [], 'administration')
             ),
         ];

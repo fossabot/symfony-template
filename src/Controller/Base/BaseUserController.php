@@ -11,15 +11,11 @@
 
 namespace App\Controller\Base;
 
-use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\UserTrait;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Tests\AppBundle\Traits\UserTraitTest;
 
 class BaseUserController extends BaseFormController
 {

@@ -11,7 +11,6 @@
 
 namespace App\Controller;
 
-use App\Controller\Base\BaseFormController;
 use App\Controller\Base\BaseUserController;
 use App\Form\FrontendUser\ChangePasswordType;
 use App\Form\FrontendUser\EditAccountType;

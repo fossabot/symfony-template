@@ -48,11 +48,11 @@ class EmailService implements EmailServiceInterface
     /**
      * EmailService constructor.
      *
-     * @param \Swift_Mailer     $mailer
+     * @param \Swift_Mailer $mailer
      * @param RegistryInterface $registry
-     * @param LoggerInterface   $logger
-     * @param Environment       $twig
-     * @param string            $mailerSender
+     * @param LoggerInterface $logger
+     * @param Environment $twig
+     * @param string $mailerSender
      */
     public function __construct(\Swift_Mailer $mailer, RegistryInterface $registry, LoggerInterface $logger, Environment $twig, string $mailerSender)
     {
@@ -86,7 +86,7 @@ class EmailService implements EmailServiceInterface
 
         $body = $email->getBody();
         if (null !== $email->getActionLink()) {
-            $body .= "\n\n".$email->getActionText().': '.$email->getActionLink();
+            $body .= "\n\n" . $email->getActionText() . ': ' . $email->getActionLink();
         }
         $message->setBody($body, 'text/plain');
 
@@ -107,9 +107,9 @@ class EmailService implements EmailServiceInterface
     }
 
     /**
-     * @param string   $receiver
-     * @param string   $subject
-     * @param string   $body
+     * @param string $receiver
+     * @param string $subject
+     * @param string $body
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader
@@ -135,7 +135,7 @@ class EmailService implements EmailServiceInterface
      * @param string $subject
      * @param string $body
      * @param $actionText
-     * @param string   $actionLink
+     * @param string $actionLink
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader
@@ -159,9 +159,9 @@ class EmailService implements EmailServiceInterface
     }
 
     /**
-     * @param string   $receiver
-     * @param string   $subject
-     * @param string   $body
+     * @param string $receiver
+     * @param string $subject
+     * @param string $body
      * @param string[] $carbonCopy
      *
      * @throws \Twig_Error_Loader

@@ -25,12 +25,9 @@ class AdministrationController extends BaseController
     /**
      * @Route("", name="administration")
      *
-     * @param Request $request
-     *
-     * @param FormFactoryInterface $factory
      * @return Response
      */
-    public function indexAction(Request $request, FormFactoryInterface $factory)
+    public function indexAction()
     {
         return $this->render('administration/index.html.twig');
     }

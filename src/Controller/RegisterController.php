@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -66,7 +65,7 @@ class RegisterController extends BaseUserController
                 $this->loginUser($request, $user);
 
                 //redirect to start page
-                return $this->redirectToRoute("index_index");
+                return $this->redirectToRoute("index");
             }
         );
         if ($form instanceof Response) {

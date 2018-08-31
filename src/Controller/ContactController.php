@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\FrontendUser;
-use App\Form\Model\ContactRequest\ContactRequestType;
+use App\Form\ContactRequest\ContactRequestType;
 use App\Model\ContactRequest;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -30,9 +30,9 @@ class ContactController extends BaseFormController
     /**
      * @Route("/", name="contact_index")
      *
-     * @param Request             $request
+     * @param Request $request
      * @param TranslatorInterface $translator
-     * @param EmailServiceInterface        $emailService
+     * @param EmailServiceInterface $emailService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -61,7 +61,7 @@ class ContactController extends BaseFormController
             $createForm($contactRequest),
             $request,
             function () use ($request, $contactRequest, $translator, $emailService, $createContactRequest, $createForm) {
-                $userRepo = $this->getDoctrine()->getRepository('Doctor');
+                $userRepo = $this->getDoctrine()->getRepository(FrontendUser::class);
                 $admins = $userRepo->findBy(['isAdministrator' => true, 'receivesAdministratorMail' => true]);
                 foreach ($admins as $admin) {
                     /* @var FormInterface $form */

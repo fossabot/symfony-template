@@ -22,8 +22,8 @@ class CsvService implements CsvServiceInterface
     /**
      * creates a response containing the data rendered as a csv.
      *
-     * @param string     $filename
-     * @param string[]   $header
+     * @param string $filename
+     * @param string[] $header
      * @param string[][] $data
      *
      * @return Response
@@ -37,7 +37,7 @@ class CsvService implements CsvServiceInterface
             //UTF-8 BOM
             fwrite($handle, "\xEF\xBB\xBF");
             //set delimiter to specified
-            fwrite($handle, 'sep='.static::DELIMITER."\n");
+            fwrite($handle, 'sep=' . static::DELIMITER . "\n");
 
             if (\is_array($header)) {
                 // Add the header of the CSV file
@@ -58,7 +58,7 @@ class CsvService implements CsvServiceInterface
 
         $response->setStatusCode(200);
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $filename . '"');
 
         return $response;
     }

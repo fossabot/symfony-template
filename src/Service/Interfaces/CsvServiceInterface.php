@@ -18,8 +18,8 @@ interface CsvServiceInterface
     /**
      * creates a response containing the data rendered as a csv.
      *
-     * @param string     $filename
-     * @param string[]   $header
+     * @param string $filename
+     * @param string[] $header
      * @param string[][] $data
      *
      * @return StreamedResponse
