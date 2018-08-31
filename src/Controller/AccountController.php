@@ -12,7 +12,6 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
-use App\Entity\Setting;
 use App\Form\FrontendUser\ChangePasswordType;
 use App\Form\FrontendUser\EditAccountType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,7 +27,7 @@ class AccountController extends BaseFormController
     /**
      * @Route("/", name="account_index")
      *
-     * @param Request             $request
+     * @param Request $request
      * @param TranslatorInterface $translator
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -46,12 +45,14 @@ class AccountController extends BaseFormController
                 ->add('form.change_password', SubmitType::class, ['translation_domain' => 'account', 'label' => 'index.change_password']),
             $request,
             function ($form) use ($user, $translator) {
-                if (
-                    $user->getPlainPassword() !== $user->getRepeatPlainPassword() ||
-                    '' === $user->getPlainPassword()
-                ) {
-                    $this->displaySuccess($translator->trans('reset.error.passwords_do_not_match', [], 'login'));
 
+                if ($user->getPlainPassword() !== $user->getRepeatPlainPassword()) {
+                    $this->displayError($translator->trans('reset.error.passwords_do_not_match', [], 'login'));
+                    return $form;
+                }
+
+                if (strlen($user->getPlainPassword()) < 8) {
+                    $this->displayError($translator->trans('reset.error.password_needs_at_least_8_chars', [], 'login'));
                     return $form;
                 }
 

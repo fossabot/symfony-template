@@ -11,11 +11,6 @@
 
 namespace App\Form\FrontendUser;
 
-use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-
 class RecoverType extends \App\Form\Traits\User\RecoverType
 {
 }

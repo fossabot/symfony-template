@@ -56,7 +56,7 @@ class BaseFormController extends BaseDoctrineController
         //translate messages
         $translator = $this->getTranslator();
         $buttonLabel = $translator->trans('form.submit_buttons.create', [], 'framework');
-        $successfulText = $translator->trans('successful.create', [], 'framework');
+        $successfulText = $translator->trans('form.successful.created', [], 'framework');
 
         $formType = $this->classToFormType(\get_class($defaultEntity));
         $startEntity = clone $defaultEntity;
@@ -101,7 +101,7 @@ class BaseFormController extends BaseDoctrineController
         //translate messages
         $translator = $this->getTranslator();
         $buttonLabel = $translator->trans('form.submit_buttons.update', [], 'framework');
-        $successfulText = $translator->trans('successful.update', [], 'framework');
+        $successfulText = $translator->trans('form.successful.updated', [], 'framework');
 
         //create persist callable
         $myOnSuccessCallable = function ($form) use ($entity, $beforeUpdateCallable, $successfulText) {
@@ -143,7 +143,7 @@ class BaseFormController extends BaseDoctrineController
             $entity,
             $this->classToFormType(\get_class($entity), 'Delete'),
             $translator->trans('form.submit_buttons.delete', [], 'framework'),
-            $translator->trans('successful.delete', [], 'framework'),
+            $translator->trans('form.successful.deleted', [], 'framework'),
             $beforeRemoveCallable ??
             function () {
                 return true;

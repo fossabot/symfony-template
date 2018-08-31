@@ -11,7 +11,6 @@
 
 namespace App\Form\Traits\User;
 
-use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

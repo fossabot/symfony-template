@@ -30,14 +30,6 @@ reset:
   success:
     password_set: 'Neues Passwort erfolgreich gesetzt'
   error:
-    passwords_do_not_match: 'Die Passwörter stimmen nicht überein'
     invalid_hash: "Dieser Link ist nicht mehr gültig. Beachten Sie, das jeder Link nur einmal benutzt werden kann."
-
-register:
-  title: "Registrieren"
-  description: "Erhalten Sie Zugriff"
-  success:
-    registered: "Sie wurden erfolgreich registriert. Willkommen :)."
-  error:
     passwords_do_not_match: 'Die Passwörter stimmen nicht überein'
-    email_already_in_use: "Diese E-Mail wird bereits verwendet. Sie können das Passwort zurücksetzen, falls dies Ihre E-Mail ist."
+    password_needs_at_least_8_chars: 'Das Passwort ist zu kurz. Bitte verwenden Sie mindestens 8 Stellen.'

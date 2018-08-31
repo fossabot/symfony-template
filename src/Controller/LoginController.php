@@ -18,7 +18,6 @@ use App\Form\FrontendUser\LoginType;
 use App\Form\FrontendUser\RecoverType;
 use App\Model\Breadcrumb;
 use App\Service\Interfaces\EmailServiceInterface;
-use App\Service\InviteEmailService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -90,20 +89,20 @@ class LoginController extends BaseFormController
         if (\mb_strlen($lastUsername) > 0) {
             $lastUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $lastUsername]);
             if (null === $lastUser) {
-                $this->displayError($this->getTranslator()->trans('login.danger.email_not_found', [], 'login'));
+                $this->displayError($this->getTranslator()->trans('login.error.email_not_found', [], 'login'));
 
                 return $lastUsername;
             }
 
             if (!$lastUser->isEnabled()) {
-                $this->displayError($this->getTranslator()->trans('login.danger.login_disabled', [], 'login'));
+                $this->displayError($this->getTranslator()->trans('login.error.login_disabled', [], 'login'));
 
                 return $lastUsername;
             }
         }
 
         if (null !== $error) {
-            $this->displayError($this->getTranslator()->trans('login.danger.login_failed', [], 'login'));
+            $this->displayError($this->getTranslator()->trans('login.error.login_failed', [], 'login'));
 
             return $lastUsername;
         }
