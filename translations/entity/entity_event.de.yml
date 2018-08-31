@@ -1,0 +1,4 @@
+entity:
+  name: 'Termin'
+  description: 'Ein Termin hat einen Start- und einen Endzeitpunkt sowie ein Verantwortlicher'
+  plural: 'Termine'

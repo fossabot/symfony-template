@@ -14,7 +14,6 @@ namespace App\Form\Traits\Communication;
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,13 +21,12 @@ class CommunicationType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("phone", TextType::class, ["required" => false]);
-        $builder->add("email", EmailType::class);
-        $builder->add("webpage", UrlType::class, ["required" => false]);
+        $builder->add('phone', TextType::class, ['required' => false]);
+        $builder->add('email', EmailType::class);
     }
 
     /**
@@ -37,7 +35,8 @@ class CommunicationType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_communication'
+            'translation_domain' => 'trait_communication',
+            'label' => 'trait.name',
         ]);
     }
 }

@@ -2,12 +2,12 @@ app:
     resource: "../src/Controller/"
     type:     annotation
 
-app.frontend:
-    resource: "../src/Controller/Frontend"
+app_administration:
+    resource: "../src/Controller/Administration/"
     type:     annotation
-    prefix:   /frontend
+    prefix:   /administration
 
-app.backend:
-    resource: "../src/Controller/Backend"
+app_api:
+    resource: "../src/Controller/Api/"
     type:     annotation
-    prefix:   /backend
+    prefix:   /api

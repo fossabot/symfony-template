@@ -1,10 +1,9 @@
 Introduction
 ======
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Travis Build Status](https://travis-ci.org/famoser/symfony-template.svg?branch=master)](https://travis-ci.org/famoser/symfony-template)
-[![Code Climate](https://codeclimate.com/github/famoser/symfony-template/badges/gpa.svg)](https://codeclimate.com/github/famoser/symfony-template)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ca101539e534469d88fb5739e21af367)](https://www.codacy.com/app/famoser/symfony-template)
-[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/symfony-template/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/symfony-template)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffamoser%2Fnodika.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffamoser%2Fnodika?ref=badge_shield)
+[![Travis Build Status](https://travis-ci.org/famoser/nodika.svg?branch=master)](https://travis-ci.org/famoser/nodika)
+[![Scrutinizer](https://scrutinizer-ci.com/g/famoser/nodika/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/famoser/nodika)
 
 dependencies (you need this on your machine):
  - `xampp` https://www.apachefriends.org/de/index.html
@@ -68,10 +67,10 @@ if you've changed the Entities and need to adapt the database
  
 if you want to deploy
  - rename `servers_template.yml` to `servers.yml`, correct entries
- - execute `dep deploy ENVIRONMENT`, replacing `ENVIRONMENT` by ether `dev`, `testing` or `production` (defaults to `dev`) 
- - if you deploy the fist time to production:
-    - while `deploy:composer` is running, set the `.env` file in `/shared/.env`
-    
+ - execute `php deployer.phar deploy ENVIRONMENT`, replacing `ENVIRONMENT` by ether `dev`, `testing` or `production` (defaults to `dev`) 
+ - if you are on the dev branch fixtures are autoamtically applied
+ - if you deploy the fist time to production may want to login with ssh and prepare the database data with `php bin/console doctrine:fixtures:load --fixtures=src/DataFixtures/Production -q`
+ 
 if you're setting up deployment on a new server
  - `cat ~/.ssh/id_rsa.pub` to ensure you already have created an ssh key for yourself, if none:
     - `ssh-keygen -t rsa -b 4096 -C "info@famoser.ch"` generate a new key

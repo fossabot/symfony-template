@@ -1,18 +1,10 @@
+// include styling
 require("../sass/app.sass");
-var $ = require("jquery");
-var bootstrap = require("bootstrap");
 
-window.$ = $;
+// other parts of the application
+require("./bootstrap_vanilla");
+require("./font_awesome_light");
+require("./font_awesome_solid");
 
-//prevent double submit & give user instant feedback
-var disableFormButton = function () {
-    var $form = $(this);
-    var $buttons = $(".btn", $form);
-    if (!$buttons.hasClass("no-disable")) {
-        $buttons.addClass("disabled");
-    }
-};
-
-$(document).ready(function () {
-    $("form").on("submit", disableFormButton);
-});
+// apps
+require('./apps/Vote/bootstrap');

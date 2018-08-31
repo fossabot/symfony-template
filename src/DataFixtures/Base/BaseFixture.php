@@ -14,7 +14,10 @@ namespace App\DataFixtures\Base;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\CommunicationTrait;
 use App\Entity\Traits\PersonTrait;
+use App\Entity\Traits\StartEndTrait;
 use App\Entity\Traits\ThingTrait;
+use App\Entity\Traits\UserTrait;
+use App\Service\EventGenerationService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -24,8 +27,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /** @var EventGenerationService */
+    private $eventGenerationService;
     /* @var ContainerInterface $container */
     private $container;
+
+    public function __construct(EventGenerationService $eventGenerationService)
+    {
+        $this->eventGenerationService = $eventGenerationService;
+    }
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -33,9 +43,38 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     }
 
     /**
+     * @return \App\Service\EventGenerationService
+     */
+    protected function getEventGenerationService()
+    {
+        return $this->eventGenerationService;
+    }
+
+    /**
+     * @return \Faker\Generator
+     */
+    protected function getFaker()
+    {
+        return Factory::create('de_CH');
+    }
+
+    /**
+     * @param UserTrait $obj
+     */
+    protected function fillUser($obj)
+    {
+        $faker = $this->getFaker();
+        $obj->setEmail($faker->email);
+        $obj->setPlainPassword($faker->password);
+        $obj->setPassword();
+        $obj->setRegistrationDate(new \DateTime());
+        $obj->setLastLoginDate(new \DateTime());
+    }
+
+    /**
      * @param AddressTrait $obj
      */
-    protected function fillRandomAddress($obj)
+    protected function fillAddress($obj)
     {
         $faker = $this->getFaker();
         $obj->setStreet($faker->streetAddress);
@@ -49,32 +88,21 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     }
 
     /**
-     * @return \Faker\Generator
-     */
-    protected function getFaker()
-    {
-        return Factory::create('de_CH');
-    }
-
-    /**
      * @param CommunicationTrait $obj
      */
-    protected function fillRandomCommunication($obj)
+    protected function fillCommunication($obj)
     {
         $faker = $this->getFaker();
         $obj->setEmail($faker->email);
         if ($faker->numberBetween(0, 10) > 5) {
             $obj->setPhone($faker->phoneNumber);
         }
-        if ($faker->numberBetween(0, 10) > 8) {
-            $obj->setWebpage($faker->url);
-        }
     }
 
     /**
      * @param ThingTrait $obj
      */
-    protected function fillRandomThing($obj)
+    protected function fillThing($obj)
     {
         $faker = $this->getFaker();
         $obj->setName($faker->text(50));
@@ -86,11 +114,27 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     /**
      * @param PersonTrait $obj
      */
-    protected function fillRandomPerson($obj)
+    protected function fillPerson($obj)
     {
         $faker = $this->getFaker();
         $obj->setGivenName($faker->firstName);
         $obj->setFamilyName($faker->lastName);
+        if ($faker->numberBetween(0, 10) > 5) {
+            $obj->setJobTitle($faker->jobTitle);
+        }
+    }
+
+    /**
+     * @param StartEndTrait $obj
+     */
+    protected function fillStartEnd($obj)
+    {
+        $faker = $this->getFaker();
+        $end = $faker->dateTime;
+        $start = $faker->dateTime($end);
+
+        $obj->setStartDateTime($start);
+        $obj->setEndDateTime($end);
     }
 
     /**
@@ -102,7 +146,7 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     protected function loadSomeRandoms(ObjectManager $manager, $count = 5)
     {
         for ($i = 0; $i < $count; ++$i) {
-            $instance = $this->getAllRandomInstance();
+            $instance = $this->getRandomInstance();
             $manager->persist($instance);
         }
     }
@@ -112,5 +156,8 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
      *
      * @return mixed
      */
-    abstract protected function getAllRandomInstance();
+    protected function getRandomInstance()
+    {
+        return null;
+    }
 }

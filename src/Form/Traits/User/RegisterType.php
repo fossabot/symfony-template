@@ -12,7 +12,6 @@
 namespace App\Form\Traits\User;
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,14 +21,13 @@ class RegisterType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', TextType::class);
         $builder->add('plainPassword', PasswordType::class);
         $builder->add('repeatPlainPassword', PasswordType::class);
-        $builder->add('agbAccepted', CheckboxType::class);
     }
 
     /**
@@ -38,7 +36,7 @@ class RegisterType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user'
+            'translation_domain' => 'trait_user',
         ]);
     }
 }

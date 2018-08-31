@@ -17,25 +17,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait CommunicationTrait
 {
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $phone;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @ORM\Column(type="text")
      */
     private $email;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Assert\Url()
-     */
-    private $webpage;
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getPhone()
     {
@@ -43,7 +41,7 @@ trait CommunicationTrait
     }
 
     /**
-     * @param mixed $phone
+     * @param string $phone
      *
      * @return static
      */
@@ -75,22 +73,6 @@ trait CommunicationTrait
     }
 
     /**
-     * @return mixed
-     */
-    public function getWebpage()
-    {
-        return $this->webpage;
-    }
-
-    /**
-     * @param mixed $webpage
-     */
-    public function setWebpage($webpage)
-    {
-        $this->webpage = $webpage;
-    }
-
-    /**
      * get non-empty communication lines.
      *
      * @return string[]
@@ -103,9 +85,6 @@ trait CommunicationTrait
         }
         if (mb_strlen($this->getEmail()) > 0) {
             $res[] = $this->getEmail();
-        }
-        if (mb_strlen($this->getWebpage()) > 0) {
-            $res[] = $this->getWebpage();
         }
 
         return $res;

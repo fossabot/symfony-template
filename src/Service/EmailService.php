@@ -13,10 +13,9 @@ namespace App\Service;
 
 use App\Entity\Email;
 use App\Enum\EmailType;
+use App\Helper\HashHelper;
 use App\Service\Interfaces\EmailServiceInterface;
-use Monolog\Logger;
 use Psr\Log\LoggerInterface;
-use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\Environment;
 
@@ -49,11 +48,11 @@ class EmailService implements EmailServiceInterface
     /**
      * EmailService constructor.
      *
-     * @param \Swift_Mailer $mailer
+     * @param \Swift_Mailer     $mailer
      * @param RegistryInterface $registry
-     * @param LoggerInterface $logger
-     * @param Environment $twig
-     * @param string $contactEmail
+     * @param LoggerInterface   $logger
+     * @param Environment       $twig
+     * @param string            $contactEmail
      */
     public function __construct(\Swift_Mailer $mailer, RegistryInterface $registry, LoggerInterface $logger, Environment $twig, string $contactEmail)
     {
@@ -65,32 +64,16 @@ class EmailService implements EmailServiceInterface
     }
 
     /**
-     * @param string $receiver
-     * @param string $subject
-     * @param string $body
-     * @param string|null $carbonCopy
-     *
-     * @return bool
-     */
-    public function sendTextEmail($receiver, $subject, $body, $carbonCopy = null)
-    {
-        $email = new Email();
-        $email->setReceiver($receiver);
-        $email->setSubject($subject);
-        $email->setBody($body);
-        $email->setCarbonCopy($carbonCopy);
-        $email->setEmailType(EmailType::TEXT_EMAIL);
-
-        return $this->processEmail($email);
-    }
-
-    /**
      * @param Email $email
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     private function processEmail(Email $email)
     {
         $email->setSentDateTime(new \DateTime());
-        $email->setIdentifier(Uuid::uuid4());
+        $email->setIdentifier(HashHelper::createNewResetHash());
 
         $manager = $this->doctrine->getManager();
         $manager->persist($email);
@@ -103,50 +86,46 @@ class EmailService implements EmailServiceInterface
 
         $body = $email->getBody();
         if (null !== $email->getActionLink()) {
-            $body .= "\n\n" . $email->getActionText() . ': ' . $email->getActionLink();
+            $body .= "\n\n".$email->getActionText().': '.$email->getActionLink();
         }
         $message->setBody($body, 'text/plain');
 
         if (EmailType::PLAIN_EMAIL !== $email->getEmailType()) {
-            try {
-                $message->addPart(
-                    $this->twig->render(
-                        'email/email.html.twig',
-                        ['email' => $email]
-                    ),
-                    'text/html'
-                );
-            } catch (\Exception $e) {
-                $this->logger->log(Logger::ERROR, 'can not render email', $e);
-            }
+            $message->addPart(
+                $this->twig->render(
+                    'email/view.html.twig',
+                    ['email' => $email]
+                ),
+                'text/html'
+            );
         }
 
-        if (null !== $email->getCarbonCopy()) {
-            $message->addCc($email->getCarbonCopy());
+        foreach ($email->getCarbonCopyArray() as $item) {
+            $message->addCc($item);
         }
         $this->mailer->send($message);
     }
 
     /**
-     * @param string $receiver
-     * @param string $subject
-     * @param string $body
-     * @param $actionText
-     * @param string $actionLink
-     * @param string|null $carbonCopy
+     * @param string   $receiver
+     * @param string   $subject
+     * @param string   $body
+     * @param string[] $carbonCopy
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      *
      * @return bool
      */
-    public function sendActionEmail($receiver, $subject, $body, $actionText, $actionLink, $carbonCopy = null)
+    public function sendTextEmail($receiver, $subject, $body, $carbonCopy = [])
     {
         $email = new Email();
         $email->setReceiver($receiver);
         $email->setSubject($subject);
         $email->setBody($body);
-        $email->setActionText($actionText);
-        $email->setActionLink($actionLink);
-        $email->setCarbonCopy($carbonCopy);
-        $email->setEmailType(EmailType::ACTION_EMAIL);
+        $email->setCarbonCopyArray($carbonCopy);
+        $email->setEmailType(EmailType::TEXT_EMAIL);
 
         return $this->processEmail($email);
     }
@@ -155,17 +134,49 @@ class EmailService implements EmailServiceInterface
      * @param string $receiver
      * @param string $subject
      * @param string $body
-     * @param string|null $carbonCopy
+     * @param $actionText
+     * @param string   $actionLink
+     * @param string[] $carbonCopy
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      *
      * @return bool
      */
-    public function sendPlainEmail($receiver, $subject, $body, $carbonCopy = null)
+    public function sendActionEmail($receiver, $subject, $body, $actionText, $actionLink, $carbonCopy = [])
     {
         $email = new Email();
         $email->setReceiver($receiver);
         $email->setSubject($subject);
         $email->setBody($body);
-        $email->setCarbonCopy($carbonCopy);
+        $email->setActionText($actionText);
+        $email->setActionLink($actionLink);
+        $email->setCarbonCopyArray($carbonCopy);
+        $email->setEmailType(EmailType::ACTION_EMAIL);
+
+        return $this->processEmail($email);
+    }
+
+    /**
+     * @param string   $receiver
+     * @param string   $subject
+     * @param string   $body
+     * @param string[] $carbonCopy
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     *
+     * @return bool
+     */
+    public function sendPlainEmail($receiver, $subject, $body, $carbonCopy = [])
+    {
+        $email = new Email();
+        $email->setReceiver($receiver);
+        $email->setSubject($subject);
+        $email->setBody($body);
+        $email->setCarbonCopyArray($carbonCopy);
         $email->setEmailType(EmailType::PLAIN_EMAIL);
 
         return $this->processEmail($email);

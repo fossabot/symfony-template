@@ -21,31 +21,43 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait AddressTrait
 {
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $street;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $streetNr;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $addressLine;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $postalCode;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $city;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Country()
      */
@@ -201,7 +213,7 @@ trait AddressTrait
         $res = [];
         $lineOne = $this->getStreet();
         if (mb_strlen($lineOne) > 0 && mb_strlen($this->getStreetNr()) > 0) {
-            $lineOne .= ' ' . $this->getStreetNr();
+            $lineOne .= ' '.$this->getStreetNr();
         }
         if (mb_strlen($lineOne) > 0) {
             $res[] = $lineOne;
@@ -211,7 +223,7 @@ trait AddressTrait
         }
         $line3 = $this->getPostalCode();
         if (mb_strlen($line3) > 0 && mb_strlen($this->getCity() > 0)) {
-            $line3 .= ' ' . $this->getCity();
+            $line3 .= ' '.$this->getCity();
         }
         if (mb_strlen($line3) > 0) {
             $res[] = $line3;

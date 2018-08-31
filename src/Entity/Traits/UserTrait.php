@@ -49,17 +49,16 @@ trait UserTrait
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $registrationDate;
 
     /**
-     * @var bool
+     * @var \DateTime
      *
-     * @ORM\Column(type="boolean", options={"default": false})
-     * @Assert\IsTrue()
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $agbAccepted = false;
+    private $lastLoginDate;
 
     /**
      * @var string
@@ -88,7 +87,7 @@ trait UserTrait
     }
 
     /**
-     * @param boolean $isEnabled
+     * @param bool $isEnabled
      *
      * @return static
      */
@@ -110,7 +109,7 @@ trait UserTrait
     /**
      * @param \DateTime $registrationDate
      */
-    public function setRegistrationDate($registrationDate)
+    public function setRegistrationDate(?\DateTime $registrationDate)
     {
         $this->registrationDate = $registrationDate;
     }
@@ -121,22 +120,6 @@ trait UserTrait
     public function getResetHash()
     {
         return $this->resetHash;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAgbAccepted()
-    {
-        return $this->agbAccepted;
-    }
-
-    /**
-     * @param bool $agbAccepted
-     */
-    public function setAgbAccepted($agbAccepted)
-    {
-        $this->agbAccepted = $agbAccepted;
     }
 
     /**
@@ -187,6 +170,22 @@ trait UserTrait
     public function canLogin()
     {
         return $this->isEnabled;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLoginDate(): ?\DateTime
+    {
+        return $this->lastLoginDate;
+    }
+
+    /**
+     * @param \DateTime $lastLoginDate
+     */
+    public function setLastLoginDate(\DateTime $lastLoginDate): void
+    {
+        $this->lastLoginDate = $lastLoginDate;
     }
 
     /**
@@ -335,10 +334,12 @@ trait UserTrait
         $this->passwordHash = password_hash($this->getPlainPassword(), PASSWORD_BCRYPT);
         $this->setPlainPassword(null);
         $this->setRepeatPlainPassword(null);
+
+        $this->setResetHash();
     }
 
     /**
-     * creates a new reset hash
+     * creates a new reset hash.
      */
     public function setResetHash()
     {
@@ -348,13 +349,13 @@ trait UserTrait
         for ($i = 0; $i < 20; ++$i) {
             $rand = mt_rand(20, 160);
             $allowed = false;
-            for ($j = 0; $j < count($allowedRanges); ++$j) {
+            for ($j = 0; $j < \count($allowedRanges); ++$j) {
                 if ($allowedRanges[$j][0] <= $rand && $allowedRanges[$j][1] >= $rand) {
                     $allowed = true;
                 }
             }
             if ($allowed) {
-                $newHash .= chr($rand);
+                $newHash .= \chr($rand);
             } else {
                 --$i;
             }

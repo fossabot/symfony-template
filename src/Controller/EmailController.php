@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EmailController extends BaseController
 {
     /**
-     * @Route("/{identifier}", name="view_email")
+     * @Route("/{identifier}", name="email_view")
      *
      * @param $identifier
      *
@@ -35,6 +35,6 @@ class EmailController extends BaseController
             throw new NotFoundHttpException();
         }
 
-        return $this->render('email/email.html.twig', ['email' => $email]);
+        return $this->render('email/view.html.twig', ['email' => $email]);
     }
 }

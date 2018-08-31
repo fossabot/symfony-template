@@ -1,0 +1,13 @@
+entity:
+  name: 'Termintauschvorschlag'
+  description: 'Ein Termintauschvorschlag enthält Termine, die zwischen zwei Doctoren getauscht werden können'
+
+message: 'Nachricht'
+
+next_action:
+  accept_decline: "Dieser Tausch braucht Ihre Zustimmung."
+  ack_declined: "Ihr Tausch wurde abgelehnt und daher abgebrochen."
+  ack_accepted: "Ihr Tausch wurde angenommen und ausgeführt."
+  withdraw: "Ihr Tauschpartner hat noch nicht geantwortet."
+  ack_withdrawn: "Der Tausch wurde zurückgezogen."
+  ack_invalid: "Der Tausch ist ungültig, da darin enthaltene Termine bereits den Eigentümer gewechselt haben."

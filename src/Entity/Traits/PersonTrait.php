@@ -18,6 +18,13 @@ trait PersonTrait
     /**
      * @var string
      *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $jobTitle;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text")
      */
     private $givenName;
@@ -28,6 +35,22 @@ trait PersonTrait
      * @ORM\Column(type="text")
      */
     private $familyName;
+
+    /**
+     * @return string
+     */
+    public function getJobTitle()
+    {
+        return $this->jobTitle;
+    }
+
+    /**
+     * @param string $jobTitle
+     */
+    public function setJobTitle(string $jobTitle)
+    {
+        $this->jobTitle = $jobTitle;
+    }
 
     /**
      * Get givenName.
@@ -82,6 +105,6 @@ trait PersonTrait
      */
     public function getFullName()
     {
-        return $this->getGivenName() . ' ' . $this->getFamilyName();
+        return $this->getGivenName().' '.$this->getFamilyName();
     }
 }

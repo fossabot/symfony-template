@@ -2,14 +2,25 @@
 
 {% block content %}
     <section class="content">
-        <div class="container index-container default-color">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>{% block title %}{% endblock %}</h1>
-                    <h2>{% block description %}{% endblock %}</h2>
-                    {% block single_content %}
-                    {% endblock single_content %}
+        <div class="container jumbotron">
+            <h1 class="display-3">{{ block("title") }}</h1>
+            <p class="lead">{% block description %}{% endblock %}</p>
+        </div>
+
+        {% set _pre_content = block('pre_content') %}
+        {% if _pre_content|trim is not empty %}
+            <div class="container card">
+                <div class="card-body">
+                    {% block pre_content %}
+                    {% endblock pre_content %}
                 </div>
+            </div>
+        {% endif %}
+
+        <div class="container card">
+            <div class="card-body">
+                {% block single_content %}
+                {% endblock single_content %}
             </div>
         </div>
     </section>

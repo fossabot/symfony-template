@@ -3,5 +3,5 @@ parameters:
     APP_SECRET: '%env(APP_SECRET)%'
     DATABASE_URL: '%env(DATABASE_URL)%'
     MAILER_URL: '%env(MAILER_URL)%'
-    MAILER_SENDER: '%env(MAILER_SENDER)%'
+    MAILER_EMAIL: '%env(MAILER_EMAIL)%'
     SUPPORT_EMAIL: '%env(SUPPORT_EMAIL)%'

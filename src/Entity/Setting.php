@@ -12,106 +12,131 @@
 namespace App\Entity;
 
 use App\Entity\Base\BaseEntity;
+use App\Entity\Traits\ChangeAwareTrait;
 use App\Entity\Traits\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A Member is part of the organisation, and is responsible for the events assigned to it.
- *
- * @ORM\Table
- * @ORM\Entity(repositoryClass="App\Repository\SettingRepository")
- * @ORM\HasLifecycleCallbacks
+ * @ORM\Entity(repositoryClass="App\Repository\SettingsRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Setting extends BaseEntity
 {
     use IdTrait;
+    use ChangeAwareTrait;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $key;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $content;
-
-    /**
-     * @var FrontendUser
+     * @var bool
      *
-     * @ORM\ManyToOne(targetEntity="FrontendUser", inversedBy="settings")
+     * @ORM\Column(type="boolean")
      */
-    private $frontendUser;
+    private $doctorsCanEditSelf = true;
 
     /**
-     * Get content.
+     * @var bool
      *
-     * @return string
+     * @ORM\Column(type="boolean")
      */
-    public function getContent()
+    private $doctorsCanEditClinics = false;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $canConfirmDaysAdvance = 90;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $mustConfirmDaysAdvance = 10;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $sendRemainderDaysInterval = 7;
+
+    /**
+     * @return int
+     */
+    public function getCanConfirmDaysAdvance(): int
     {
-        return $this->content;
+        return $this->canConfirmDaysAdvance;
     }
 
     /**
-     * Set content.
-     *
-     * @param string $content
-     *
-     * @return Setting
+     * @param int $canConfirmDaysAdvance
      */
-    public function setContent($content)
+    public function setCanConfirmDaysAdvance(int $canConfirmDaysAdvance): void
     {
-        $this->content = $content;
-
-        return $this;
+        $this->canConfirmDaysAdvance = $canConfirmDaysAdvance;
     }
 
     /**
-     * Get user.
-     *
-     * @return FrontendUser
+     * @return int
      */
-    public function getFrontendUser()
+    public function getMustConfirmDaysAdvance(): int
     {
-        return $this->frontendUser;
+        return $this->mustConfirmDaysAdvance;
     }
 
     /**
-     * Set user.
-     *
-     * @param FrontendUser $frontendUser
-     *
-     * @return Setting
+     * @param int $mustConfirmDaysAdvance
      */
-    public function setFrontendUser(FrontendUser $frontendUser = null)
+    public function setMustConfirmDaysAdvance(int $mustConfirmDaysAdvance): void
     {
-        $this->frontendUser = $frontendUser;
-
-        return $this;
+        $this->mustConfirmDaysAdvance = $mustConfirmDaysAdvance;
     }
 
     /**
-     * Get key.
-     *
-     * @return string
+     * @return int
      */
-    public function getKey()
+    public function getSendRemainderDaysInterval(): int
     {
-        return $this->key;
+        return $this->sendRemainderDaysInterval;
     }
 
     /**
-     * Set key.
-     *
-     * @param string $key
-     *
-     * @return Setting
+     * @param int $sendRemainderDaysInterval
      */
-    public function setKey($key)
+    public function setSendRemainderDaysInterval(int $sendRemainderDaysInterval): void
     {
-        $this->key = $key;
+        $this->sendRemainderDaysInterval = $sendRemainderDaysInterval;
+    }
 
-        return $this;
+    /**
+     * @return bool
+     */
+    public function getDoctorsCanEditSelf(): bool
+    {
+        return $this->doctorsCanEditSelf;
+    }
+
+    /**
+     * @param bool $doctorsCanEditSelf
+     */
+    public function setDoctorsCanEditSelf(bool $doctorsCanEditSelf): void
+    {
+        $this->doctorsCanEditSelf = $doctorsCanEditSelf;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDoctorsCanEditClinics(): bool
+    {
+        return $this->doctorsCanEditClinics;
+    }
+
+    /**
+     * @param bool $doctorsCanEditClinics
+     */
+    public function setDoctorsCanEditClinics(bool $doctorsCanEditClinics): void
+    {
+        $this->doctorsCanEditClinics = $doctorsCanEditClinics;
     }
 }

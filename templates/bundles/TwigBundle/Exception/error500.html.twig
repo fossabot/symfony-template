@@ -3,5 +3,8 @@
 {% trans_default_domain "error" %}
 
 {% block additional_error_info %}
-    <p>{{ "index.500"|trans }} <a href="mailto:info@nodika.ch">{{ SUPPORT_EMAIL }}</a> </p>
+    <p class="text-secondary">
+        {{ "error.500"|trans }}
+        <a href="{{ "error.500_email"|trans }}">{{ "error.500_email"|trans }}</a>
+    </p>
 {% endblock %}

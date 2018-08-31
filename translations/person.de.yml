@@ -1,0 +1,69 @@
+index:
+  title: 'Ihr Account'
+  description: 'Ihr Account verwalten'
+  manage_self: 'Verwalten'
+  change_password: 'Passwort ändern'
+  change_doctoral: 'Persönliche Daten ändern'
+  no_clinics: 'Sie sind noch nicht Teil einer Praxis. Fragen Sie Ihren Administrator, ob er Ihnen eine Einladung zu Ihrer Praxis zusenden kann.'
+  change_email: 'Email ändern'
+  your_clinics: 'Sie sind Teil folgender Praxis (oder Praxen)'
+  remove_itself: 'Zugriff entfernen'
+  remove_itself_description: 'Sie können sich selbst den Zugriff zu Ihrer Praxis wieder entfernen (weil Sie z.B. nicht mehr dort arbeiten)'
+
+#edit_doctoral page
+edit_doctor:
+  title: 'Persönliche Daten ändern'
+  description: 'Editieren Sie Ihre persönlichen Daten'
+  doctor_edit_form: 'Account ändern'
+  about: 'Account'
+  about_description: 'Dieser Account gehört Ihnen und weist Sie als Mitarbeiter Ihrer Praxis aus.'
+  doctor_address: 'Adresse'
+  doctor_address_description: 'Ihre persönliche Adresse'
+  doctor_contact: 'Kontaktinformationen'
+  doctor_contact_description: 'An diese hinterlegte E-Mail werden Ihre persönlichen E-Mails versandt (z.B. zu Terminerinnerungen)'
+  not_login_email: 'Nicht die Login-Email!'
+  not_login_email_description: >
+    Die hier hinterlegte E-Mail dient zum Versenden der Benachrichtigungen und muss nicht dieselbe sein wie die Login E-Mail.
+    Um die Login-Email zu ändern, gehen Sie zurück in Ihr Profil und wählen den Menupunkt E-Mail ändern
+
+#edit_password page
+change_password:
+  title: 'Passwort ändern'
+  description: 'Änderung Ihres Passwortes'
+  change_password_form: 'Passwort setzen'
+  choose_safe: 'Sicheres Passwort'
+  choose_safe_description: >
+    Wählen Sie ein sicheres Passwort. Ein sicheres Passwort ist möglichst lange (mehr als 8 Stellen)
+    und besteht aus ungewöhnlichen Wort- und Zahlenkombinationen
+
+#edit_email page
+change_email:
+  title: 'Neu E-Mail setzen'
+  description: 'Neue Login E-Mail setzen'
+  change_email_form: 'Neue E-Mail'
+  login_email: 'Login E-Mail'
+  login_email_description: >
+    Dies ist die E-Mail, die Sie als Login verwenden. Diese darf in unserem System nur einmal vorkommen.
+    Entfernen Sie den Account und damit alle seine verbundenen Daten.
+  no_doctoral_email: 'Nicht die persönliche E-Mail!'
+  no_doctoral_email_description: >
+    Die hier hinterlegte E-Mail dient als Login-Email, und muss nicht dieselbe sein wie die persönliche E-Mail.
+    Um die persönliche Email zu ändern, gehen Sie zurück in Ihr Profil und wählen den Menupunkt Persönliche Daten ändern
+  messages:
+    changed_successfully: 'Ihre Login E-Mail wurde erfolgreich geändert.'
+    email_already_picked: 'Diese E-Mail wird bereits verwendet.'
+
+#remove_clinic page
+remove_clinic:
+  title: 'Praxis entfernen'
+  description: 'Möchten Sie sich von dieser Praxis entfernen?'
+  really_remove: 'Ich möchte mich wirklich als Mitarbeiter entfernen. Ich verstehe die damit entstehenden Konsequenzen.'
+  really_remove_confirm: 'Bestätigen'
+  change_email_form: 'Neue E-Mail'
+  remove_clinic: 'Von der Praxis entfernen'
+  remove_clinic_description: >
+    Entfernen Sie sich von dieser Praxis, haben Sie keinen Zugriff mehr auf deren Termine und Funktionen.
+    Sie werden automatisch ausgeloggt.
+  messages:
+    remove_successfully: 'Sie wurden erfolgreich als Mitarbeiter entfernt'
+    not_part_of_clinic: 'Sie sind nicht Teil dieser Praxis'

@@ -19,8 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * An Email is a sent email to the specified receivers.
  *
- * @ORM\Table
- * @ORM\Entity(repositoryClass="App\Repository\EmailRepository")
+ * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  */
 class Email extends BaseEntity
@@ -162,6 +161,26 @@ class Email extends BaseEntity
     }
 
     /**
+     * @return string[]
+     */
+    public function getCarbonCopyArray()
+    {
+        if (mb_strlen($this->carbonCopy) > 0) {
+            return explode(',', $this->carbonCopy);
+        }
+
+        return [];
+    }
+
+    /**
+     * @param string[] $carbonCopy
+     */
+    public function setCarbonCopyArray($carbonCopy)
+    {
+        $this->carbonCopy = implode(',', $carbonCopy);
+    }
+
+    /**
      * @return \DateTime
      */
     public function getSentDateTime()
@@ -200,7 +219,7 @@ class Email extends BaseEntity
      */
     public function getFullIdentifier()
     {
-        return $this->getReceiver() . ' ' . $this->getSubject();
+        return $this->getReceiver().' '.$this->getSubject();
     }
 
     /**

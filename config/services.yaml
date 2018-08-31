@@ -24,17 +24,24 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\Frontend\:
-        resource: '../src/Controller/Frontend'
-        tags: ['controller.service_arguments']
+    App\Security\AdminUserProvider:
+        arguments: ["@doctrine", "%env(ADMIN_EMAIL)%"]
+        
+    App\Service\ExchangeService:
+        arguments: ["@translator", "@session.flash_bag", "@validator", "@doctrine"]
+    
+    App\Service\EventPastEvaluationService:
+        arguments: ["@doctrine"]
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Controller\Backend\:
-        resource: '../src/Controller/Backend'
-        tags: ['controller.service_arguments']
+    App\Service\EventGenerationService:
+        arguments: ["@doctrine","@translator","@session"]
 
     App\Service\EmailService:
-        arguments: ["@mailer", "@doctrine", "@logger","@twig","%env(MAILER_SENDER)%"]
+        arguments: ["@mailer", "@doctrine", "@logger","@twig","%env(MAILER_EMAIL)%"]
+
+    App\Normalizer\EntityNormalizer:
+        public: false
+        autowire: true
+        autoconfigure: true
+        tags:
+          - { name: serializer.normalizer }

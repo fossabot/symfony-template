@@ -1,18 +1,50 @@
 {% macro menu_entry(name, link) %}
     {% if app.request.requestUri == link %}
         <li class="nav-item active">
-            <a class="nav-link" href="{{ link }}">{{ name }}
+            <a class="nav-link" href="{{ link }}">
+                {{ name }}
                 <span class="sr-only">(current)</span>
             </a>
         </li>
     {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ link }}">{{ name }}</a>
+            <a class="nav-link" href="{{ link }}">
+                {{ name }}</a>
         </li>
     {% endif %}
 {% endmacro %}
 
-{% import _self as self %}
+{% macro dropdown_entry(name, link) %}
+    {% if app.request.requestUri == link %}
+        <a class="dropdown-item active" href="{{ link }}">
+            {{ name }}
+            <span class="sr-only">(current)</span>
+        </a>
+    {% else %}
+        <a class="dropdown-item" href="{{ link }}">
+            {{ name }}
+        </a>
+    {% endif %}
+{% endmacro %}
+
+{% macro menu_icon_entry(icon, link) %}
+    {% if app.request.requestUri == link %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ link }}">
+                <i class="{{ icon }}"></i>
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ link }}">
+                <i class="{{ icon }}"></i>
+            </a>
+        </li>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as own_macros %}
 
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
@@ -43,64 +75,99 @@
     <base href="/" target="_self">
 </head>
 <body>
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience and security.</p>
-<![endif]-->
 
+{% if is_granted('ROLE_USER') %}
 <header class="header">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ path('static_index') }}">{{ "index.title"|trans({}, "static") }}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="{{ path("index_index") }}">{{ "base.brand"|trans({}, "layout") }}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    {{ own_macros.menu_entry("index.title"|trans({}, "index"), path("index_index")) }}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ "base.events_menu.title"|trans({}, "layout") }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            {{ own_macros.dropdown_entry("base.events_menu.assign"|trans({}, "layout"), path("assign_index")) }}
+                            {{ own_macros.dropdown_entry("base.events_menu.trade"|trans({}, "layout"), path("trade_index")) }}
+                            <div class="dropdown-divider"></div>
+                            {{ own_macros.dropdown_entry("base.events_menu.search"|trans({}, "layout"), path("search_index")) }}
+                        </div>
+                    </li>
+                    {% if app.user is defined and app.user.administrator and not (app.request.requestUri starts with "/administration") %}
+                        <div class="form-inline">
+                            <a class="btn btn-sm btn-outline-secondary" type="button"
+                               href="{{ path("administration_index") }}">{{ "index.title"|trans({}, "administration") }}</a>
+                        </div>
+                    {% endif %}
+                </ul>
+
                 <ul class="navbar-nav ml-auto">
-                    {{ self.menu_entry("index.title"|trans({}, "static"), path("static_index")) }}
-                    {{ self.menu_entry("about.title"|trans({}, "static"), path("static_about")) }}
-                    {{ self.menu_entry("contact.title"|trans({}, "static"), path("static_contact")) }}
-                    {{ self.menu_entry("register.title"|trans({}, "static"), path("static_register")) }}
+                    {{ own_macros.menu_icon_entry("fas fa-user", path("account_index")) }}
+                    {{ own_macros.menu_icon_entry("fas fa-sign-out", path("login_logout")) }}
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+{% endif %}
+
+{% if is_granted('ROLE_ADMIN') %}
+    {# display admin menu in dark theme if inside admin area#}
+{% endif %}
 
 <div class="content-wrapper">
-    {# flashbag #}
-    <div class="container">
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
-                    {{ message|raw }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endfor %}
-        {% endfor %}
-    </div>
+    {% if app.session.flashbag.keys|length > 0 %}
+        <div class="container">
+            <div class="row">
+                {% for type, messages in app.session.flashbag.all %}
+                    {% for message in messages %}
+                        <div class="col-md-12 alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                            {{ message|raw }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
+        <div class="container">
+            <div class="row">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% for breadcrumb in breadcrumbs %}
+                            {% if breadcrumb.path != app.request.pathinfo %}
+                                <li class="breadcrumb-item">
+                                    <a href="{{ breadcrumb.path }}">
+                                        {{ breadcrumb.name }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ title }}
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endif %}
 
     {% block content %}
 
     {% endblock %}
 </div>
-
-<footer class="footer">
-    <div class="container footer-container">
-        <div class="row">
-            <div class="col-md-6">
-                made with &lt;3 by <a href="http://famoser.ch" target="_blank">famoser</a>
-            </div>
-            <div class="col-md-6 align-right">
-                version 2018.1
-            </div>
-        </div>
-    </div>
-</footer>
 
 <script src="{{ asset('dist/app.js') }}"></script>
 {% block javascript %}

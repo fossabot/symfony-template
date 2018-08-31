@@ -11,14 +11,24 @@
 
 namespace App\Controller\Base;
 
+use App\Entity\Doctor;
+use App\Model\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class BaseController extends AbstractController
 {
     public static function getSubscribedServices()
     {
-        return parent::getSubscribedServices() + ['kernel' => KernelInterface::class];
+        return parent::getSubscribedServices() +
+            [
+                'kernel' => KernelInterface::class,
+                'security.token_storage' => TokenStorageInterface::class,
+                'translator' => TranslatorInterface::class,
+            ];
     }
 
     /**
@@ -26,11 +36,18 @@ class BaseController extends AbstractController
      */
     private function getKernel()
     {
-        return $this->get("kernel");
+        return $this->get('kernel');
     }
 
-
     /**
+     * @return TranslatorInterface
+     */
+    protected function getTranslator()
+    {
+        return $this->get('translator');
+    }
+
+    /**BaseFormController
      * get the parameter.
      *
      * remove this method as soon as possible
@@ -93,8 +110,46 @@ class BaseController extends AbstractController
     private function displayFlash($type, $message, $link = null)
     {
         if (null !== $link) {
-            $message = '<a href="' . $link . '">' . $message . '</a>';
+            $message = '<a href="'.$link.'">'.$message.'</a>';
         }
         $this->get('session')->getFlashBag()->set($type, $message);
+    }
+
+    /**
+     * @return Doctor|null
+     */
+    protected function getUser()
+    {
+        return parent::getUser();
+    }
+
+    /**
+     * @return Breadcrumb[]|array
+     */
+    protected function getIndexBreadcrumbs()
+    {
+        return [
+            new Breadcrumb(
+                $this->generateUrl('index_index'),
+                $this->getTranslator()->trans('index.title', [], 'index')
+            ),
+        ];
+    }
+
+    /**
+     * Renders a view.
+     *
+     * @param string        $view
+     * @param array         $parameters
+     * @param Response|null $response
+     * @param Breadcrumb[]  $breadcrumbs
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function render(string $view, array $parameters = [], Response $response = null, array $breadcrumbs = []): Response
+    {
+        $parameters['breadcrumbs'] = array_merge($this->getIndexBreadcrumbs(), $breadcrumbs);
+
+        return parent::render($view, $parameters);
     }
 }
