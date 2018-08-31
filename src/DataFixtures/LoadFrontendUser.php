@@ -12,10 +12,10 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Base\BaseFixture;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadDoctor extends BaseFixture
+class LoadFrontendUser extends BaseFixture
 {
     const ORDER = 1;
 
@@ -33,21 +33,11 @@ class LoadDoctor extends BaseFixture
 
         //create admin
         $admin = $this->getRandomInstance();
-        $admin->setEmail('info@nodika.ch');
+        $admin->setEmail('info@example.ch');
         $admin->setPlainPassword('asdf');
         $admin->setPassword();
         $admin->setIsAdministrator(true);
-        $admin->setReceivesAdministratorMail(true);
         $manager->persist($admin);
-
-        //create doctor which is invited
-        $invitedUser = $this->getRandomInstance();
-        $invitedUser->invite();
-        $manager->persist($invitedUser);
-
-        //create doctor which is not invited yet
-        $notInvitedUser = $this->getRandomInstance();
-        $manager->persist($notInvitedUser);
 
         $manager->flush();
     }
@@ -65,11 +55,11 @@ class LoadDoctor extends BaseFixture
      *
      * @param bool $acceptInvitation
      *
-     * @return Doctor
+     * @return FrontendUser
      */
     protected function getRandomInstance()
     {
-        $doctor = new Doctor();
+        $doctor = new FrontendUser();
         $this->fillAddress($doctor);
         $this->fillCommunication($doctor);
         $this->fillPerson($doctor);

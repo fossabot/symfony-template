@@ -11,7 +11,7 @@
 
 namespace App\Service;
 
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\Event;
 use App\Entity\EventGeneration;
 use App\Entity\EventPast;
@@ -520,11 +520,11 @@ class EventGenerationService implements EventGenerationServiceInterface
 
     /**
      * @param EventGeneration $eventGeneration
-     * @param Doctor          $creator
+     * @param FrontendUser          $creator
      *
      * @return Event[]
      */
-    public function persist(EventGeneration $eventGeneration, Doctor $creator)
+    public function persist(EventGeneration $eventGeneration, FrontendUser $creator)
     {
         $manager = $this->doctrine->getManager();
 

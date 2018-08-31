@@ -12,7 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Form\Traits\User\ChangePasswordType;
 use App\Form\Traits\User\LoginType;
 use App\Form\Traits\User\RecoverType;
@@ -89,7 +89,7 @@ class LoginController extends BaseFormController
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
         if (\mb_strlen($lastUsername) > 0) {
-            $lastUser = $this->getDoctrine()->getRepository(Doctor::class)->findOneBy(['email' => $lastUsername]);
+            $lastUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $lastUsername]);
             if (null === $lastUser) {
                 $this->displayError($this->getTranslator()->trans('login.danger.email_not_found', [], 'login'));
 
@@ -121,7 +121,7 @@ class LoginController extends BaseFormController
      */
     public function indexAction(Request $request)
     {
-        $user = new Doctor();
+        $user = new FrontendUser();
         $user->setEmail($this->getLastUsername($request));
 
         // create login form
@@ -154,7 +154,7 @@ class LoginController extends BaseFormController
                 $this->displaySuccess($translator->trans('recover.success.email_sent', [], 'login'));
 
                 //check if user exists
-                $exitingUser = $this->getDoctrine()->getRepository(Doctor::class)->findOneBy(['email' => $form->getData()['email']]);
+                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
                     $logger->warning('tried to reset passwort for non-exitant email '.$form->getData()['email']);
 
@@ -201,7 +201,7 @@ class LoginController extends BaseFormController
      */
     public function resetAction(Request $request, $resetHash, TranslatorInterface $translator)
     {
-        $user = $this->getDoctrine()->getRepository(Doctor::class)->findOneBy(['resetHash' => $resetHash]);
+        $user = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['resetHash' => $resetHash]);
         if (null === $user) {
             $this->displayError($translator->trans('reset.danger.invalid_hash', [], 'login'));
 
@@ -216,7 +216,7 @@ class LoginController extends BaseFormController
         }
 
         $form = $this->handleForm(
-            $this->createForm(ChangePasswordType::class, $user, ['data_class' => Doctor::class])
+            $this->createForm(ChangePasswordType::class, $user, ['data_class' => FrontendUser::class])
                 ->add('form.set_password', SubmitType::class, ['translation_domain' => 'login', 'label' => 'reset.set_password']),
             $request,
             function ($form) use ($user, $translator, $request) {
@@ -270,7 +270,7 @@ class LoginController extends BaseFormController
                 /* @var FormInterface $form */
 
                 //check if user exists
-                $exitingUser = $this->getDoctrine()->getRepository(Doctor::class)->findOneBy(['email' => $form->getData()['email']]);
+                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
                     $this->displayError($translator->trans('request.error.email_not_found', [], 'login'));
 

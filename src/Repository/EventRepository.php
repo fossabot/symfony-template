@@ -12,7 +12,7 @@
 namespace App\Repository;
 
 use App\Entity\Clinic;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\Event;
 use App\Model\Event\SearchModel;
 use Doctrine\ORM\EntityRepository;
@@ -66,7 +66,7 @@ class EventRepository extends EntityRepository
                 ->setParameter('eventTags', $searchModel->getEventTags());
         }
 
-        if ($searchModel->getDoctor() instanceof Doctor) {
+        if ($searchModel->getDoctor() instanceof FrontendUser) {
             $qb->andWhere('f = :doctor')
                 ->setParameter('doctor', $searchModel->getDoctor());
         }

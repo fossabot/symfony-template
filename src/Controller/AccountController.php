@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\Setting;
-use App\Form\Doctor\EditAccountType;
+use App\Form\FrontendUser\EditAccountType;
 use App\Form\Traits\User\ChangePasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;

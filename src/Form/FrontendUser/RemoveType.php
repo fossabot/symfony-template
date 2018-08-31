@@ -9,14 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Enum;
+namespace App\Form\FrontendUser;
 
-use App\Enum\Base\BaseEnum;
+use App\Form\Generic\RemoveThingType;
 
-class EventTagColor extends BaseEnum
+class RemoveType extends RemoveThingType
 {
-    const RED = 1;
-    const YELLOW = 2;
-    const BLUE = 3;
-    const GREEN = 4;
 }

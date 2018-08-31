@@ -26,117 +26,27 @@ class Setting extends BaseEntity
     use ChangeAwareTrait;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $doctorsCanEditSelf = true;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $doctorsCanEditClinics = false;
-
-    /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="int")
      */
-    private $canConfirmDaysAdvance = 90;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $mustConfirmDaysAdvance = 10;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $sendRemainderDaysInterval = 7;
+    private $maxShowUsersInList = 20;
 
     /**
      * @return int
      */
-    public function getCanConfirmDaysAdvance(): int
+    public function getMaxShowUsersInList(): int
     {
-        return $this->canConfirmDaysAdvance;
+        return $this->maxShowUsersInList;
     }
 
     /**
-     * @param int $canConfirmDaysAdvance
+     * @param int $maxShowUsersInList
      */
-    public function setCanConfirmDaysAdvance(int $canConfirmDaysAdvance): void
+    public function setMaxShowUsersInList(int $maxShowUsersInList): void
     {
-        $this->canConfirmDaysAdvance = $canConfirmDaysAdvance;
+        $this->maxShowUsersInList = $maxShowUsersInList;
     }
 
-    /**
-     * @return int
-     */
-    public function getMustConfirmDaysAdvance(): int
-    {
-        return $this->mustConfirmDaysAdvance;
-    }
 
-    /**
-     * @param int $mustConfirmDaysAdvance
-     */
-    public function setMustConfirmDaysAdvance(int $mustConfirmDaysAdvance): void
-    {
-        $this->mustConfirmDaysAdvance = $mustConfirmDaysAdvance;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSendRemainderDaysInterval(): int
-    {
-        return $this->sendRemainderDaysInterval;
-    }
-
-    /**
-     * @param int $sendRemainderDaysInterval
-     */
-    public function setSendRemainderDaysInterval(int $sendRemainderDaysInterval): void
-    {
-        $this->sendRemainderDaysInterval = $sendRemainderDaysInterval;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getDoctorsCanEditSelf(): bool
-    {
-        return $this->doctorsCanEditSelf;
-    }
-
-    /**
-     * @param bool $doctorsCanEditSelf
-     */
-    public function setDoctorsCanEditSelf(bool $doctorsCanEditSelf): void
-    {
-        $this->doctorsCanEditSelf = $doctorsCanEditSelf;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getDoctorsCanEditClinics(): bool
-    {
-        return $this->doctorsCanEditClinics;
-    }
-
-    /**
-     * @param bool $doctorsCanEditClinics
-     */
-    public function setDoctorsCanEditClinics(bool $doctorsCanEditClinics): void
-    {
-        $this->doctorsCanEditClinics = $doctorsCanEditClinics;
-    }
 }

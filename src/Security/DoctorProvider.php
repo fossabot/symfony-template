@@ -11,7 +11,7 @@
 
 namespace App\Security;
 
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Security\Base\BaseUserProvider;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -47,7 +47,7 @@ class DoctorProvider extends BaseUserProvider
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof Doctor) {
+        if (!$user instanceof FrontendUser) {
             throw new UnsupportedUserException(
                 sprintf('Instances of "%s" are not supported.', \get_class($user))
             );
@@ -74,7 +74,7 @@ class DoctorProvider extends BaseUserProvider
      */
     public function loadUserByUsername($username)
     {
-        $user = $this->registry->getRepository(Doctor::class)->findOneBy(['email' => $username]);
+        $user = $this->registry->getRepository(FrontendUser::class)->findOneBy(['email' => $username]);
         if (null !== $user) {
             return $user;
         }
@@ -93,6 +93,6 @@ class DoctorProvider extends BaseUserProvider
      */
     public function supportsClass($class)
     {
-        return Doctor::class === $class;
+        return FrontendUser::class === $class;
     }
 }

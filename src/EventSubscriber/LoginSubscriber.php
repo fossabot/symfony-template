@@ -11,7 +11,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -38,12 +38,12 @@ class LoginSubscriber implements EventSubscriberInterface
      */
     public function onInteractiveLogin(InteractiveLoginEvent $event)
     {
-        /** @var Doctor $doctor */
-        $doctor = $event->getAuthenticationToken()->getUser();
-        $doctor->setLastLoginDate(new \DateTime());
+        /** @var FrontendUser $frontendUser */
+        $frontendUser = $event->getAuthenticationToken()->getUser();
+        $frontendUser->setLastLoginDate(new \DateTime());
 
         $manager = $this->doctrine->getManager();
-        $manager->persist($doctor);
+        $manager->persist($frontendUser);
         $manager->flush();
     }
 

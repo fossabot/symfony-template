@@ -29,11 +29,7 @@ class SettingType extends BaseAbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('canConfirmDaysAdvance', NumberType::class);
-        $builder->add('mustConfirmDaysAdvance', NumberType::class);
-        $builder->add('sendRemainderDaysInterval', NumberType::class);
-        $builder->add('doctorsCanEditSelf', CheckboxType::class, ['required' => false]);
-        $builder->add('doctorsCanEditClinics', CheckboxType::class, ['required' => false]);
+        $builder->add('maxShowUsersInList', NumberType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -11,7 +11,7 @@
 
 namespace App\Service;
 
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\Email;
 use App\Service\Interfaces\EmailServiceInterface;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -49,11 +49,11 @@ class InviteEmailService
     }
 
     /**
-     * @param Doctor $doctor
+     * @param FrontendUser $doctor
      *
      * @throws \Exception
      */
-    public function inviteDoctor(Doctor $doctor)
+    public function inviteDoctor(FrontendUser $doctor)
     {
         //map clinics to clinic name array
         $clinics = [];

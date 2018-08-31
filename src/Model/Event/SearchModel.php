@@ -12,7 +12,7 @@
 namespace App\Model\Event;
 
 use App\Entity\Clinic;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\EventTag;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -38,7 +38,7 @@ class SearchModel
     private $clinic;
 
     /**
-     * @var Doctor|null
+     * @var FrontendUser|null
      */
     private $doctor;
 
@@ -129,17 +129,17 @@ class SearchModel
     }
 
     /**
-     * @return Doctor|null
+     * @return FrontendUser|null
      */
-    public function getDoctor(): ?Doctor
+    public function getDoctor(): ?FrontendUser
     {
         return $this->doctor;
     }
 
     /**
-     * @param Doctor|null $doctor
+     * @param FrontendUser|null $doctor
      */
-    public function setDoctor(?Doctor $doctor): void
+    public function setDoctor(?FrontendUser $doctor): void
     {
         $this->doctor = $doctor;
     }

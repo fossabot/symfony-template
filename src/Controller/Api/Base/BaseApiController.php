@@ -13,7 +13,7 @@ namespace App\Controller\Api\Base;
 
 use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Clinic;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\Event;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -37,7 +37,7 @@ class BaseApiController extends BaseDoctrineController
     }
 
     /**
-     * @param Doctor[]|Doctor $frontendUsers
+     * @param FrontendUser[]|FrontendUser $frontendUsers
      *
      * @return JsonResponse
      */

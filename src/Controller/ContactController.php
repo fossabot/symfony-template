@@ -12,7 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Form\Model\ContactRequest\ContactRequestType;
 use App\Model\ContactRequest;
 use App\Service\EmailService;
@@ -41,7 +41,7 @@ class ContactController extends BaseFormController
         //prefill contact request with user data
         $createContactRequest = function () {
             $contactRequest = new ContactRequest();
-            if ($this->getUser() instanceof Doctor) {
+            if ($this->getUser() instanceof FrontendUser) {
                 $contactRequest->setName($this->getUser()->getFullName());
                 $contactRequest->setEmail($this->getUser()->getEmail());
             }

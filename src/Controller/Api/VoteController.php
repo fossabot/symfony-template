@@ -13,7 +13,7 @@ namespace App\Controller\Api;
 
 use App\Controller\Api\Base\BaseApiController;
 use App\Entity\Clinic;
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Entity\Event;
 use App\Entity\EventOffer;
 use App\Model\Event\SearchModel;
@@ -37,7 +37,7 @@ class VoteController extends BaseApiController
      */
     public function dataAction()
     {
-        $frontendUsers = $this->getDoctrine()->getRepository(Doctor::class)->findAll();
+        $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findAll();
         return $this->returnFrontendUsers($frontendUsers);
     }
 }

@@ -9,25 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\StartEnd;
+namespace App\Form\FrontendUser;
 
+use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use App\Form\Traits\Address\AddressType;
+use App\Form\Traits\Communication\CommunicationType;
+use App\Form\Traits\Person\PersonType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class StartEndType extends BaseAbstractType
+class FrontendUserType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $dateArray = ['date_widget' => 'single_text', 'time_widget' => 'single_text'];
-
-        $builder->add('startDateTime', DateTimeType::class, $dateArray);
-        $builder->add('endDateTime', DateTimeType::class, $dateArray);
+        $builder->add('person', PersonType::class, ['inherit_data' => true]);
+        $builder->add('address', AddressType::class, ['inherit_data' => true]);
     }
 
     /**
@@ -36,8 +38,8 @@ class StartEndType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_start_end',
-            'label' => 'trait.name',
+            'data_class' => FrontendUser::class,
+            'translation_domain' => 'entity_frontend_user',
         ]);
     }
 }

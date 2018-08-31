@@ -11,7 +11,7 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Doctor;
+use App\Entity\FrontendUser;
 use App\Security\Voter\Base\BaseVoter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -25,7 +25,7 @@ class DoctorVoter extends BaseVoter
      */
     protected function supports($attribute, $subject)
     {
-        return $subject instanceof Doctor;
+        return $subject instanceof FrontendUser;
     }
 
     /**
@@ -33,7 +33,7 @@ class DoctorVoter extends BaseVoter
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
      * @param string         $attribute
-     * @param Doctor         $subject
+     * @param FrontendUser         $subject
      * @param TokenInterface $token
      *
      * @return bool
@@ -42,7 +42,7 @@ class DoctorVoter extends BaseVoter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof Doctor) {
+        if (!$user instanceof FrontendUser) {
             return false;
         }
 
