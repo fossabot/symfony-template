@@ -15,7 +15,7 @@ use App\Controller\Base\BaseFormController;
 use App\Entity\FrontendUser;
 use App\Form\Model\ContactRequest\ContactRequestType;
 use App\Model\ContactRequest;
-use App\Service\EmailService;
+use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +32,11 @@ class ContactController extends BaseFormController
      *
      * @param Request             $request
      * @param TranslatorInterface $translator
-     * @param EmailService        $emailService
+     * @param EmailServiceInterface        $emailService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request, TranslatorInterface $translator, EmailService $emailService)
+    public function indexAction(Request $request, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
         //prefill contact request with user data
         $createContactRequest = function () {

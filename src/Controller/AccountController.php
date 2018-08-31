@@ -13,8 +13,8 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\Setting;
+use App\Form\FrontendUser\ChangePasswordType;
 use App\Form\FrontendUser\EditAccountType;
-use App\Form\Traits\User\ChangePasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,22 +64,19 @@ class AccountController extends BaseFormController
         );
         $arr['change_password_form'] = $form->createView();
 
-        $setting = $this->getDoctrine()->getRepository(Setting::class)->findSingle();
-        if ($setting->getDoctorsCanEditSelf()) {
-            //edit account form
-            $form = $this->handleForm(
-                $this->createForm(EditAccountType::class, $user)
-                    ->add('form.save', SubmitType::class, ['translation_domain' => 'common_form', 'label' => 'submit.update']),
-                $request,
-                function ($form) use ($user, $translator) {
-                    $this->displaySuccess($translator->trans('successful.update', [], 'common_form'));
-                    $this->fastSave($user);
+        //edit account form
+        $form = $this->handleForm(
+            $this->createForm(EditAccountType::class, $user)
+                ->add('form.save', SubmitType::class, ['translation_domain' => 'common_form', 'label' => 'submit.update']),
+            $request,
+            function ($form) use ($user, $translator) {
+                $this->displaySuccess($translator->trans('successful.update', [], 'common_form'));
+                $this->fastSave($user);
 
-                    return $form;
-                }
-            );
-            $arr['update_form'] = $form->createView();
-        }
+                return $form;
+            }
+        );
+        $arr['update_form'] = $form->createView();
 
         return $this->render('account/index.html.twig', $arr);
     }

@@ -12,12 +12,7 @@
 namespace App\Controller\Api;
 
 use App\Controller\Api\Base\BaseApiController;
-use App\Entity\Clinic;
 use App\Entity\FrontendUser;
-use App\Entity\Event;
-use App\Entity\EventOffer;
-use App\Model\Event\SearchModel;
-use App\Service\EmailService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

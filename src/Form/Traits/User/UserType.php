@@ -9,29 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\Address;
+namespace App\Form\Traits\User;
 
+use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressType extends BaseAbstractType
+class UserType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('street', TextType::class);
-        $builder->add('streetNr', TextType::class);
-        $builder->add('addressLine', TextType::class, ['required' => false]);
-        $builder->add('postalCode', NumberType::class);
-        $builder->add('city', TextType::class);
-        $builder->add('country', CountryType::class);
+        $builder->add('email', TextType::class);
+        $builder->add('plainPassword', PasswordType::class);
+        $builder->add('isEnabled', CheckboxType::class);
     }
 
     /**
@@ -40,8 +38,7 @@ class AddressType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_address',
-            'label' => 'trait.name',
+            'translation_domain' => 'trait_user'
         ]);
     }
 }

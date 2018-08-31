@@ -28,7 +28,7 @@ class EmailService implements EmailServiceInterface
     /**
      * @var string
      */
-    private $contactEmail;
+    private $mailerSender;
 
     /**
      * @var RegistryInterface
@@ -52,15 +52,15 @@ class EmailService implements EmailServiceInterface
      * @param RegistryInterface $registry
      * @param LoggerInterface   $logger
      * @param Environment       $twig
-     * @param string            $contactEmail
+     * @param string            $mailerSender
      */
-    public function __construct(\Swift_Mailer $mailer, RegistryInterface $registry, LoggerInterface $logger, Environment $twig, string $contactEmail)
+    public function __construct(\Swift_Mailer $mailer, RegistryInterface $registry, LoggerInterface $logger, Environment $twig, string $mailerSender)
     {
         $this->mailer = $mailer;
         $this->doctrine = $registry;
         $this->twig = $twig;
         $this->logger = $logger;
-        $this->contactEmail = $contactEmail;
+        $this->mailerSender = $mailerSender;
     }
 
     /**
@@ -81,7 +81,7 @@ class EmailService implements EmailServiceInterface
 
         $message = (new \Swift_Message())
             ->setSubject($email->getSubject())
-            ->setFrom($this->contactEmail)
+            ->setFrom($this->mailerSender)
             ->setTo($email->getReceiver());
 
         $body = $email->getBody();

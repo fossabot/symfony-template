@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditAccountType extends BaseAbstractType
+class RegisterType extends BaseAbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,6 +27,7 @@ class EditAccountType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('user', \App\Form\Traits\User\RegisterType::class, ['inherit_data' => true]);
         $builder->add('person', PersonType::class, ['inherit_data' => true]);
         $builder->add('address', AddressType::class, ['inherit_data' => true]);
     }

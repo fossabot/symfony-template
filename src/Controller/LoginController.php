@@ -13,10 +13,9 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseFormController;
 use App\Entity\FrontendUser;
-use App\Form\Traits\User\ChangePasswordType;
-use App\Form\Traits\User\LoginType;
-use App\Form\Traits\User\RecoverType;
-use App\Form\Traits\User\RequestInviteType;
+use App\Form\FrontendUser\ChangePasswordType;
+use App\Form\FrontendUser\LoginType;
+use App\Form\FrontendUser\RecoverType;
 use App\Model\Breadcrumb;
 use App\Service\Interfaces\EmailServiceInterface;
 use App\Service\InviteEmailService;
@@ -156,14 +155,14 @@ class LoginController extends BaseFormController
                 //check if user exists
                 $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
-                    $logger->warning('tried to reset passwort for non-exitant email '.$form->getData()['email']);
+                    $logger->warning('tried to reset passwort for non-existant email '.$form->getData()['email']);
 
                     return $form;
                 }
 
                 //do not send password reset link if not enabled
                 if (!$exitingUser->isEnabled()) {
-                    $logger->warning('tried to reset passwort for disabled account '.$form->getData()['email']);
+                    $logger->warning('tried to reset password for disabled account '.$form->getData()['email']);
 
                     return $form;
                 }
@@ -252,7 +251,7 @@ class LoginController extends BaseFormController
     }
 
     /**
-     * @Route("/request", name="login_request")
+     * @Route("/register", name="login_request")
      *
      * @param Request             $request
      * @param InviteEmailService  $emailService
