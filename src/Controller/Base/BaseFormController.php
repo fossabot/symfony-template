@@ -35,7 +35,7 @@ class BaseFormController extends BaseDoctrineController
             }
 
             $this->displayError(
-                $this->getTranslator()->trans('error.form_validation_failed', [], 'common_form')
+                $this->getTranslator()->trans('form.error.validation_failed', [], 'framework')
             );
         }
 
@@ -55,8 +55,8 @@ class BaseFormController extends BaseDoctrineController
     {
         //translate messages
         $translator = $this->getTranslator();
-        $buttonLabel = $translator->trans('submit.create', [], 'common_form');
-        $successfulText = $translator->trans('successful.create', [], 'common_form');
+        $buttonLabel = $translator->trans('form.submit_buttons.create', [], 'framework');
+        $successfulText = $translator->trans('successful.create', [], 'framework');
 
         $formType = $this->classToFormType(\get_class($defaultEntity));
         $startEntity = clone $defaultEntity;
@@ -100,8 +100,8 @@ class BaseFormController extends BaseDoctrineController
     {
         //translate messages
         $translator = $this->getTranslator();
-        $buttonLabel = $translator->trans('submit.update', [], 'common_form');
-        $successfulText = $translator->trans('successful.update', [], 'common_form');
+        $buttonLabel = $translator->trans('form.submit_buttons.update', [], 'framework');
+        $successfulText = $translator->trans('successful.update', [], 'framework');
 
         //create persist callable
         $myOnSuccessCallable = function ($form) use ($entity, $beforeUpdateCallable, $successfulText) {
@@ -142,8 +142,8 @@ class BaseFormController extends BaseDoctrineController
             $request,
             $entity,
             $this->classToFormType(\get_class($entity), 'Delete'),
-            $translator->trans('submit.delete', [], 'common_form'),
-            $translator->trans('successful.delete', [], 'common_form'),
+            $translator->trans('form.submit_buttons.delete', [], 'framework'),
+            $translator->trans('successful.delete', [], 'framework'),
             $beforeRemoveCallable ??
             function () {
                 return true;

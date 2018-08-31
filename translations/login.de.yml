@@ -3,7 +3,7 @@ login:
   description: 'Willkommen zurück!'
   problems_with_login: 'Probleme beim Einloggen?'
   do_login: "einloggen"
-  danger:
+  error:
     login_failed: 'Login fehlgeschlagen'
     email_not_found: 'Diese E-Mail wurde nicht gefunden.'
     login_disabled: 'Ihr Account wurde vom Administrator deaktiviert.'
@@ -14,7 +14,9 @@ recover:
   send_email: 'E-Mail zusenden'
   use_login_email: 'Geben Sie die E-Mail ein, die Sie beim Login verwenden. Wir senden Ihnen dann einen Link zu, mit dem Sie das Passwort neu setzen können.'
   success:
-    email_sent: 'Sofern diese E-Mail in unserem System gefunden wurde, haben wir Ihnen soeben eine E-Mail versandt'
+    email_sent: 'Wir haben Ihnen soeben eine E-Mail versandt.'
+  danger:
+    email_not_found: 'Diese E-Mail wurde nicht in unserem System gefunden.'
   email:
     reset_password:
       subject: 'Passwort zurücksetzen'

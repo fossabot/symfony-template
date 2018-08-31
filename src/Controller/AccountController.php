@@ -50,7 +50,7 @@ class AccountController extends BaseFormController
                     $user->getPlainPassword() !== $user->getRepeatPlainPassword() ||
                     '' === $user->getPlainPassword()
                 ) {
-                    $this->displaySuccess($translator->trans('reset.danger.passwords_do_not_match', [], 'login'));
+                    $this->displaySuccess($translator->trans('reset.error.passwords_do_not_match', [], 'login'));
 
                     return $form;
                 }
@@ -70,7 +70,7 @@ class AccountController extends BaseFormController
                 ->add('form.save', SubmitType::class, ['translation_domain' => 'common_form', 'label' => 'submit.update']),
             $request,
             function ($form) use ($user, $translator) {
-                $this->displaySuccess($translator->trans('successful.update', [], 'common_form'));
+                $this->displaySuccess($translator->trans('form.successful.updated', [], 'framework'));
                 $this->fastSave($user);
 
                 return $form;

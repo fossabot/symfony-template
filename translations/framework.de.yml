@@ -11,17 +11,13 @@ form:
   error:
     validation_failed: 'Die Verarbeitung konnte nicht abgeschlossen werden. Sind alle benötigten Felder richtig ausgefüllt?'
   successful:
-    create: 'Erfolgreich hinzugefügt'
-    update: 'Erfolgreich gespeichert'
-    delete: 'Erfolgreich entfernt'
+    created: 'Erfolgreich hinzugefügt'
+    updated: 'Erfolgreich gespeichert'
+    deleted: 'Erfolgreich entfernt'
   submit_buttons:
     create: 'erstellen'
     update: 'speichern'
     delete: 'entfernen'
-    login: 'login'
-    register: 'registrieren'
-    confirm: 'bestätigen'
-    apply: 'anwenden'
   fields:
     required: '*'
     not_required: '(freiwillig)'
