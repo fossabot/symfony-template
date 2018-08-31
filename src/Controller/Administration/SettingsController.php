@@ -51,6 +51,15 @@ class SettingsController extends BaseController
             }
         );
 
+        //allow to edit who receives the emails
+        $emails = $this->processSelectDoctors($request, $factory, 'emails',
+            $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(['isAdministrator' => true, 'receivesAdministratorMail' => true]),
+            function ($doctor, $value) {
+                /* @var FrontendUser $doctor */
+                $doctor->setReceivesAdministratorMail($value);
+            }
+        );
+
         return $this->render('administration/setting/edit.html.twig', ['settings' => $form->createView(), 'admins' => $admins->createView()]);
     }
 

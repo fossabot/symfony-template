@@ -41,6 +41,13 @@ class FrontendUser extends BaseEntity implements UserInterface, EquatableInterfa
     private $isAdministrator = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $receivesAdministratorMail = false;
+
+    /**
      * Returns the roles granted to the user.
      *
      * @return array (Role|string)[] The user roles
@@ -80,5 +87,21 @@ class FrontendUser extends BaseEntity implements UserInterface, EquatableInterfa
     public function setIsAdministrator(bool $isAdministrator): void
     {
         $this->isAdministrator = $isAdministrator;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReceivesAdministratorMail(): bool
+    {
+        return $this->receivesAdministratorMail;
+    }
+
+    /**
+     * @param bool $receivesAdministratorMail
+     */
+    public function setReceivesAdministratorMail(bool $receivesAdministratorMail): void
+    {
+        $this->receivesAdministratorMail = $receivesAdministratorMail;
     }
 }

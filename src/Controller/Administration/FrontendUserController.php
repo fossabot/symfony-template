@@ -13,9 +13,9 @@ namespace App\Controller\Administration;
 
 use App\Controller\Administration\Base\BaseController;
 use App\Entity\FrontendUser;
+use App\Entity\Setting;
 use App\Form\FrontendUser\RemoveType;
 use App\Model\Breadcrumb;
-use App\Service\InviteEmailService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +26,21 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FrontendUserController extends BaseController
 {
+
+    /**
+     * @Route("", name="administration_frontend_users")
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function indexAction()
+    {
+        $setting = $this->getDoctrine()->getRepository(Setting::class)->findSingle();
+        $users = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(["deletedAt" => null], ["familyName" => "ASC", "givenName" => "ASC"], $setting->getMaxShowUsersInList());
+        return $this->render('administration/frontend_users.html.twig');
+    }
+
     /**
      * checks if the email is already used, and shows an error to the user if so.
      *
@@ -44,19 +59,6 @@ class FrontendUserController extends BaseController
         }
 
         return true;
-    }
-
-    /**
-     * @Route("", name="administration_frontend_users")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function indexAction()
-    {
-        $users = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(["deletedAt" => null], ["familyName" => "ASC", "givenName" => "ASC"]);
-        return $this->render('administration/frontend_user/index.html.twig');
     }
 
     /**

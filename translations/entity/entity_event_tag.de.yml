@@ -1,4 +1,0 @@
-entity:
-  name: 'Tag'
-  description: 'Termine können Tags hinzugefügt werden, um unterschiedliche Arten von Terminen für Ihre Mitglieder unterscheidbar zu machen.'
-  plural: 'Tags'
