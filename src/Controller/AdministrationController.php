@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Controller\Administration;
+namespace App\Controller;
 
 use App\Controller\Administration\Base\BaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
