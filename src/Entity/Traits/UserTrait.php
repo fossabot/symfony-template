@@ -58,7 +58,7 @@ trait UserTrait
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $lastLoginDate;
+    private $lastLogin;
 
     /**
      * @var string
@@ -175,17 +175,17 @@ trait UserTrait
     /**
      * @return \DateTime
      */
-    public function getLastLoginDate(): ?\DateTime
+    public function getLastLogin(): ?\DateTime
     {
-        return $this->lastLoginDate;
+        return $this->lastLogin;
     }
 
     /**
-     * @param \DateTime $lastLoginDate
+     * @param \DateTime $lastLogin
      */
-    public function setLastLoginDate(\DateTime $lastLoginDate): void
+    public function setLastLogin(\DateTime $lastLogin): void
     {
-        $this->lastLoginDate = $lastLoginDate;
+        $this->lastLogin = $lastLogin;
     }
 
     /**

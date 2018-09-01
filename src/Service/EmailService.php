@@ -16,6 +16,7 @@ use App\Enum\EmailType;
 use App\Helper\HashHelper;
 use App\Service\Interfaces\EmailServiceInterface;
 use Psr\Log\LoggerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Twig\Environment;
 
@@ -66,14 +67,12 @@ class EmailService implements EmailServiceInterface
     /**
      * @param Email $email
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
     private function processEmail(Email $email)
     {
         $email->setSentDateTime(new \DateTime());
-        $email->setIdentifier(HashHelper::createNewResetHash());
+        $email->setIdentifier(Uuid::uuid4()->toString());
 
         $manager = $this->doctrine->getManager();
         $manager->persist($email);
@@ -112,9 +111,7 @@ class EmailService implements EmailServiceInterface
      * @param string $body
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */
@@ -138,9 +135,7 @@ class EmailService implements EmailServiceInterface
      * @param string $actionLink
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */
@@ -164,9 +159,7 @@ class EmailService implements EmailServiceInterface
      * @param string $body
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */

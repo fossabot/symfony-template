@@ -18,8 +18,9 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class FrontendUserProvider extends BaseUserProvider
+class FrontendUserProvider implements UserProviderInterface
 {
     /**
      * @var RegistryInterface

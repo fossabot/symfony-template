@@ -5,7 +5,7 @@ password: 'Passwort'
 plain_password: 'Passwort'
 repeat_plain_password: 'Passwort wiederholen'
 email: 'Email'
-is_enabled: 'Login erlaubt'
+can_login: 'Login erlaubt'
 
 error:
   passwords_do_not_match: 'Die Passwörter stimmen nicht überein'

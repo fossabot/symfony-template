@@ -19,9 +19,7 @@ interface EmailServiceInterface
      * @param string $body
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */
@@ -33,9 +31,7 @@ interface EmailServiceInterface
      * @param string $body
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */
@@ -49,9 +45,7 @@ interface EmailServiceInterface
      * @param string $actionLink
      * @param string[] $carbonCopy
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      *
      * @return bool
      */

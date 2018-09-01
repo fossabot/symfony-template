@@ -40,7 +40,7 @@ class LoginSubscriber implements EventSubscriberInterface
     {
         /** @var FrontendUser $frontendUser */
         $frontendUser = $event->getAuthenticationToken()->getUser();
-        $frontendUser->setLastLoginDate(new \DateTime());
+        $frontendUser->setLastLogin(new \DateTime());
 
         $manager = $this->doctrine->getManager();
         $manager->persist($frontendUser);

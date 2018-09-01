@@ -13,19 +13,8 @@
             </h3>
 
             <p>
-                {% if user.clinics|length == 1 %}
-                    {{ "index.member_of_clinic"|trans({"%clinic%": user.clinics|join("")}) }}
-                {% elseif user.clinics|length > 1 %}
-                    {{ "index.member_of_clinics"|trans({"%clinics%": user.clinics|join(", ")}) }}
-                {% else %}
-                    {{ "index.no_clinics"|trans }}
-                {% endif %}
-            </p>
-
-            <p>
                 <b>{{ "trait.name"|trans({}, "trait_communication") }}</b>:<br/>
-                {{ user.email }}<br/>
-                {{ user.phone }}
+                {{ user.email }}
             </p>
 
             <p>

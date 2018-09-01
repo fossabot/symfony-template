@@ -50,7 +50,7 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
         $obj->setPlainPassword($faker->password);
         $obj->setPassword();
         $obj->setRegistrationDate(new \DateTime());
-        $obj->setLastLoginDate(new \DateTime());
+        $obj->setLastLogin(new \DateTime());
     }
 
     /**

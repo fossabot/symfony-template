@@ -1,4 +1,4 @@
-{% trans_default_domain "common_email" %}
+{% trans_default_domain "framework" %}
 <!doctype html>
 <html>
 <head>
@@ -397,10 +397,10 @@
 
                             <td class="content-block">
                                 <a href="{{ absolute_url(path("email_view", {"identifier" : email.identifier })) }}">
-                                    {{ "mail_wrong_displayed"|trans }}
+                                    {{ "email.wrongly_displayed"|trans }}
                                 </a> <br/>
-                                {{ "generated"|trans }} <br/>
-                                <a href="{{ absolute_url(path("contact_index")) }}">{{ "questions"|trans }}</a>
+                                {{ "email.is_generated"|trans }} <br/>
+                                <a href="{{ absolute_url(path("contact")) }}">{{ "email.questions"|trans }}</a>
                             </td>
                         </tr>
                     </table>
