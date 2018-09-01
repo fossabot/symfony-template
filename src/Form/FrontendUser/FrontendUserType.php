@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -12,12 +12,11 @@
 namespace App\Form\FrontendUser;
 
 use App\Entity\FrontendUser;
-use App\Form\Base\BaseAbstractType;
 use App\Form\Traits\User\UserType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FrontendUserType extends BaseAbstractType
+class FrontendUserType extends EditAccountType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -25,7 +24,7 @@ class FrontendUserType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('user', UserType::class, ["inherit_data" => true]);
+        $builder->add('user', UserType::class, ['inherit_data' => true]);
         parent::buildForm($builder, $options);
     }
 

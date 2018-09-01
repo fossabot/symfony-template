@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -62,7 +62,8 @@ class TwigExtension extends Twig_Extension
     public function dateFormatFilter($date)
     {
         if ($date instanceof \DateTime) {
-            $dateFormat = $this->translator->trans("time.format.date", [], "framework");
+            $dateFormat = $this->translator->trans('time.format.date', [], 'framework');
+
             return $this->prependDayName($date) . ', ' . $date->format($dateFormat);
         }
 
@@ -77,7 +78,8 @@ class TwigExtension extends Twig_Extension
     public function dateTimeFilter($date)
     {
         if ($date instanceof \DateTime) {
-            $dateTimeFormat = $this->translator->trans("time.format.date_time", [], "framework");
+            $dateTimeFormat = $this->translator->trans('time.format.date_time', [], 'framework');
+
             return $this->prependDayName($date) . ', ' . $date->format($dateTimeFormat);
         }
 

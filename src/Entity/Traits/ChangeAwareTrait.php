@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -37,14 +37,14 @@ trait ChangeAwareTrait
     /**
      * @var FrontendUser
      *
-     * @ORM\ManyToOne(targetEntity="Doctor")
+     * @ORM\ManyToOne(targetEntity="App\Entity\FrontendUser")
      */
     private $createdBy;
 
     /**
      * @var FrontendUser
      *
-     * @ORM\ManyToOne(targetEntity="Doctor")
+     * @ORM\ManyToOne(targetEntity="App\Entity\FrontendUser")
      */
     private $lastChangedBy;
 

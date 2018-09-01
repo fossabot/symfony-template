@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -35,17 +35,20 @@ class BaseUserController extends BaseFormController
 
     /**
      * @param UserTrait|UserInterface $user
+     *
      * @return bool
      */
     protected function setNewPasswordIfValid(UserInterface $user)
     {
         if ($user->getPlainPassword() !== $user->getRepeatPlainPassword()) {
             $this->displayError($this->getTranslator()->trans('error.passwords_do_not_match', [], 'trait_user'));
+
             return false;
         }
 
-        if (strlen($user->getPlainPassword()) < 8) {
+        if (\mb_strlen($user->getPlainPassword()) < 8) {
             $this->displayError($this->getTranslator()->trans('error.password_needs_at_least_8_chars', [], 'trait_user'));
+
             return false;
         }
 

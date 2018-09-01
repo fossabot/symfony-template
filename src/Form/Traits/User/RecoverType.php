@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -11,12 +11,11 @@
 
 namespace App\Form\Traits\User;
 
-use App\Form\Base\BaseAbstractType;
+use App\Form\Traits\User\Base\BaseUserType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RecoverType extends BaseAbstractType
+class RecoverType extends BaseUserType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -25,15 +24,5 @@ class RecoverType extends BaseAbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', TextType::class);
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
-        ]);
     }
 }

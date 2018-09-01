@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -42,8 +42,7 @@ class EntityNormalizer extends ObjectNormalizer
         ?NameConverterInterface $nameConverter = null,
         ?PropertyAccessorInterface $propertyAccessor = null,
         ?PropertyTypeExtractorInterface $propertyTypeExtractor = null
-    )
-    {
+    ) {
         parent::__construct($classMetadataFactory, $nameConverter, $propertyAccessor, $propertyTypeExtractor);
         // Entity manager
         $this->em = $em;

@@ -29,6 +29,19 @@
     </div>
 {% endblock %}
 
+{% block person_widget %}
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            {{ form_label(form.givenName) }}
+            {{ form_widget(form.givenName) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ form_label(form.familyName) }}
+            {{ form_widget(form.familyName) }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block start_end_widget %}
     <div class="form-row">
         <div class="form-group col-md-6">

@@ -19,25 +19,35 @@
             <th>{{ "can_login"|trans({}, "trait_user") }}</th>
             <th>{{ "last_login"|trans({}, "trait_user") }}</th>
             <th class="minimal-width"></th>
+            <th class="minimal-width"></th>
         </tr>
         </thead>
         <tbody>
 
-        {% for frontendUser in doctors %}
+        {% for frontend_user in frontend_users %}
             <tr>
-                <td>{{ frontendUser.fullName }}</td>
-                <td>{{ frontendUser.email }}</td>
+                <td>{{ frontend_user.fullName }}</td>
+                <td>{{ frontend_user.email }}</td>
                 <td>
-                    {{ frontendUser.canLogin|booleanFormat }}
+                    {{ frontend_user.canLogin|booleanFormat }}
                     <br/>
-                    <a href="{{ path("administration_frontend_user_toggle_can_login", {"frontendUser" : frontendUser.id}) }}">
+                    <a href="{{ path("administration_frontend_user_toggle_can_login", {"frontendUser" : frontend_user.id}) }}">
                         {{ "toggle_login_enabled.change"|trans }}
                     </a>
                 </td>
                 <td>
+                    {{ frontend_user.lastLogin|dateTimeFormat }}
+                </td>
+                <td>
                     <a class="btn btn-secondary"
-                       href="{{ path("administration_frontend_user_edit", {"frontendUser" : frontendUser.id}) }}">
+                       href="{{ path("administration_frontend_user_edit", {"frontendUser" : frontend_user.id}) }}">
                         <i class="fal fa-pencil"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="btn btn-secondary"
+                       href="{{ path("administration_frontend_user_remove", {"frontendUser" : frontend_user.id}) }}">
+                        <i class="fal fa-trash"></i>
                     </a>
                 </td>
             </tr>

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -29,7 +29,7 @@ class SettingsRepository extends EntityRepository
     {
         $setting = $this->findOneBy([]);
         if ($setting !== null) {
-            /** @var Setting $setting */
+            /* @var Setting $setting */
             return $setting;
         }
 

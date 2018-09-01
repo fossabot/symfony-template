@@ -5,12 +5,12 @@ index:
 new:
   title: 'Neuer Benutzer'
   description: 'Neuer Benutzer erstellen'
-  danger:
+  error:
     email_not_unique: 'Diese E-Mail ist bereits vergeben'
 
 edit:
   title: 'Benutzer bearbeiten'
-  description: 'Ändern Sie Adresse, Email & Namen des Benutzeres'
+  description: 'Ändern Sie Account, Name & Adresse des Benutzeres'
 
 remove:
   title: 'Benutzer entfernen'
@@ -19,3 +19,5 @@ remove:
 toggle_login_enabled:
   title: 'Login erlauben ändern'
   change: 'ändern'
+  error:
+    can_not_toggle_self: 'Sie können nicht sich selber den Zugriff verweigern.'

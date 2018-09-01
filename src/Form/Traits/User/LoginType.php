@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -11,13 +11,12 @@
 
 namespace App\Form\Traits\User;
 
-use App\Form\Base\BaseAbstractType;
+use App\Form\Traits\User\Base\BaseUserType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LoginType extends BaseAbstractType
+class LoginType extends BaseUserType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,15 +26,5 @@ class LoginType extends BaseAbstractType
     {
         $builder->add('email', TextType::class);
         $builder->add('password', PasswordType::class);
-    }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
-        ]);
     }
 }

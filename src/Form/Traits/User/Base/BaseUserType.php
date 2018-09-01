@@ -9,32 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Traits\Person;
+namespace App\Form\Traits\User\Base;
 
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PersonType extends BaseAbstractType
+abstract class BaseUserType extends BaseAbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('givenName', TextType::class);
-        $builder->add('familyName', TextType::class);
-    }
-
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_person',
+            'translation_domain' => 'trait_user',
             'label' => 'trait.name',
         ]);
     }

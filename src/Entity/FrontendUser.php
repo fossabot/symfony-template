@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -103,5 +103,13 @@ class FrontendUser extends BaseEntity implements UserInterface, EquatableInterfa
     public function setReceivesAdministratorMail(bool $receivesAdministratorMail): void
     {
         $this->receivesAdministratorMail = $receivesAdministratorMail;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getFullName();
     }
 }

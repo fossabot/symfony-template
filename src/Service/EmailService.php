@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -13,7 +13,6 @@ namespace App\Service;
 
 use App\Entity\Email;
 use App\Enum\EmailType;
-use App\Helper\HashHelper;
 use App\Service\Interfaces\EmailServiceInterface;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;

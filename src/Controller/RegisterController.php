@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -61,17 +61,17 @@ class RegisterController extends BaseUserController
 
                 //save user & show success message
                 $this->fastSave($user);
-                $this->displaySuccess($translator->trans("index.success.registered", [], "register"));
+                $this->displaySuccess($translator->trans('index.success.registered', [], 'register'));
                 $this->loginUser($request, $user);
 
                 //redirect to start page
-                return $this->redirectToRoute("index");
+                return $this->redirectToRoute('index');
             }
         );
         if ($form instanceof Response) {
             return $form;
         }
 
-        return $this->render('register/register.html.twig', ["form" => $form->createView()]);
+        return $this->render('register/register.html.twig', ['form' => $form->createView()]);
     }
 }

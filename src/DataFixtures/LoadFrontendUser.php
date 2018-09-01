@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -33,7 +33,7 @@ class LoadFrontendUser extends BaseFixture
 
         //create admin
         $admin = $this->getRandomInstance();
-        $admin->setEmail('info@example.ch');
+        $admin->setEmail('info@' . $this->getTranslator()->trans('base.brand', [], 'layout'));
         $admin->setPlainPassword('asdf');
         $admin->setPassword();
         $admin->setIsAdministrator(true);
@@ -59,12 +59,11 @@ class LoadFrontendUser extends BaseFixture
      */
     protected function getRandomInstance()
     {
-        $doctor = new FrontendUser();
-        $this->fillAddress($doctor);
-        $this->fillCommunication($doctor);
-        $this->fillPerson($doctor);
-        $this->fillUser($doctor);
+        $frontendUser = new FrontendUser();
+        $this->fillAddress($frontendUser);
+        $this->fillPerson($frontendUser);
+        $this->fillUser($frontendUser);
 
-        return $doctor;
+        return $frontendUser;
     }
 }

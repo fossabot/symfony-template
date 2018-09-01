@@ -6,6 +6,7 @@ plain_password: 'Passwort'
 repeat_plain_password: 'Passwort wiederholen'
 email: 'Email'
 can_login: 'Login erlaubt'
+last_login: 'Letzer Login'
 
 error:
   passwords_do_not_match: 'Die Passwörter stimmen nicht überein'

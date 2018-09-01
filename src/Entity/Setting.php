@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -28,7 +28,7 @@ class Setting extends BaseEntity
     /**
      * @var int
      *
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private $maxShowUsersInList = 20;
 
@@ -47,6 +47,4 @@ class Setting extends BaseEntity
     {
         $this->maxShowUsersInList = $maxShowUsersInList;
     }
-
-
 }

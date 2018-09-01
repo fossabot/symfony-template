@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -28,7 +28,8 @@ class VoteController extends BaseApiController
      */
     public function dataAction()
     {
-        $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(["deletedAt" => null]);
+        $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(['deletedAt' => null]);
+
         return $this->returnFrontendUsers($frontendUsers);
     }
 }

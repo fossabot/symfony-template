@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -30,7 +30,8 @@ class IndexController extends BaseDoctrineController
     }
 
     /**
-     * no breadcrumbs on the index
+     * no breadcrumbs on the index.
+     *
      * @return \App\Model\Breadcrumb[]|array
      */
     protected function getIndexBreadcrumbs()

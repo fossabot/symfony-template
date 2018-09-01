@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -35,69 +35,36 @@ use Symfony\Component\Translation\TranslatorInterface;
 class LoginController extends BaseUserController
 {
     /**
-     * @param Request $request
+     * @Route("", name="login")
      *
-     * @return string
+     * @param AuthenticationUtils $authenticationUtils
+     *
+     * @return Response
      */
-    private function getLastUsername(Request $request)
+    public function indexAction(AuthenticationUtils $authenticationUtils)
     {
-        /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
-        $session = $request->getSession();
-
-        $authErrorKey = Security::AUTHENTICATION_ERROR;
-        // get the error if any (works with forward and redirect -- see below)
-        if ($request->attributes->has($authErrorKey)) {
-            $error = $request->attributes->get($authErrorKey);
-        } elseif (null !== $session && $session->has($authErrorKey)) {
-            $error = $session->get($authErrorKey);
-            $session->remove($authErrorKey);
-        } else {
-            $error = null;
-        }
-
-        // last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(Security::LAST_USERNAME);
+        $lastUsername = $authenticationUtils->getLastUsername();
         if (\mb_strlen($lastUsername) > 0) {
             $lastUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $lastUsername]);
             if (null === $lastUser) {
                 $this->displayError($this->getTranslator()->trans('login.error.email_not_found', [], 'login'));
-
-                return $lastUsername;
             }
 
             if (!$lastUser->getCanLogin()) {
                 $this->displayError($this->getTranslator()->trans('login.error.login_disabled', [], 'login'));
-
-                return $lastUsername;
             }
-        }
-
-        if (null !== $error) {
+        } elseif (null !== $authenticationUtils->getLastAuthenticationError()) {
             $this->displayError($this->getTranslator()->trans('login.error.login_failed', [], 'login'));
-
-            return $lastUsername;
         }
 
-        return '';
-    }
-
-    /**
-     * @Route("", name="login")
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function indexAction(Request $request)
-    {
         $user = new FrontendUser();
-        $user->setEmail($this->getLastUsername($request));
+        $user->setEmail($lastUsername);
 
         // create login form
         $form = $this->createForm(LoginType::class, $user);
         $form->add('form.login', SubmitType::class, ['translation_domain' => 'login', 'label' => 'login.do_login']);
 
-        return $this->render('login/login.html.twig', ["form" => $form->createView()]);
+        return $this->render('login/login.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -154,7 +121,7 @@ class LoginController extends BaseUserController
             }
         );
 
-        return $this->render('login/recover.html.twig', ["form" => $form->createView()]);
+        return $this->render('login/recover.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -208,7 +175,7 @@ class LoginController extends BaseUserController
             return $form;
         }
 
-        return $this->render('login/reset.html.twig', ["form" => $form->createView()]);
+        return $this->render('login/reset.html.twig', ['form' => $form->createView()]);
     }
 
     /**

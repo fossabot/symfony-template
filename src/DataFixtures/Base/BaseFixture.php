@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the nodika project.
+ * This file is part of the mangel.io project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *
@@ -30,6 +30,11 @@ abstract class BaseFixture extends Fixture implements OrderedFixtureInterface, C
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+    }
+
+    protected function getTranslator()
+    {
+        return $this->container->get('translator');
     }
 
     /**
