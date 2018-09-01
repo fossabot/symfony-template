@@ -9,25 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\FrontendUser;
+namespace App\Form\Generic;
 
-use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
-use App\Form\Traits\Address\AddressType;
-use App\Form\Traits\Person\PersonType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditAccountType extends BaseAbstractType
+abstract class DeleteThingType extends BaseAbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('person', PersonType::class, ['inherit_data' => true]);
-        $builder->add('address', AddressType::class, ['inherit_data' => true]);
+        $builder->add(
+            'confirmConsequences',
+            CheckboxType::class,
+            ['mapped' => false, 'label' => 'form.fields.confirm_consequences']
+        );
     }
 
     /**
@@ -36,8 +33,7 @@ class EditAccountType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => FrontendUser::class,
-            'translation_domain' => 'entity_frontend_user',
+            'translation_domain' => 'framework',
         ]);
     }
 }

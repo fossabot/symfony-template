@@ -16,7 +16,7 @@ use App\Form\Traits\User\UserType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FrontendUserType extends EditAccountType
+class FrontendUserType extends UpdateSelfType
 {
     /**
      * @param FormBuilderInterface $builder

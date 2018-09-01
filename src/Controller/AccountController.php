@@ -13,7 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseUserController;
 use App\Form\FrontendUser\ChangePasswordType;
-use App\Form\FrontendUser\EditAccountType;
+use App\Form\FrontendUser\UpdateSelfType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,7 +57,7 @@ class AccountController extends BaseUserController
 
         //edit account form
         $form = $this->handleForm(
-            $this->createForm(EditAccountType::class, $user)
+            $this->createForm(UpdateSelfType::class, $user)
                 ->add('form.save', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'form.submit_buttons.update']),
             $request,
             function ($form) use ($user, $translator) {

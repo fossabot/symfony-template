@@ -14,7 +14,6 @@ namespace App\Controller\Administration;
 use App\Controller\Administration\Base\BaseController;
 use App\Entity\FrontendUser;
 use App\Entity\Setting;
-use App\Form\FrontendUser\RemoveType;
 use App\Model\Breadcrumb;
 use Ramsey\Uuid\Uuid;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,8 +28,6 @@ class FrontendUserController extends BaseController
 {
     /**
      * @Route("", name="administration_frontend_users")
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -54,7 +51,7 @@ class FrontendUserController extends BaseController
     {
         $existing = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(['email' => $user->getEmail()]);
         if (\count($existing) > 0) {
-            $this->displayError($translator->trans('new.error.email_not_unique', [], 'administration_frontend_user'));
+            $this->displayError($translator->trans('create.error.email_not_unique', [], 'administration_frontend_user'));
 
             return false;
         }
@@ -63,14 +60,14 @@ class FrontendUserController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_frontend_user_new")
+     * @Route("/create", name="administration_frontend_user_create")
      *
      * @param Request $request
      * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function newAction(Request $request, TranslatorInterface $translator)
+    public function createAction(Request $request, TranslatorInterface $translator)
     {
         $user = new FrontendUser();
         $user->setPlainPassword(uniqid());
@@ -81,14 +78,13 @@ class FrontendUserController extends BaseController
             $request,
             $user,
             function () use ($user, $translator) {
+                //ensure email is not taken already
                 if (!$this->emailNotUsed($user, $translator)) {
                     return false;
                 }
 
-                if (\mb_strlen($user->getPlainPassword()) === 0) {
-                    //put default password
-                    $user->setPlainPassword(Uuid::uuid4()->toString());
-                }
+                //set "random" default password
+                $user->setPlainPassword(Uuid::uuid4()->toString());
                 $user->setPassword();
 
                 return true;
@@ -98,11 +94,11 @@ class FrontendUserController extends BaseController
             return $myForm;
         }
 
-        return $this->render('administration/frontend_user/new.html.twig', ['form' => $myForm->createView()]);
+        return $this->render('administration/frontend_user/create.html.twig', ['form' => $myForm->createView()]);
     }
 
     /**
-     * @Route("/{frontendUser}/edit", name="administration_frontend_user_edit")
+     * @Route("/{frontendUser}/update", name="administration_frontend_user_update")
      *
      * @param Request $request
      * @param FrontendUser $frontendUser
@@ -110,19 +106,23 @@ class FrontendUserController extends BaseController
      *
      * @return Response
      */
-    public function editAction(Request $request, FrontendUser $frontendUser, TranslatorInterface $translator)
+    public function updateAction(Request $request, FrontendUser $frontendUser, TranslatorInterface $translator)
     {
         $beforeEmail = $frontendUser->getEmail();
         $myForm = $this->handleUpdateForm(
             $request,
             $frontendUser,
             function () use ($frontendUser, $translator, $beforeEmail) {
-                if ($beforeEmail !== $frontendUser->getEmail() && !$this->emailNotUsed($frontendUser, $translator)) {
+                //prevent to disable login like this
+                if ($frontendUser === $this->getUser() && !$frontendUser->canLogin()) {
+                    $this->displayError($translator->trans('update.error.can_not_disable_login_self', [], 'administration_frontend_user'));
+
                     return false;
                 }
 
-                if (\mb_strlen($frontendUser->getPlainPassword()) > 0) {
-                    $frontendUser->setPassword();
+                //check email has not changed or is not taken already
+                if ($beforeEmail !== $frontendUser->getEmail() && !$this->emailNotUsed($frontendUser, $translator)) {
+                    return false;
                 }
 
                 return true;
@@ -133,52 +133,59 @@ class FrontendUserController extends BaseController
             return $myForm;
         }
 
-        return $this->render('administration/frontend_user/edit.html.twig', ['form' => $myForm->createView()]);
+        return $this->render('administration/frontend_user/update.html.twig', ['form' => $myForm->createView()]);
     }
 
     /**
      * deactivated because not safe.
      *
-     * @Route("/{frontendUser}/remove", name="administration_frontend_user_remove")
+     * @Route("/{frontendUser}/delete", name="administration_frontend_user_delete")
      *
      * @param Request $request
      * @param FrontendUser $frontendUser
+     * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function removeAction(Request $request, FrontendUser $frontendUser)
+    public function deleteAction(Request $request, FrontendUser $frontendUser, TranslatorInterface $translator)
     {
         //establish if user can be deleted freely
         $canDelete = true;
 
-        $myForm = $this->handleForm(
-            $this->createForm(RemoveType::class, $frontendUser),
+        $formSubmitted = false;
+        $form = $this->handleDeleteForm(
             $request,
-            function () use ($frontendUser, $canDelete) {
-                if ($canDelete) {
-                    $this->fastRemove($frontendUser);
+            $frontendUser,
+            function () use ($frontendUser, $canDelete, &$formSubmitted, $translator) {
+                if ($frontendUser === $this->getUser()) {
+                    $this->displayError($translator->trans('delete.error.can_not_remove_self', [], 'administration_frontend_user'));
                 } else {
-                    $frontendUser->delete();
-                    $this->fastSave($frontendUser);
+                    if ($canDelete) {
+                        $this->fastRemove($frontendUser);
+                    } else {
+                        $frontendUser->delete();
+                        $this->fastSave($frontendUser);
+                    }
+                    $this->displaySuccess($translator->trans('form.successful.deleted', [], 'framework'));
                 }
+                $formSubmitted = true;
+
+                return false;
             }
         );
 
-        if ($myForm instanceof Response) {
-            return $myForm;
+        if ($formSubmitted) {
+            return $this->redirectToRoute('administration_frontend_users');
         }
 
-        $arr = [];
-        $arr['can_delete'] = $canDelete;
-        $arr['form'] = $myForm->createView();
-
-        return $this->render('administration/frontend_user/remove.html.twig', $arr);
+        return $this->render('administration/frontend_user/delete.html.twig', ['form' => $form->createView()]);
     }
 
     /**
      * @Route("/{frontendUser}/toggle_can_login", name="administration_frontend_user_toggle_can_login")
      *
      * @param FrontendUser $frontendUser
+     * @param TranslatorInterface $translator
      *
      * @return Response
      */

@@ -11,8 +11,8 @@
 
 namespace App\Form\FrontendUser;
 
-use App\Form\Generic\RemoveThingType;
+use App\Form\Generic\DeleteThingType;
 
-class RemoveType extends RemoveThingType
+class DeleteType extends DeleteThingType
 {
 }

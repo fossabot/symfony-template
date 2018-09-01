@@ -7,8 +7,8 @@
 
 {% block single_content %}
     <p>
-        <a class="btn btn-secondary" href="{{ path("administration_frontend_user_new") }}">
-            {{ "new.title"|trans }}
+        <a class="btn btn-secondary" href="{{ path("administration_frontend_user_create") }}">
+            {{ "create.title"|trans }}
         </a>
     </p>
     <table class="table table-striped">
@@ -40,13 +40,13 @@
                 </td>
                 <td>
                     <a class="btn btn-secondary"
-                       href="{{ path("administration_frontend_user_edit", {"frontendUser" : frontend_user.id}) }}">
+                       href="{{ path("administration_frontend_user_update", {"frontendUser" : frontend_user.id}) }}">
                         <i class="fal fa-pencil"></i>
                     </a>
                 </td>
                 <td>
                     <a class="btn btn-secondary"
-                       href="{{ path("administration_frontend_user_remove", {"frontendUser" : frontend_user.id}) }}">
+                       href="{{ path("administration_frontend_user_delete", {"frontendUser" : frontend_user.id}) }}">
                         <i class="fal fa-trash"></i>
                     </a>
                 </td>

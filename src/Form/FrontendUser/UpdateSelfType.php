@@ -9,22 +9,25 @@
  * file that was distributed with this source code.
  */
 
-namespace App\Form\Generic;
+namespace App\Form\FrontendUser;
 
+use App\Entity\FrontendUser;
 use App\Form\Base\BaseAbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use App\Form\Traits\Address\AddressType;
+use App\Form\Traits\Person\PersonType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class RemoveThingType extends BaseAbstractType
+class UpdateSelfType extends BaseAbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(
-            'confirmConsequences',
-            CheckboxType::class,
-            ['mapped' => false, 'label' => 'form.fields.confirm_consequences']
-        );
+        $builder->add('person', PersonType::class, ['inherit_data' => true]);
+        $builder->add('address', AddressType::class, ['inherit_data' => true]);
     }
 
     /**
@@ -33,7 +36,8 @@ abstract class RemoveThingType extends BaseAbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'framework',
+            'data_class' => FrontendUser::class,
+            'translation_domain' => 'entity_frontend_user',
         ]);
     }
 }

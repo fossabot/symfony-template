@@ -2,7 +2,7 @@ index:
   title: 'Einstellungen'
   description: 'Benutzeranzahl ändern, ...'
 
-edit:
+update:
   title: 'Einstellungen'
   description: 'Konfigurieren Sie die Anwendung nach Ihren Bedürfnissen'
   administrators: 'Administratoren'

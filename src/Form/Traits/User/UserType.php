@@ -13,7 +13,6 @@ namespace App\Form\Traits\User;
 
 use App\Form\Traits\User\Base\BaseUserType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,7 +25,6 @@ class UserType extends BaseUserType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', TextType::class);
-        $builder->add('plainPassword', PasswordType::class, ['required' => false]);
-        $builder->add('canLogin', CheckboxType::class);
+        $builder->add('canLogin', CheckboxType::class, ['required' => false]);
     }
 }

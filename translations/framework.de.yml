@@ -23,8 +23,6 @@ form:
     update: 'speichern'
     delete: 'entfernen'
   fields:
-    required: '*'
-    not_required: '(freiwillig)'
     confirm_consequences: 'Ich verstehe, das ich dies nicht rückgängig machen kann.'
 
 email:

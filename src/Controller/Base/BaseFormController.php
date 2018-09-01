@@ -130,21 +130,21 @@ class BaseFormController extends BaseDoctrineController
      *
      * @param Request $request
      * @param BaseEntity $entity
-     * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
+     * @param callable $beforeDeleteCallable called after successful submit, before entity is deleted. return true to continue removal
      *
      * @return FormInterface
      */
-    protected function handleRemoveForm(Request $request, BaseEntity $entity, $beforeRemoveCallable = null)
+    protected function handleDeleteForm(Request $request, BaseEntity $entity, $beforeDeleteCallable = null)
     {
         $translator = $this->getTranslator();
 
-        return $this->handleRemoveFormInternal(
+        return $this->handleDeleteFormInternal(
             $request,
             $entity,
-            $this->classToFormType(\get_class($entity), 'Delete'),
+            $this->classToFormType(\get_class($entity), 'Delete', false),
             $translator->trans('form.submit_buttons.delete', [], 'framework'),
             $translator->trans('form.successful.deleted', [], 'framework'),
-            $beforeRemoveCallable ??
+            $beforeDeleteCallable ??
             function () {
                 return true;
             }
@@ -159,16 +159,16 @@ class BaseFormController extends BaseDoctrineController
      * @param string $formType namespace of form type to use
      * @param string $buttonLabel label of button
      * @param string $successText content of text displayed if successful
-     * @param callable $beforeRemoveCallable called after successful submit, before entity is removed. return true to continue removal
+     * @param callable $beforeDeleteCallable called after successful submit, before entity is deleted. return true to continue removal
      *
      * @return FormInterface the constructed form
      */
-    private function handleRemoveFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText, $beforeRemoveCallable)
+    private function handleDeleteFormInternal(Request $request, BaseEntity $entity, $formType, $buttonLabel, $successText, $beforeDeleteCallable)
     {
-        $myOnSuccessCallable = function ($form) use ($entity, $successText, $beforeRemoveCallable) {
+        $myOnSuccessCallable = function ($form) use ($entity, $successText, $beforeDeleteCallable) {
             $manager = $this->getDoctrine()->getManager();
 
-            if (false !== $beforeRemoveCallable($entity, $manager)) {
+            if (false !== $beforeDeleteCallable($entity, $manager)) {
                 $manager->remove($entity);
                 $manager->flush();
                 $this->displaySuccess($successText);
@@ -189,17 +189,18 @@ class BaseFormController extends BaseDoctrineController
 
     /**
      * produces App\Form\MyClassName\MyClassNameType from Famoser\Class\MyClassName
-     * if $isRemoveType is true then the remove form is returned.
+     * if $isDeleteType is true then the delete form is returned.
      *
      * @param string $classWithNamespace
      * @param string $prepend is prepended to class name
+     * @param bool $repeatClass
      *
      * @return string
      */
-    private function classToFormType($classWithNamespace, $prepend = '')
+    private function classToFormType($classWithNamespace, $prepend = '', $repeatClass = true)
     {
         $className = mb_substr($classWithNamespace, mb_strrpos($classWithNamespace, '\\') + 1);
 
-        return 'App\\Form\\' . $className . '\\' . $prepend . $className . 'Type';
+        return 'App\\Form\\' . $className . '\\' . $prepend . ($repeatClass ? $className : '') . 'Type';
     }
 }
