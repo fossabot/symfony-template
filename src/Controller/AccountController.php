@@ -46,7 +46,7 @@ class AccountController extends BaseUserController
             $this->createForm(ChangePasswordType::class, $user)
                 ->add('form.change_password', SubmitType::class, ['translation_domain' => 'account', 'label' => 'index.change_password']),
             $request,
-            function ($form) use ($user, $translator) {
+            function ($form) use ($user) {
                 if ($this->setNewPasswordIfValid($user)) {
                     $this->fastSave($user);
                     $this->displaySuccess($this->getTranslator()->trans('index.success.password_changed', [], 'account'));

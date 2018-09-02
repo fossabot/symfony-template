@@ -20,8 +20,6 @@ interface EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendTextEmail($receiver, $subject, $body, $carbonCopy = []);
 
@@ -32,8 +30,6 @@ interface EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendPlainEmail($receiver, $subject, $body, $carbonCopy = []);
 
@@ -46,8 +42,6 @@ interface EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendActionEmail($receiver, $subject, $body, $actionText, $actionLink, $carbonCopy = []);
 }

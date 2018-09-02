@@ -346,10 +346,11 @@ trait UserTrait
         $newHash = '';
         //0-9, A-Z, a-z
         $allowedRanges = [[48, 57], [65, 90], [97, 122]];
+        $allowedRangesCount = \count($allowedRanges);
         for ($i = 0; $i < 20; ++$i) {
             $rand = mt_rand(20, 160);
             $allowed = false;
-            for ($j = 0; $j < \count($allowedRanges); ++$j) {
+            for ($j = 0; $j < $allowedRangesCount; ++$j) {
                 if ($allowedRanges[$j][0] <= $rand && $allowedRanges[$j][1] >= $rand) {
                     $allowed = true;
                 }

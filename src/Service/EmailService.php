@@ -83,7 +83,7 @@ class EmailService implements EmailServiceInterface
             ->setTo($email->getReceiver());
 
         $body = $email->getBody();
-        if (null !== $email->getActionLink()) {
+        if ($email->getEmailType() === EmailType::ACTION_EMAIL) {
             $body .= "\n\n" . $email->getActionText() . ': ' . $email->getActionLink();
         }
         $message->setBody($body, 'text/plain');
@@ -111,8 +111,6 @@ class EmailService implements EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendTextEmail($receiver, $subject, $body, $carbonCopy = [])
     {
@@ -123,7 +121,7 @@ class EmailService implements EmailServiceInterface
         $email->setCarbonCopyArray($carbonCopy);
         $email->setEmailType(EmailType::TEXT_EMAIL);
 
-        return $this->processEmail($email);
+        $this->processEmail($email);
     }
 
     /**
@@ -135,8 +133,6 @@ class EmailService implements EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendActionEmail($receiver, $subject, $body, $actionText, $actionLink, $carbonCopy = [])
     {
@@ -149,7 +145,7 @@ class EmailService implements EmailServiceInterface
         $email->setCarbonCopyArray($carbonCopy);
         $email->setEmailType(EmailType::ACTION_EMAIL);
 
-        return $this->processEmail($email);
+        $this->processEmail($email);
     }
 
     /**
@@ -159,8 +155,6 @@ class EmailService implements EmailServiceInterface
      * @param string[] $carbonCopy
      *
      * @throws \Exception
-     *
-     * @return bool
      */
     public function sendPlainEmail($receiver, $subject, $body, $carbonCopy = [])
     {
@@ -171,6 +165,6 @@ class EmailService implements EmailServiceInterface
         $email->setCarbonCopyArray($carbonCopy);
         $email->setEmailType(EmailType::PLAIN_EMAIL);
 
-        return $this->processEmail($email);
+        $this->processEmail($email);
     }
 }

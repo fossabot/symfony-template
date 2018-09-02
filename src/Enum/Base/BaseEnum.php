@@ -88,6 +88,7 @@ abstract class BaseEnum
 
             return ['translation_domain' => $transDomain, 'label' => 'enum.name', 'choices' => $res, 'choice_translation_domain' => $transDomain];
         } catch (\ReflectionException $e) {
+            //this never fails because the class clearly exists
         }
 
         return [];
@@ -108,6 +109,7 @@ abstract class BaseEnum
 
             return $translator->trans($this->getTextInternal($enumValue, $reflection), [], 'enum_' . $this->camelCaseToTranslation($reflection->getShortName()));
         } catch (\ReflectionException $e) {
+            //this never fails because the class clearly exists
         }
 
         return '';
@@ -136,6 +138,7 @@ abstract class BaseEnum
                 }
             }
         } catch (\ReflectionException $e) {
+            //this never fails because the class clearly exists
         }
 
         return '';

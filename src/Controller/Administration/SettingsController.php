@@ -14,7 +14,7 @@ namespace App\Controller\Administration;
 use App\Controller\Administration\Base\BaseController;
 use App\Entity\FrontendUser;
 use App\Entity\Setting;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -47,22 +47,20 @@ class SettingsController extends BaseController
         );
 
         $admins = $this->processSelectFrontendUsers($request, $factory, $translator, 'admins',
-            ['isAdministrator' => true],
             function ($doctor, $value) {
                 /* @var FrontendUser $doctor */
                 $doctor->setIsAdministrator($value);
             },
-            true
+            'admins'
         );
 
         //allow to edit who receives the emails
         $emails = $this->processSelectFrontendUsers($request, $factory, $translator, 'emails',
-            ['isAdministrator' => true, 'receivesAdministratorMail' => true],
             function ($doctor, $value) {
                 /* @var FrontendUser $doctor */
                 $doctor->setReceivesAdministratorMail($value);
             },
-            false
+            'emails'
         );
 
         return $this->render('administration/setting/update.html.twig', ['settings' => $form->createView(), 'admins' => $admins->createView(), 'emails' => $emails->createView()]);
@@ -73,23 +71,32 @@ class SettingsController extends BaseController
      * @param FormFactoryInterface $factory
      * @param TranslatorInterface $translator
      * @param string $name
-     * @param FrontendUser[] $data
      * @param callable $setProperty
-     * @param bool $preventDisableSelf
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function processSelectFrontendUsers(Request $request, FormFactoryInterface $factory, TranslatorInterface $translator, $name, $selectCondition, $setProperty, $preventDisableSelf)
+    private function processSelectFrontendUsers(Request $request, FormFactoryInterface $factory, TranslatorInterface $translator, $name, $setProperty, $type)
     {
+        //create condition by how to select users
+        $selectCondition = ['isAdministrator' => true];
+        if ($type === 'emails') {
+            $selectCondition += ['receivesAdministratorMail' => true];
+        }
+
         //form creation
-        $createForm = function () use ($factory, $name, $selectCondition) {
+        $createForm = function () use ($factory, $name, $type, $selectCondition) {
             $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy($selectCondition);
 
             return $factory->createNamedBuilder($name)
                 ->setMapped(false)
-                ->add('frontendUsers', EntityType::class, ['multiple' => true, 'query_builder' => function ($qb) {
-                    /* @var QueryBuilder $qb */
-                    //TODO: how to formulate?
+                ->add('frontendUsers', EntityType::class, ['multiple' => true, 'query_builder' => function (EntityRepository $er) use ($type) {
+                    $qb = $er->createQueryBuilder('e');
+                    if ($type === 'emails') {
+                        $qb->where('e.isAdministrator = :isAdministrator');
+                        $qb->setParameter(':isAdministrator', true);
+                    }
+
+                    return $qb;
                 }, 'data' => $frontendUsers, 'class' => FrontendUser::class, 'translation_domain' => 'entity_frontend_user', 'label' => 'entity.plural'])
                 ->add('submit', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'form.submit_buttons.update'])
                 ->getForm();
@@ -111,7 +118,7 @@ class SettingsController extends BaseController
             }
 
             //prevent deactivate self
-            if ($preventDisableSelf && !\in_array($this->getUser(), $propertySetFrontendUsers, true)) {
+            if ($type === 'admins' && !\in_array($this->getUser(), $propertySetFrontendUsers, true)) {
                 $this->displayError($translator->trans('update.error.cannot_deactive_self', [], 'administration_setting'));
 
                 return $createForm();

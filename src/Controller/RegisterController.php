@@ -14,7 +14,6 @@ namespace App\Controller;
 use App\Controller\Base\BaseUserController;
 use App\Entity\FrontendUser;
 use App\Form\FrontendUser\RegisterType;
-use App\Service\EmailService;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,19 +30,18 @@ class RegisterController extends BaseUserController
      * @Route("", name="register")
      *
      * @param Request $request
-     * @param EmailService $emailService
      * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function registerAction(Request $request, EmailService $emailService, TranslatorInterface $translator)
+    public function registerAction(Request $request, TranslatorInterface $translator)
     {
         $user = new FrontendUser();
         $form = $this->handleForm(
             $this->createForm(RegisterType::class, $user)
                 ->add('form.register', SubmitType::class, ['translation_domain' => 'register', 'label' => 'index.title']),
             $request,
-            function ($form) use ($request, $emailService, $translator, $user) {
+            function ($form) use ($request, $translator, $user) {
                 /* @var FormInterface $form */
 
                 //set valid password if possible

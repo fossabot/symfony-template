@@ -160,7 +160,7 @@ class LoginController extends BaseUserController
                 //set new reset hash & display success message
                 $user->setResetHash();
                 $this->fastSave($user);
-                $this->displaySuccess($this->getTranslator()->trans('reset.success.password_set', [], 'login'));
+                $this->displaySuccess($translator->trans('reset.success.password_set', [], 'login'));
 
                 //login user & redirect
                 $this->loginUser($request, $user);

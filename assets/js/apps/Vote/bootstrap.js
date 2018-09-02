@@ -13,7 +13,7 @@ import Messages from '../../localization/vote'
 import mergeMessages from '../../localization/shared/_all'
 
 
-if (document.getElementById("vote") != null) {
+if (document.getElementById("vote") !== null) {
     // register plugins
     Vue.use(VueI18n);
 

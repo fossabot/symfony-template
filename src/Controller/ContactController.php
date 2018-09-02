@@ -87,8 +87,6 @@ class ContactController extends BaseFormController
             }
         );
 
-        $arr['form'] = $form->createView();
-
-        return $this->render('contact/index.html.twig', $arr);
+        return $this->render('contact/index.html.twig', ['form' => $form->createView()]);
     }
 }

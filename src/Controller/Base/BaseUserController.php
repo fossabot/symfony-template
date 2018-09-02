@@ -48,11 +48,11 @@ class BaseUserController extends BaseFormController
     }
 
     /**
-     * @param UserTrait|UserInterface $user
+     * @param UserTrait $user
      *
      * @return bool
      */
-    protected function setNewPasswordIfValid(UserInterface $user)
+    protected function setNewPasswordIfValid($user)
     {
         if ($user->getPlainPassword() !== $user->getRepeatPlainPassword()) {
             $this->displayError($this->getTranslator()->trans('error.passwords_do_not_match', [], 'trait_user'));
