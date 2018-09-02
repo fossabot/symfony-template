@@ -37,6 +37,7 @@ class LoadFrontendUser extends BaseFixture
         $admin->setPlainPassword('asdf');
         $admin->setPassword();
         $admin->setIsAdministrator(true);
+        $admin->setReceivesAdministratorMail(true);
         $manager->persist($admin);
 
         $manager->flush();

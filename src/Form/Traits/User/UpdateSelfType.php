@@ -11,10 +11,11 @@
 
 namespace App\Form\Traits\User;
 
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use App\Form\Traits\User\Base\BaseUserType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class UserType extends UpdateSelfType
+class UpdateSelfType extends BaseUserType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,7 +23,6 @@ class UserType extends UpdateSelfType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-        $builder->add('canLogin', CheckboxType::class, ['required' => false]);
+        $builder->add('email', TextType::class);
     }
 }

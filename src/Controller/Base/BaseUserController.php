@@ -12,13 +12,27 @@
 namespace App\Controller\Base;
 
 use App\Entity\Traits\UserTrait;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class BaseUserController extends BaseFormController
 {
+    /**
+     * @return array
+     */
+    public static function getSubscribedServices()
+    {
+        return parent::getSubscribedServices() +
+            [
+                'security.token_storage' => TokenStorageInterface::class,
+                'event_dispatcher' => EventDispatcherInterface::class,
+            ];
+    }
+
     /**
      * @param Request $request
      * @param UserInterface $user

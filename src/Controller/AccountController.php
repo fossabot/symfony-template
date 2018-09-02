@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseUserController;
+use App\Entity\FrontendUser;
 use App\Form\FrontendUser\ChangePasswordType;
 use App\Form\FrontendUser\UpdateSelfType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,6 +38,7 @@ class AccountController extends BaseUserController
         $arr = [];
 
         $user = $this->getUser();
+        $oldEmail = $user->getEmail();
         $arr['user'] = $user;
 
         //change password form
@@ -60,9 +62,23 @@ class AccountController extends BaseUserController
             $this->createForm(UpdateSelfType::class, $user)
                 ->add('form.save', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'form.submit_buttons.update']),
             $request,
-            function ($form) use ($user, $translator) {
-                $this->displaySuccess($translator->trans('form.successful.updated', [], 'framework'));
+            function ($form) use ($request, $user, $translator, $oldEmail) {
+                //if email changed, ensure it is not taken already
+                if ($user->getEmail() !== $oldEmail) {
+                    $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $user->getEmail()]);
+                    if (null !== $exitingUser) {
+                        $this->displayError($translator->trans('index.error.email_taken', [], 'account'));
+
+                        return $form;
+                    }
+                }
+
                 $this->fastSave($user);
+                $this->displaySuccess($translator->trans('form.successful.updated', [], 'framework'));
+
+                if ($user->getEmail() !== $oldEmail) {
+                    $this->loginUser($request, $user);
+                }
 
                 return $form;
             }

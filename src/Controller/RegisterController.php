@@ -41,7 +41,7 @@ class RegisterController extends BaseUserController
         $user = new FrontendUser();
         $form = $this->handleForm(
             $this->createForm(RegisterType::class, $user)
-                ->add('form.register', SubmitType::class, ['translation_domain' => 'register', 'label' => 'register.title']),
+                ->add('form.register', SubmitType::class, ['translation_domain' => 'register', 'label' => 'index.title']),
             $request,
             function ($form) use ($request, $emailService, $translator, $user) {
                 /* @var FormInterface $form */
@@ -52,8 +52,8 @@ class RegisterController extends BaseUserController
                 }
 
                 //check if email already exists
-                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
-                if (null === $exitingUser) {
+                $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $user->getEmail()]);
+                if (null !== $exitingUser) {
                     $this->displayError($translator->trans('index.error.email_already_in_use', [], 'register'));
 
                     return $form;

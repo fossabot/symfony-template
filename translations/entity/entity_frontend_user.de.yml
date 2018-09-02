@@ -1,4 +1,5 @@
 entity:
   name: 'Benutzer'
-  plural: 'Benutzer können sich einloggen und mit der Anwendung interagieren'
+  description: 'Benutzer können sich einloggen und mit der Anwendung interagieren'
+  plural: 'Benutzer'
   user_trait: 'Account'

@@ -7,3 +7,5 @@ index:
   hi: 'Hallo %name%'
   success:
     password_changed: 'Ihr Passwort wurde erfolgreich geändert.'
+  error:
+    email_taken: 'Ein Benutzer mit dieser E-Mail ist bereits registriert.'

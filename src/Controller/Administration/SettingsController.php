@@ -14,12 +14,14 @@ namespace App\Controller\Administration;
 use App\Controller\Administration\Base\BaseController;
 use App\Entity\FrontendUser;
 use App\Entity\Setting;
+use Doctrine\ORM\QueryBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @Route("/settings")
@@ -30,10 +32,12 @@ class SettingsController extends BaseController
      * @Route("", name="administration_settings")
      *
      * @param Request $request
+     * @param FormFactoryInterface $factory
+     * @param TranslatorInterface $translator
      *
      * @return Response
      */
-    public function indexAction(Request $request, FormFactoryInterface $factory)
+    public function indexAction(Request $request, FormFactoryInterface $factory, TranslatorInterface $translator)
     {
         //general settings
         $setting = $this->getDoctrine()->getRepository(Setting::class)->findSingle();
@@ -42,57 +46,90 @@ class SettingsController extends BaseController
             $setting
         );
 
-        //allow to edit admins
-        $admins = $this->processSelectDoctors($request, $factory, 'admins',
-            $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(['isAdministrator' => true]),
+        $admins = $this->processSelectFrontendUsers($request, $factory, $translator, 'admins',
+            ['isAdministrator' => true],
             function ($doctor, $value) {
                 /* @var FrontendUser $doctor */
                 $doctor->setIsAdministrator($value);
-            }
+            },
+            true
         );
 
         //allow to edit who receives the emails
-        $emails = $this->processSelectDoctors($request, $factory, 'emails',
-            $this->getDoctrine()->getRepository(FrontendUser::class)->findBy(['isAdministrator' => true, 'receivesAdministratorMail' => true]),
+        $emails = $this->processSelectFrontendUsers($request, $factory, $translator, 'emails',
+            ['isAdministrator' => true, 'receivesAdministratorMail' => true],
             function ($doctor, $value) {
                 /* @var FrontendUser $doctor */
                 $doctor->setReceivesAdministratorMail($value);
-            }
+            },
+            false
         );
 
-        return $this->render('administration/setting/edit.html.twig', ['settings' => $form->createView(), 'admins' => $admins->createView()]);
+        return $this->render('administration/setting/update.html.twig', ['settings' => $form->createView(), 'admins' => $admins->createView(), 'emails' => $emails->createView()]);
     }
 
     /**
      * @param Request $request
      * @param FormFactoryInterface $factory
-     * @param FrontendUser[] $data
+     * @param TranslatorInterface $translator
      * @param string $name
+     * @param FrontendUser[] $data
      * @param callable $setProperty
+     * @param bool $preventDisableSelf
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function processSelectDoctors(Request $request, FormFactoryInterface $factory, $name, $data, $setProperty)
+    private function processSelectFrontendUsers(Request $request, FormFactoryInterface $factory, TranslatorInterface $translator, $name, $selectCondition, $setProperty, $preventDisableSelf)
     {
-        $adminForm = $factory->createNamedBuilder($name)
-            ->setMapped(false)
-            ->add('doctors', EntityType::class, ['multiple' => true, 'class' => FrontendUser::class, 'data' => $data, 'translation_domain' => 'entity_doctor', 'label' => 'entity.plural'])
-            ->add('submit', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'submit.update'])
-            ->getForm();
-        $adminForm->handleRequest($request);
+        //form creation
+        $createForm = function () use ($factory, $name, $selectCondition) {
+            $frontendUsers = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy($selectCondition);
 
-        if ($adminForm->isSubmitted() && $adminForm->isValid()) {
-            //deactive the property for all except those chosen
-            $doctors = $this->getDoctrine()->getRepository(FrontendUser::class)->findAll();
+            return $factory->createNamedBuilder($name)
+                ->setMapped(false)
+                ->add('frontendUsers', EntityType::class, ['multiple' => true, 'query_builder' => function ($qb) {
+                    /* @var QueryBuilder $qb */
+                    //TODO: how to formulate?
+                }, 'data' => $frontendUsers, 'class' => FrontendUser::class, 'translation_domain' => 'entity_frontend_user', 'label' => 'entity.plural'])
+                ->add('submit', SubmitType::class, ['translation_domain' => 'framework', 'label' => 'form.submit_buttons.update'])
+                ->getForm();
+        };
+
+        $form = $createForm();
+
+        //handle request
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var FrontendUser[] $propertySetFrontendUsers */
+            $propertySetFrontendUsers = $form->getData()['frontendUsers'];
+
+            //ensure at least one activated
+            if (\count($propertySetFrontendUsers) === 0) {
+                $this->displayError($translator->trans('update.error.select_at_least_one', [], 'administration_setting'));
+
+                return $createForm();
+            }
+
+            //prevent deactivate self
+            if ($preventDisableSelf && !\in_array($this->getUser(), $propertySetFrontendUsers, true)) {
+                $this->displayError($translator->trans('update.error.cannot_deactive_self', [], 'administration_setting'));
+
+                return $createForm();
+            }
+
+            //deactivate the property for the previous
+            $doctors = $this->getDoctrine()->getRepository(FrontendUser::class)->findBy($selectCondition);
             foreach ($doctors as $doctor) {
                 $setProperty($doctor, false);
             }
-            foreach ($adminForm->getData() as $doctor) {
+
+            //active for the chosen ones
+            foreach ($propertySetFrontendUsers as $doctor) {
                 $setProperty($doctor, true);
             }
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $adminForm;
+        return $form;
     }
 }

@@ -26,6 +26,7 @@ class UpdateSelfType extends BaseAbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('user', \App\Form\Traits\User\UpdateSelfType::class, ['inherit_data' => true]);
         $builder->add('person', PersonType::class, ['inherit_data' => true]);
         $builder->add('address', AddressType::class, ['inherit_data' => true]);
     }
