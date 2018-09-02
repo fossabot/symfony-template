@@ -1,6 +1,5 @@
 // library import
 import merge from 'deepmerge'
-
 // get all shared lang files
 import actions from './actions'
 import messages from './messages'

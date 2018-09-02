@@ -1,5 +1,5 @@
 trait:
- name: 'Letzte Änderungen'
+  name: 'Letzte Änderungen'
 
 last_changed_at: 'Zuletzt geändert um'
 last_changed_by: 'Zuletzt geändert von'

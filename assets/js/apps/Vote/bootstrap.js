@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-Vue.config.productionTip = false;
-
 // components
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-
 // app
 import Vote from './vote'
-
 // messages
 import Messages from '../../localization/vote'
 import mergeMessages from '../../localization/shared/_all'
+
+Vue.config.productionTip = false;
 
 
 if (document.getElementById("vote") !== null) {

@@ -7,7 +7,8 @@ require("bootstrap");
 require("bootstrap-multiselect/dist/js/bootstrap-multiselect.js");
 
 // include fontawesome
-import { dom, library } from '@fortawesome/fontawesome-svg-core'
+import {dom} from '@fortawesome/fontawesome-svg-core'
+
 dom.watch();
 
 
