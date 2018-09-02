@@ -28,7 +28,7 @@
         methods: {},
         computed: {},
         mounted() {
-            axios.get("/api/vote/data")
+            axios.get("/api/vote/frontend_users")
                 .then((response) => {
                     this.data = response.data;
                 });
