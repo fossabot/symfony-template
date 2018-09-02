@@ -3,6 +3,7 @@
 *.phar
 /node_modules/
 yarn-error.log
+trace.html
 
 # deployment
 servers.yml

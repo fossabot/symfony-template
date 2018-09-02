@@ -1,6 +1,6 @@
 {
-  "name": "famoser/evoting.uzh.ch",
-  "description": "evoting for the workforce of the UZH to elect their representatives in the various committees they are represented.",
+  "name": "famoser/symfony-template",
+  "description": "a symfony setup to quickly get up & running",
   "license": "MIT",
   "require": {
     "php": "^7.2",

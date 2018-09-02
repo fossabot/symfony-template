@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the mangel.io project.
+ * This file is part of the symfony-template project.
  *
  * (c) Florian Moser <git@famoser.ch>
  *

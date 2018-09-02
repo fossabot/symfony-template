@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  *     $ cd your-symfony-project/
  *     $ ./vendor/bin/phpunit
  */
-class DefaultControllerTest extends WebTestCase
+class LoginControllerTest extends WebTestCase
 {
     /**
      * PHPUnit's data providers allow to execute the same tests repeated times
@@ -88,7 +88,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function getPublicUrls()
     {
-        yield ['/'];
+        yield ['/contact'];
         yield ['/register'];
         yield ['/login'];
     }

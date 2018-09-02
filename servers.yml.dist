@@ -3,7 +3,7 @@
   user: USER
   http_user: USER
   branch: master
-  deploy_path: ~/www/deploy/evoting.uzh.ch/{{stage}}
+  deploy_path: ~/www/deploy/example.com/{{stage}}
   sshOptions:
     StrictHostKeyChecking: no
 
