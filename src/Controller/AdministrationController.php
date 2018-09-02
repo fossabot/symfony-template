@@ -12,8 +12,8 @@
 namespace App\Controller;
 
 use App\Controller\Administration\Base\BaseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/administration")

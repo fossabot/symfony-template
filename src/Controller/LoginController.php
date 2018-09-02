@@ -71,6 +71,7 @@ class LoginController extends BaseUserController
      * @param Request $request
      * @param EmailServiceInterface $emailService
      * @param TranslatorInterface $translator
+     * @param LoggerInterface $logger
      *
      * @return Response
      */
@@ -89,7 +90,7 @@ class LoginController extends BaseUserController
                 //check if user exists
                 $exitingUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $form->getData()['email']]);
                 if (null === $exitingUser) {
-                    $logger->warning('tried to reset passwort for non-existant email ' . $form->getData()['email']);
+                    $logger->warning('tried to reset password for non-existent email ' . $form->getData()['email']);
 
                     return $form;
                 }

@@ -54,8 +54,6 @@ class LoadFrontendUser extends BaseFixture
     /**
      * create an instance with all random values.
      *
-     * @param bool $acceptInvitation
-     *
      * @return FrontendUser
      */
     protected function getRandomInstance()

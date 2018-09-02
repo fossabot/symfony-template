@@ -188,7 +188,7 @@ class BaseFormController extends BaseDoctrineController
     }
 
     /**
-     * produces App\Form\MyClassName\MyClassNameType from Famoser\Class\MyClassName
+     * produces App\Form\MyClassName\MyClassNameType from App\Entity\MyClassName
      * if $isDeleteType is true then the delete form is returned.
      *
      * @param string $classWithNamespace

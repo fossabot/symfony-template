@@ -11,13 +11,6 @@
 
 namespace App\Form\Setting;
 
-/*
- * Created by PhpStorm.
- * User: famoser
- * Date: 19/05/2017
- * Time: 19:13
- */
-
 use App\Entity\Setting;
 use App\Form\Base\BaseAbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
