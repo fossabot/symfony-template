@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  *     $ cd your-symfony-project/
  *     $ ./vendor/bin/phpunit
  */
-class StaticControllerTestSkip extends WebTestCase
+class StaticControllerTest extends WebTestCase
 {
     public function testIndex()
     {
@@ -31,8 +31,8 @@ class StaticControllerTestSkip extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertCount(
-            5,
-            $crawler->filter('index-container'),
+            1,
+            $crawler->filter('content-wrapper'),
             'The homepage displays the all sections.'
         );
     }

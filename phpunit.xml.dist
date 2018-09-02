@@ -19,8 +19,7 @@
         <env name="MAILER_URL" value="null://localhost"/>
 
         <!-- define your env variables for the test env here -->
-        <env name="MAILER_SENDER" value="git@famoser.ch"/>
-        <env name="SUPPORT_EMAIL" value="git@famoser.ch"/>
+        <env name="MAILER_SENDER" value="info@example.com"/>
     </php>
 
     <testsuites>

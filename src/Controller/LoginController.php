@@ -44,17 +44,15 @@ class LoginController extends BaseUserController
     public function indexAction(AuthenticationUtils $authenticationUtils)
     {
         $lastUsername = $authenticationUtils->getLastUsername();
-        if (\mb_strlen($lastUsername) > 0) {
+        if (null !== $authenticationUtils->getLastAuthenticationError(true)) {
             $lastUser = $this->getDoctrine()->getRepository(FrontendUser::class)->findOneBy(['email' => $lastUsername]);
             if (null === $lastUser) {
                 $this->displayError($this->getTranslator()->trans('login.error.email_not_found', [], 'login'));
-            }
-
-            if (!$lastUser->getCanLogin()) {
+            } elseif (!$lastUser->getCanLogin()) {
                 $this->displayError($this->getTranslator()->trans('login.error.login_disabled', [], 'login'));
+            } else {
+                $this->displayError($this->getTranslator()->trans('login.error.login_failed', [], 'login'));
             }
-        } elseif (null !== $authenticationUtils->getLastAuthenticationError()) {
-            $this->displayError($this->getTranslator()->trans('login.error.login_failed', [], 'login'));
         }
 
         $user = new FrontendUser();

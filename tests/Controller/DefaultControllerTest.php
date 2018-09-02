@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
  *     $ cd your-symfony-project/
  *     $ ./vendor/bin/phpunit
  */
-class DefaultControllerTestSkip extends WebTestCase
+class DefaultControllerTest extends WebTestCase
 {
     /**
      * PHPUnit's data providers allow to execute the same tests repeated times
@@ -95,11 +95,11 @@ class DefaultControllerTestSkip extends WebTestCase
 
     public function getSecureUrls()
     {
-        yield ['/dashboard'];
+        yield ['/'];
     }
 
     public function get404Urls()
     {
-        yield ['/dashboard/'];
+        yield ['/none_existing_page'];
     }
 }
