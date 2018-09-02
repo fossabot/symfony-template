@@ -17,7 +17,7 @@ useful tipps for development and its environment.
 `dep deploy` to deploy  
 
 ##### develop
-login with `info@mangel.io`, `asdf`  
+login with `info@example.com`, `asdf`  
 `yarn encode dev-server` starts the frontend dev server  
 test error templates inside TwigBundle/views by accessing `/_error/404` and `/_error/500`
 
